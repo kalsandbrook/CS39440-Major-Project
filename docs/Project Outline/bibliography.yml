@@ -1,0 +1,53 @@
+igdbdocs:
+  type: Web
+  title: IGDB API Documentation
+  url:
+    value: https://api-docs.igdb.com/
+    date: 2024-02-07
+  note: One of the APIs that may be supported by the application. It does not include as many games as the Steam WebAPI, but may be more in depth.
+
+steamapidocs:
+  type: Web
+  title: Steam WebAPI Documentation
+  url:
+    value: https://wiki.teamfortress.com/wiki/WebAPI
+    date: 2024-02-07
+  note: One of the APIs the application may support. It includes many games, but available information may be limited.
+
+qtjambi:
+  type: Web
+  title: QtJambi Repository
+  url:
+    value: https://qtjambi.io/
+    date: 2024-02-07
+
+pyqt:
+  type: Web
+  title: PyQt
+  url:
+    value: https://wiki.python.org/moin/PyQt
+    date: 2024-02-07
+
+kdehig:
+  type: Web
+  title: KDE Human Interface Guidelines
+  url:
+    value: https://develop.kde.org/hig/
+    date: 2024-02-07
+  note: A set of principles that will be taken into account when designing the User Interface.
+
+github:
+  type: Web
+  author: GitHub Incorporated
+  title: GitHub
+  url:
+    value: https://github.com/
+  note: An external service that offers the ability to host private git repositories. It also allows for Kanban-like functionality and issue tracking to aid development.
+
+gitlab:
+  type: Web
+  author: Prifysgol Aberystwyth University
+  title: Aberystwyth University - GitLab
+  url:
+    value: https://gitlab.aber.ac.uk/
+  note: Similar to GitHub, but hosted by the University. However, it has a more limited set of features for tracking development.
