@@ -1,6 +1,6 @@
 # GamePile
 
-A CS9440 Major Project, produced for Aberystwyth University by Kal Sandbrook (kas143).
+A CS39440 Major Project, produced for Aberystwyth University by Kal Sandbrook (kas143).
 
 ## Documents
 
