@@ -1,4 +1,4 @@
-#import("template.typ"): *
+#import "@local/report-template:1.0.0": *
 
 #show: doc.with(
   status: "RELEASE",

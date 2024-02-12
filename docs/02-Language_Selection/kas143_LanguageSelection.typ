@@ -1,15 +1,18 @@
 #import "@preview/tablex:0.0.8": tablex, cellx
-#import("template.typ"): *
+#import "@local/report-template:1.0.0": *
 
 #show: doc.with(
   title: "CS39440: Major Project - Choosing a Language",
   subtitle: "Working Title: \"Video Game Backlog Application\"",
+  status: "Release",
+  version: "v1.0",
   authors: (
     (name: "Kal Sandbrook", email:"kas143@aber.ac.uk"),
   ),
-  // supervisors: (
-  //   (name: "Dr. Edore Akpokodje", email: "eta@aber.ac.uk"),
-  // ),
+  supervisors: (
+    (name: "Dr. Edore Akpokodje", email: "eta@aber.ac.uk"),
+  ),
+  reference: "kas143-LanguageSelection",
   hasOutline: false
 )
 

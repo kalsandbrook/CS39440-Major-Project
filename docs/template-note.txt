@@ -1,0 +1,1 @@
+All templates use a typst local package, a repo will be added and linked here. 
