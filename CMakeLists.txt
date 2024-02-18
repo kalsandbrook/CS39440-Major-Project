@@ -14,15 +14,16 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(GamePile
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        gameentry.cpp
-        gameentry.h
-        gameentry.h)
-target_link_libraries(GamePile
-        Qt::Core
+qt_add_executable(GamePile
+        src/main.cpp
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/gameentry.cpp
+        src/gameentry.h
+        src/gameentry.h)
+
+target_link_libraries(GamePile PRIVATE
+        #Qt::Core
         Qt::Gui
         Qt::Widgets
 )
