@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QMenuBar>
+#include <QToolBar>
 #include "mainwindow.h"
 
 MainWindow::MainWindow() {
@@ -29,6 +30,7 @@ MainWindow::MainWindow() {
     layout->addWidget(bottomFiller);
     widget->setLayout(layout);
 
+
     createActions();
     createMenus();
 
@@ -38,6 +40,17 @@ MainWindow::MainWindow() {
 }
 
 void MainWindow::createActions() {
+    QToolBar *mainToolbar = addToolBar(tr("Main Toolbar"));
+
+    addGameAct = new QAction(tr("&Add Game"), this);
+    addGameAct -> setShortcuts(QKeySequence::New);
+    addGameAct -> setStatusTip(tr("Add a new game to the database."));
+    addGameAct -> setIcon(QIcon::fromTheme("new"));
+    mainToolbar -> addAction(addGameAct);
+
+    connect(addGameAct, &QAction::triggered, this, &MainWindow::addGame);
+
+
     aboutAct = new QAction(tr("&About"), this);
     aboutAct -> setShortcuts(QKeySequence::HelpContents);
     aboutAct -> setStatusTip(tr("Show help information."));
@@ -54,9 +67,15 @@ void MainWindow::createMenus() {
     helpMenu -> addAction(aboutQtAct);
 }
 
+void MainWindow::addGame() {
+    // TODO: Implement addition of games.
+    qInfo("Not Implemented.");
+}
+
+
 void MainWindow::about(){
-    auto title = QStringLiteral("GamePile");
-    auto infoText QStringLiteral("This is an application that helps users manage their video game collections. \n\n © Aberystwyth University, kas143");
+    const auto title = QStringLiteral("GamePile");
+    const auto infoText QStringLiteral("This is an application that helps users manage their video game collections. \n\n © Aberystwyth University, kas143");
 
     QMessageBox::about(this,title,infoText);
 }

@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow();
 private slots:
+    void addGame();
     void about();
     void aboutQt();
 private:
@@ -22,8 +23,10 @@ private:
 
     QMenu *helpMenu;
 
+    QAction *addGameAct;
     QAction *aboutAct;
     QAction *aboutQtAct;
+
     QLabel *infoLabel;
 };
 

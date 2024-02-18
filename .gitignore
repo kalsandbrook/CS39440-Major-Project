@@ -1,5 +1,7 @@
 # Ignore accidentally generated pdfs from templates.
-/docs/*/template.pdf 
+/docs/*/template.pdf
+
+workspace.xml
 
 # C++
 # ===
