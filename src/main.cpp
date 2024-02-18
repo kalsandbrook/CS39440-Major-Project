@@ -1,19 +1,14 @@
-#include <iostream>
-#include <limits>
-#include <QDebug>
-#include <QObject>
+#include <QApplication>
+#include <QPushButton>
 
-#include "gameentry.h"
-
+#include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
+    QApplication app(argc, argv);
 
-    GameEntry game0("Factorio","A factory game", QStringList{"Factory","Sandbox","Automation"});
-    GameEntry game1("Factorio","A factory game", QStringList{"Factory","Sandbox","Automation"});
-    GameEntry game2("Factorio","A factory game", QStringList{"Factory","Sandbox","Automation"});
+    MainWindow window;
 
-    QList<GameEntry*> gameList = {&game0, &game1, &game2};
-    //game.log();
+    window.show();
 
-    return 0;
+    return QApplication::exec();
 }

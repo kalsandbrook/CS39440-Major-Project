@@ -1,31 +1,21 @@
 //
-// Created by Kal on 15/02/2024.
+// Created by Kal on 18/02/2024.
 //
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
 
-#include <string>
-#include <vector>
+#ifndef GAMEENTRY_H
+#define GAMEENTRY_H
 
-using namespace std;
-
+#include<QObject>
 
 class GameEntry : public QObject{
     Q_OBJECT
-private:
+public:
     QString m_name;
     QString m_desc;
-    // TODO: Convert to Genre object.
-    QStringList m_genres;
-public:
-    GameEntry(QString name, QString desc, QStringList genres);
+    QList<QString> m_genres;
 
-    void log();
-
-    [[nodiscard]] QString getName() const { return m_name; }
-    [[nodiscard]] QString getDesc() const { return m_desc; }
-    [[nodiscard]] QStringList getGenres() const { return m_genres; }
+    // Constructor
+    GameEntry(QString name, QString desc, QList<QString> genres);
 };
 
-
-#endif //GAMEOBJECT_H
+#endif //GAMEENTRY_H
