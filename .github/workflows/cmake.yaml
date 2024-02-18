@@ -13,7 +13,7 @@ jobs:
         run: cmake -S . -B cmake-build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=ninja
 
       - name: Build Project
-        run: cmake --build build
+        run: cmake --build cmake-build
 
       # - name: Test Project
       #   runs: ctest --test-dir build
