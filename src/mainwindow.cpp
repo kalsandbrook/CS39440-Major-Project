@@ -55,8 +55,8 @@ void MainWindow::createMenus() {
 }
 
 void MainWindow::about(){
-    const QString title {tr("GamePile")};
-    const QString infoText {tr("This is an application that helps users manage their video game collections. \n\n © Aberystwyth University, kas143")};
+    auto title = QStringLiteral("GamePile");
+    auto infoText QStringLiteral("This is an application that helps users manage their video game collections. \n\n © Aberystwyth University, kas143");
 
     QMessageBox::about(this,title,infoText);
 }
