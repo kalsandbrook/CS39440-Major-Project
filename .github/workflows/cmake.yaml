@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Configure CMake
-        uses: cmake -S . -B cmake-build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=ninja
+        run: cmake -S . -B cmake-build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=ninja
 
       - name: Build Project
         run: cmake --build build
