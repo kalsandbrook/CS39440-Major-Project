@@ -2,11 +2,11 @@
 // Created by Kal on 18/02/2024.
 //
 
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QMenuBar>
-#include <QToolBar>
 #include "mainwindow.h"
+#include <QMenuBar>
+#include <QMessageBox>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow()
 {
