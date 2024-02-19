@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(GamePile)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/modules")
+include(BreezeThemes)
+
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -20,12 +23,16 @@ qt_add_executable(GamePile
         src/mainwindow.h
         src/gameentry.cpp
         src/gameentry.h
-        src/gameentry.h)
+        src/gameentry.h
+)
+
+#TODO: Credit this in report. https://github.com/Alexhuszagh/BreezeStyleSheets
 
 target_link_libraries(GamePile PRIVATE
         #Qt::Core
         Qt::Gui
         Qt::Widgets
+        breeze_themes
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
