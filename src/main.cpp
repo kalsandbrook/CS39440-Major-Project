@@ -4,7 +4,8 @@
 
 #include "mainwindow.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[])
+{
     QApplication app(argc, argv);
 
 #ifdef WIN32
@@ -17,7 +18,7 @@ int main(int argc, char *argv[]) {
     QInfo("Loaded Windows Breeze Style")
 #endif
 
-    MainWindow window;
+        MainWindow window;
 
     window.show();
 

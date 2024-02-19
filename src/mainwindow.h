@@ -9,7 +9,8 @@
 
 #include <QLabel>
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 public:
     MainWindow();
@@ -17,17 +18,18 @@ private slots:
     void addGame();
     void about();
     void aboutQt();
+
 private:
     void createActions();
     void createMenus();
 
-    QMenu *helpMenu;
+    QMenu* helpMenu;
 
-    QAction *addGameAct;
-    QAction *aboutAct;
-    QAction *aboutQtAct;
+    QAction* addGameAct;
+    QAction* aboutAct;
+    QAction* aboutQtAct;
 
-    QLabel *infoLabel;
+    QLabel* infoLabel;
 };
 
 #endif //MAINWINDOW_H

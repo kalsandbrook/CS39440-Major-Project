@@ -5,9 +5,10 @@
 #ifndef GAMEENTRY_H
 #define GAMEENTRY_H
 
-#include<QObject>
+#include <QObject>
 
-class GameEntry : public QObject{
+class GameEntry : public QObject
+{
     Q_OBJECT
 public:
     QString m_name;
