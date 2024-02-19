@@ -8,8 +8,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_PREFIX_PATH "C:/Qt/6.6.1/mingw_64")
+if (WIN32)
+    set(CMAKE_PREFIX_PATH "C:/Qt/6.6.1/mingw_64")
+endif ()
 
 find_package(Qt6 COMPONENTS
         Core
