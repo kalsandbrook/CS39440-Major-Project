@@ -1,6 +1,7 @@
 # Ignore accidentally generated pdfs from templates.
 /docs/*/template.pdf
-
+.kdev4
+*.kdev4
 workspace.xml
 
 # C++
