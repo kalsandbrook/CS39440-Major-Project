@@ -24,9 +24,13 @@ qt_add_executable(GamePile
         src/main.cpp
         src/mainwindow.cpp
         src/mainwindow.h
-        src/gameentry.cpp
-        src/gameentry.h
-        src/gameentry.h
+        src/data/gameentry.h
+        src/models/gamelistmodel.cpp
+        src/models/gamelistmodel.h
+        src/models/gamelistmodel.cpp
+        src/models/gamelistmodel.h
+        src/data/hardcoded-data.cpp
+        src/models/gameListDelegate.cpp
 )
 
 #TODO: Credit this in report. https://github.com/Alexhuszagh/BreezeStyleSheets

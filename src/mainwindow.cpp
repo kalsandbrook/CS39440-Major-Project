@@ -8,26 +8,32 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 
+#include "models/gamelistmodel.h"
+#include "models/gameListDelegate.cpp"
+#include "data/hardcoded-data.cpp"
+
 MainWindow::MainWindow()
 {
-    QWidget* widget = new QWidget;
+    auto* widget = new QWidget;
     setCentralWidget(widget);
 
-    QWidget* topFiller = new QWidget;
+    auto* topFiller = new QWidget;
     topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    infoLabel = new QLabel(tr("A test program, to see how Qt works with C++."));
+    gameListView = new QListView(this);
+    gameListModel = new GameListModel(this);
+    auto* gameListDelegate = new GameListDelegate(this);
+    gameListView -> setModel(gameListModel);
+    gameListView -> setItemDelegate(gameListDelegate);
+    gameListModel -> populate();
 
-    infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-    infoLabel->setAlignment(Qt::AlignCenter);
-
-    QWidget* bottomFiller = new QWidget;
+    auto* bottomFiller = new QWidget;
     bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QVBoxLayout* layout = new QVBoxLayout;
+    auto* layout = new QVBoxLayout;
     layout->setContentsMargins(5, 5, 5, 5);
     layout->addWidget(topFiller);
-    layout->addWidget(infoLabel);
+    layout->addWidget(gameListView);
     layout->addWidget(bottomFiller);
     widget->setLayout(layout);
 
@@ -41,13 +47,13 @@ MainWindow::MainWindow()
 
 void MainWindow::createActions()
 {
-    QToolBar* mainToolbar = addToolBar(tr("Main Toolbar"));
+    mainToolBar = addToolBar(tr("Main Toolbar"));
 
     addGameAct = new QAction(tr("&Add Game"), this);
     addGameAct->setShortcuts(QKeySequence::New);
     addGameAct->setStatusTip(tr("Add a new game to the database."));
     addGameAct->setIcon(QIcon::fromTheme("new"));
-    mainToolbar->addAction(addGameAct);
+    mainToolBar->addAction(addGameAct);
 
     connect(addGameAct, &QAction::triggered, this, &MainWindow::addGame);
 
@@ -68,18 +74,16 @@ void MainWindow::createMenus()
     helpMenu->addAction(aboutQtAct);
 }
 
-void MainWindow::addGame()
-{
-    // TODO: Implement addition of games.
-    qInfo("Not Implemented.");
+void MainWindow::addGame() const {
+    // TODO: Implement proper addition of games.
 }
 
 void MainWindow::about()
 {
-    const auto title = QStringLiteral("GamePile");
+    const auto title QStringLiteral("GamePile");
     const auto infoText QStringLiteral(
-        "This is an application that helps users manage their video game collections. \n\n © Aberystwyth University, "
-        "kas143");
+        "This is an application that helps users manage their video game collections. "
+        "\n\n © Aberystwyth University, kas143");
 
     QMessageBox::about(this, title, infoText);
 }

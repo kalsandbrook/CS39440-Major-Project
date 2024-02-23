@@ -4,6 +4,7 @@
 
 #include "mainwindow.h"
 
+
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
@@ -16,11 +17,13 @@ int main(int argc, char* argv[])
     file.open(QFile::ReadOnly | QFile::Text);
     QTextStream stream(&file);
     app.setStyleSheet(stream.readAll());
-    QInfo("Loaded Windows Breeze Style");
+    qDebug("Loaded Windows Breeze Style");
 
 #endif
 
     MainWindow window;
+
+
     window.show();
 
     return QApplication::exec();

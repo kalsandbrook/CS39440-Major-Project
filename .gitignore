@@ -2,7 +2,7 @@
 /docs/*/template.pdf
 .kdev4
 *.kdev4
-workspace.xml
+idea/workspace.xml
 .cache
 _deps
 # C++
