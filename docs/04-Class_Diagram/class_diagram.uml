@@ -1,0 +1,67 @@
+@startuml
+
+package UI{
+    class MainWindow <<extends QMainWindow>>{
+    - gameListView : GameView*
+    - gameLibraryModel : GameLibraryModel*
+    - addGameDialog : AddGameDialog*
+    - addGameAction : QAction*
+    ..Slots..
+    + onAddGameDialog()
+    + onGameAdded(Game)
+    + onGameEdited(Game)
+    + onGameDeleted(Game)
+    }
+    class AddGameDialog <<extends QDialog>>{
+        + int id()
+        + QString name()
+        + QString desc()
+        + QList<QString> genre()
+    }
+
+    package "View Model Controller"{
+        class GameView <<extends QAbstractItemView>>
+        class GameLibraryModel <<extends QAbstractItemModel>>
+        class GameItemDelegate <<extends QStyledItemDelegate>>{
+        }
+        GameItemDelegate -> MainWindow : "deleteGame, editGame"
+    }
+
+}
+package Data{
+    class GameLibrary << (S,#FFAA00) Singleton >>{
+        + addGame(Game)
+        + updateGame(Game)
+        + removeGame(int)
+        + removeGame(Game)
+        - m_games : QList<Game>
+    }
+    class Game{
+        + int id()
+        + QString name()
+        + QString desc()
+        + QList<QString> genres()
+        - m_id : int
+        - m_name : QString
+        - m_desc : QString
+        - m_genres : QList<QString>
+
+    }
+    note right of Game::genres
+        The genres member will change to
+        use a dictionary
+    end note
+}
+
+
+MainWindow *-- AddGameDialog
+
+MainWindow *-- GameView
+
+GameView *-- GameLibraryModel
+GameLibraryModel *-- GameItemDelegate
+
+GameLibrary o-- Game
+
+
+@enduml
