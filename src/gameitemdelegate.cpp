@@ -76,7 +76,7 @@ bool GameItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, con
             if (selectedAction == editAction) {
                 // Action 1 was triggered
             } else if (selectedAction == deleteAction) {
-                gameModel.deleteGameFromIndex(index);
+                //gameModel.deleteGameFromIndex(index);
             }
             return true;
         }

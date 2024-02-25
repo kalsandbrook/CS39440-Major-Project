@@ -89,7 +89,7 @@ void GameLibraryModel::deleteGameFromIndex(const QModelIndex &index) {
     }
     beginRemoveRows(index.parent(),index.row(),index.row());
 
-    m_gameLibrary.removeGame(index.data)
+    //m_gameLibrary.removeGame(index.data)
 
     endRemoveRows();
 
