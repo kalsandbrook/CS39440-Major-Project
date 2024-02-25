@@ -1,30 +1,16 @@
 #include <QApplication>
-#include <QFile>
-#include <qlogging.h>
 
 #include "mainwindow.h"
-
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-#ifdef WIN32
+    MainWindow mainWindow;
 
-    Q_INIT_RESOURCE(breeze);
+    mainWindow.resize(1280,720);
 
-    QFile file(":/dark/stylesheet.qss");
-    file.open(QFile::ReadOnly | QFile::Text);
-    QTextStream stream(&file);
-    app.setStyleSheet(stream.readAll());
-    qDebug("Loaded Windows Breeze Style");
-
-#endif
-
-    MainWindow window;
-
-
-    window.show();
+    mainWindow.show();
 
     return QApplication::exec();
 }

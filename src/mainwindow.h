@@ -1,41 +1,32 @@
 //
-// Created by Kal on 18/02/2024.
+// Created by Kal on 23/02/2024.
 //
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QLabel>
+#include <QAction>
 #include <QListView>
+#include <QMainWindow>
+#include <QTableView>
 
-#include "models/gamelistmodel.h"
+#include "addgamedialog.h"
+#include "data/gamelibrarymodel.h"
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow();
 
-private slots:
-    void addGame() const;
-    void about();
-    void aboutQt();
+public slots:
+    void onAddGameDialog();
+    void onGameAdded(const QSharedPointer<Game>& game);
 
 private:
-    void createActions();
-    void createMenus();
-
-    QMenu* helpMenu;
-    QToolBar* mainToolBar;
-
-    QAction* addGameAct;
-    QAction* aboutAct;
-    QAction* aboutQtAct;
-
-    // TODO: Update this to custom QAbstractItemView class
     QListView* gameListView;
-    GameListModel* gameListModel;
+    GameLibraryModel* gameLibraryModel;
+    AddGameDialog* addGameDialog;
+    QAction* addGameAction;
 };
 
-#endif //MAINWINDOW_H
+#endif // MAINWINDOW_H
