@@ -11,9 +11,7 @@
   </component>
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="GamePile" targetName="breeze_themes" />
       <config projectName="GamePile" targetName="GamePile" />
-      <config projectName="GamePile" targetName="run_python_breeze" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -23,17 +21,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46b28b82-d219-4696-bd74-9a6b3920456a" name="Changes" comment="Add breeze theme and check if WIN32">
-      <change afterPath="$PROJECT_DIR$/src/data/gameentry.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/hardcoded-data.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/gameListDelegate.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/gamelistmodel.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/gamelistmodel.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameview.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameview.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/.clang-format" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/QtSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/QtSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameentry.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameentry.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/gamelibrarymodel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/gamelibrarymodel.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/gamelibrarymodel.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/gamelibrarymodel.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameitemdelegate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameitemdelegate.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameitemdelegate.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameitemdelegate.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainwindow.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mainwindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainwindow.h" afterDir="false" />
     </list>
@@ -64,6 +62,9 @@
     <setting file="file://$PROJECT_DIR$/../../../../Qt/6.6.1/mingw_64/include/QtWidgets/qlistview.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/cmake-build-debug/breeze_themes_autogen/ZONWFF7ZQ6/qrc_breeze.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2024" />
@@ -82,6 +83,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;CMake Application.GamePile.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
@@ -92,6 +94,7 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/kal/dev/CS39440-Major-Project&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -107,27 +110,17 @@
       <recent name="C:\Users\Kal\dev\CS39440-Major-Project\modules" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.GamePile">
+  <component name="RunManager">
     <configuration name="GamePile" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="GamePile" TARGET_NAME="GamePile" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="GamePile" RUN_TARGET_NAME="GamePile">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="breeze_themes" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="GamePile" TARGET_NAME="breeze_themes" CONFIG_NAME="Debug">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="run_python_breeze" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="GamePile" TARGET_NAME="run_python_breeze" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="CMake Application.breeze_themes" />
-      <item itemvalue="CMake Application.run_python_breeze" />
-      <item itemvalue="CMake Application.GamePile" />
-    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -144,6 +137,8 @@
       <workItem from="1708598990488" duration="4176000" />
       <workItem from="1708611459622" duration="10017000" />
       <workItem from="1708695293996" duration="1218000" />
+      <workItem from="1708884204427" duration="1214000" />
+      <workItem from="1708887863044" duration="1776000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Boilerplate">
       <option name="closed" value="true" />

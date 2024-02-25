@@ -6,10 +6,13 @@
 #include <QTextItem>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QEvent>
+#include <QMouseEvent>
+#include <QMenu>
+
 
 #include "gameitemdelegate.h"
-
-
+#include "data/gamelibrarymodel.h"
 
 
 GameItemDelegate::GameItemDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
@@ -51,8 +54,34 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 
     painter->restore();
 }
+
 QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const{
     return {200, 50}; // Adjust size as needed
+}
+
+bool GameItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option,
+                                   const QModelIndex &index) {
+
+    auto* gameModel = qobject_cast<GameLibraryModel*>(model);
+
+    if (event->type() == QEvent::MouseButtonRelease) {
+        auto *mouseEvent = dynamic_cast<QMouseEvent*>(event);
+        if (mouseEvent->button() == Qt::RightButton) {
+            QMenu menu;
+            QAction *editAction = menu.addAction("Edit");
+            menu.addSeparator();
+            QAction *deleteAction = menu.addAction("Delete");
+
+            QAction *selectedAction = menu.exec(mouseEvent->globalPosition().toPoint());
+            if (selectedAction == editAction) {
+                // Action 1 was triggered
+            } else if (selectedAction == deleteAction) {
+                gameModel.deleteGameFromIndex(index);
+            }
+            return true;
+        }
+    }
+    return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
 

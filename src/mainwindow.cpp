@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 
 #include "gameitemdelegate.h"
+#include "gameview.h"
 #include <QToolBar>
 
 /*!
@@ -24,10 +25,9 @@ MainWindow::MainWindow()
 
     gameListView = new QListView(this);
     gameLibraryModel = new GameLibraryModel(this);
-    gameListView->setResizeMode(QListView::Adjust);
-    gameListView->setFlow(QListView::LeftToRight);
+    //gameListView->setResizeMode(QListView::Adjust);
     gameListView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    gameListView->setGridSize({128,128});
+    //gameListView->setGridSize({128,128});
     gameListView->setItemDelegate(new GameItemDelegate(this));
     gameListView->setModel(gameLibraryModel);
     setCentralWidget(gameListView);

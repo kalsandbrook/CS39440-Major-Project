@@ -31,6 +31,8 @@ add_executable(GamePile
     src/mainwindow.h
     src/gameitemdelegate.cpp
     src/gameitemdelegate.h
+        src/gameview.cpp
+        src/gameview.h
 )
 
 target_link_libraries(GamePile

@@ -25,6 +25,7 @@ public:
     QVariant data(const QModelIndex& index,
         int role = Qt::DisplayRole) const override;
     void addGame(const QSharedPointer<Game>& game);
+    void deleteGameFromIndex(const QModelIndex &index);
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
