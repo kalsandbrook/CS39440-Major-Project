@@ -22,6 +22,7 @@ public:
     [[nodiscard]] QStringList genre() const { return m_genre; }
 
 private:
+    int m_id;
     QString m_name;
     QString m_desc;
     QStringList m_genre;

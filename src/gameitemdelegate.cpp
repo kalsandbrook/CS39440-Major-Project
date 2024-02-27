@@ -1,23 +1,25 @@
 //
 // Created by Kal on 22/02/2024.
 //
-#include <QStyledItemDelegate>
-#include <QPainter>
-#include <QTextItem>
-#include <QLabel>
-#include <QVBoxLayout>
 #include <QEvent>
-#include <QMouseEvent>
+#include <QLabel>
 #include <QMenu>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QStyledItemDelegate>
+#include <QTextItem>
+#include <QVBoxLayout>
 
-
-#include "gameitemdelegate.h"
 #include "data/gamelibrarymodel.h"
+#include "gameitemdelegate.h"
 
+GameItemDelegate::GameItemDelegate(QObject* parent)
+    : QStyledItemDelegate(parent)
+{
+}
 
-GameItemDelegate::GameItemDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
-
-void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const{
+void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
     if (!index.isValid())
         return;
 
@@ -41,7 +43,7 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     int lineHeight = QFontMetrics(option.font).height(); // Height of each line
 
     // Paint the name
-    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width()/3, lineHeight));
+    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width() / 3, lineHeight));
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignTop, name);
 
     // Paint the description
@@ -55,33 +57,33 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     painter->restore();
 }
 
-QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const{
-    return {200, 50}; // Adjust size as needed
+QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    return { 200, 50 }; // Adjust size as needed
 }
 
-bool GameItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option,
-                                   const QModelIndex &index) {
+bool GameItemDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option,
+    const QModelIndex& index)
+{
 
     auto* gameModel = qobject_cast<GameLibraryModel*>(model);
 
     if (event->type() == QEvent::MouseButtonRelease) {
-        auto *mouseEvent = dynamic_cast<QMouseEvent*>(event);
+        auto* mouseEvent = dynamic_cast<QMouseEvent*>(event);
         if (mouseEvent->button() == Qt::RightButton) {
             QMenu menu;
-            QAction *editAction = menu.addAction("Edit");
+            QAction* editAction = menu.addAction("Edit");
             menu.addSeparator();
-            QAction *deleteAction = menu.addAction("Delete");
+            QAction* deleteAction = menu.addAction("Delete");
 
-            QAction *selectedAction = menu.exec(mouseEvent->globalPosition().toPoint());
+            QAction* selectedAction = menu.exec(mouseEvent->globalPosition().toPoint());
             if (selectedAction == editAction) {
                 // Action 1 was triggered
             } else if (selectedAction == deleteAction) {
-                //gameModel.deleteGameFromIndex(index);
+                // gameModel.deleteGameFromIndex(index);
             }
             return true;
         }
     }
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
-
-

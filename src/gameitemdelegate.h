@@ -5,21 +5,19 @@
 #ifndef GAMEPILE_GAMEITEMDELEGATE_H
 #define GAMEPILE_GAMEITEMDELEGATE_H
 
-#include <QStyledItemDelegate>
 #include <QPainter>
+#include <QStyledItemDelegate>
 
-class GameItemDelegate : public QStyledItemDelegate{
+class GameItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
 public:
     explicit GameItemDelegate(QObject* parent = nullptr);
 
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
 
-    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
-
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
-
-#endif //GAMEPILE_GAMEITEMDELEGATE_H
+#endif // GAMEPILE_GAMEITEMDELEGATE_H

@@ -83,14 +83,14 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
     return QAbstractItemModel::roleNames();
 }
 
-void GameLibraryModel::deleteGameFromIndex(const QModelIndex &index) {
-    if(!index.isValid()){
+void GameLibraryModel::deleteGameFromIndex(const QModelIndex& index)
+{
+    if (!index.isValid()) {
         return;
     }
-    beginRemoveRows(index.parent(),index.row(),index.row());
+    beginRemoveRows(index.parent(), index.row(), index.row());
 
-    //m_gameLibrary.removeGame(index.data)
+    // m_gameLibrary.removeGame(index.data)
 
     endRemoveRows();
-
 }

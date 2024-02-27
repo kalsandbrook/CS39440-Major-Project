@@ -12,7 +12,6 @@
 
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
-#include "gameview.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT

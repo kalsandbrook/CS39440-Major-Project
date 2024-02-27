@@ -37,7 +37,7 @@ AddGameDialog::AddGameDialog(QWidget* parent)
     mainLayout->addWidget(genreList, 2, 1, 3, 2);
     mainLayout->addWidget(buttonBox, 5, 1, 1, 2);
 
-    resize(400,300);
+    resize(400, 300);
 
     setLayout(mainLayout);
     setWindowTitle(tr("Add New Game"));
@@ -91,7 +91,8 @@ QStringList AddGameDialog::genre() const
     return genres;
 }
 
-int AddGameDialog::exec() {
+int AddGameDialog::exec()
+{
     nameLineEdit->clear();
     descTextEdit->clear();
     genreList->clearSelection();

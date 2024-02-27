@@ -15,6 +15,7 @@ find_package(Qt6 COMPONENTS
     Core
     Gui
     Widgets
+    Sql
     REQUIRED
 )
 
@@ -24,6 +25,7 @@ add_executable(GamePile
     src/data/gamelibrary.h
     src/data/gamelibrarymodel.cpp
     src/data/gamelibrarymodel.h
+    src/data/gamedatabase.h
     src/addgamedialog.cpp
     src/addgamedialog.h
     src/main.cpp
@@ -31,14 +33,16 @@ add_executable(GamePile
     src/mainwindow.h
     src/gameitemdelegate.cpp
     src/gameitemdelegate.h
-        src/gameview.cpp
-        src/gameview.h
+    src/gameview.cpp
+    src/gameview.h
+        src/data/gamedatabase.cpp
 )
 
 target_link_libraries(GamePile
     Qt::Core
     Qt::Gui
     Qt::Widgets
+    Qt::Sql
 )
 
 #if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)

@@ -7,15 +7,15 @@
 
 #include <QAbstractItemView>
 
-class GameView : public QAbstractItemView{
+class GameView : public QAbstractItemView {
 public:
     GameView(QWidget* parent);
 
-    QRect visualRect(const QModelIndex &index) const override;
+    QRect visualRect(const QModelIndex& index) const override;
 
-    void scrollTo(const QModelIndex &index, ScrollHint hint) override;
+    void scrollTo(const QModelIndex& index, ScrollHint hint) override;
 
-    QModelIndex indexAt(const QPoint &point) const override;
+    QModelIndex indexAt(const QPoint& point) const override;
 
 protected:
     QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override;
@@ -24,12 +24,11 @@ protected:
 
     int verticalOffset() const override;
 
-    bool isIndexHidden(const QModelIndex &index) const override;
+    bool isIndexHidden(const QModelIndex& index) const override;
 
-    void setSelection(const QRect &rect, QItemSelectionModel::SelectionFlags command) override;
+    void setSelection(const QRect& rect, QItemSelectionModel::SelectionFlags command) override;
 
-    QRegion visualRegionForSelection(const QItemSelection &selection) const override;
+    QRegion visualRegionForSelection(const QItemSelection& selection) const override;
 };
 
-
-#endif //GAMEPILE_GAMEVIEW_H
+#endif // GAMEPILE_GAMEVIEW_H
