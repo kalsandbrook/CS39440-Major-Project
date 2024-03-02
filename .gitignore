@@ -6,6 +6,9 @@ build/*
 .idea/*
 .cache
 _deps
+
+games
+
 # C++
 # ===
 
