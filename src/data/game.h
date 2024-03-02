@@ -18,6 +18,8 @@ public:
     {
     }
 
+    void setId(int newId) { m_id = newId; }
+    int getId() const { return m_id; }
     [[nodiscard]] QString name() const { return m_name; }
     [[nodiscard]] QString desc() const { return m_desc; }
     [[nodiscard]] QStringList genre() const { return m_genre; }

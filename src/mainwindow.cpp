@@ -4,19 +4,12 @@
 
 #include "mainwindow.h"
 
+#include "data/gamelibrary.h"
 #include "gameitemdelegate.h"
-#include "gameview.h"
 #include <QToolBar>
 
-/*!
- * \class MainWindow
- * \brief The MainWindow class is the main window of the application.
- *
- * It contains a toolbar with an action to add a game, and a list view to
- * display the games.
- *
- */
 MainWindow::MainWindow()
+    : gameLibrary(GameLibrary::instance())
 {
     QToolBar* toolBar = addToolBar("Main Toolbar");
     addGameDialog = new AddGameDialog(this);
@@ -34,13 +27,6 @@ MainWindow::MainWindow()
 
     connect(addGameAction, &QAction::triggered, this,
         &MainWindow::onAddGameDialog);
-    connect(addGameDialog, &AddGameDialog::gameAdded, this,
-        &MainWindow::onGameAdded);
 }
 
 void MainWindow::onAddGameDialog() { addGameDialog->exec(); }
-
-void MainWindow::onGameAdded(const QSharedPointer<Game>& game)
-{
-    gameLibraryModel->addGame(game);
-}

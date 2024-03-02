@@ -3,7 +3,8 @@
 //
 
 #include "gamelibrary.h"
-#include "gamedatabase.h"
+#include "qlogging.h"
+#include <QSqlQuery>
 
 GameLibrary& GameLibrary::instance()
 {
@@ -11,17 +12,37 @@ GameLibrary& GameLibrary::instance()
     return instance;
 }
 
-void GameLibrary::addGame(const QSharedPointer<Game>& game)
+void GameLibrary::addGame(Game& game)
 {
-    m_games.append(game);
+    // Add game to GameDatabase
+    db.beginTransaction();
+    QSqlQuery query(db.db());
+
+    query.prepare("INSERT INTO games (Name, Description, Genres)"
+               "VALUES (:name, :description,:genres)");
+    query.bindValue(0, game.name());
+    query.bindValue(1, game.desc());
+    query.bindValue(2, game.genre());
+
+    if(query.exec()){
+        qint64 lastInsertedId = query.lastInsertId().toLongLong();
+
+        game.setId(lastInsertedId);
+
+        db.endTransaction();
+        m_games.append(game);
+        gameAdded(game);
+    } else {
+        qFatal("Failed to add a game to the DB.");
+        db.endTransaction();
+    }
 }
 
-QList<QSharedPointer<Game>>& GameLibrary::games() { return m_games; }
+QList<Game>& GameLibrary::games() { return m_games; }
 
-GameLibrary::GameLibrary(){
-    auto db = GameDatabase::instance();
-
-    QList<QSharedPointer<Game>> initialGameList = db.getGames();
+GameLibrary::GameLibrary()
+{
+    QList<Game> initialGameList = db.getGames();
     m_games.append(initialGameList);
 }
 

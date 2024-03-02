@@ -24,14 +24,18 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index,
         int role = Qt::DisplayRole) const override;
-    void addGame(const QSharedPointer<Game>& game);
+    //void addGame(const Game& game);
     void deleteGameFromIndex(const QModelIndex& index);
+
+public slots:
+    void onGameAdded(const Game& game);
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
     GameLibrary& m_gameLibrary;
+    QList<Game> m_games;
 };
 
 #endif // GAMELIBRARYMODEL_H

@@ -12,15 +12,10 @@
 #include <QListWidget>
 #include <QTextEdit>
 
-#include "data/game.h"
-
 class AddGameDialog : public QDialog {
     Q_OBJECT
 public:
     AddGameDialog(QWidget* parent);
-
-signals:
-    void gameAdded(const QSharedPointer<Game>& game);
 
 public slots:
     int exec() override;
