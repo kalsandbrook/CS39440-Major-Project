@@ -11,17 +11,17 @@ GameLibrary& GameLibrary::instance()
     return instance;
 }
 
-void GameLibrary::addGame(const QSharedPointer<Game>& game)
+void GameLibrary::addGame(const Game& game)
 {
     m_games.append(game);
 }
 
-QList<QSharedPointer<Game>>& GameLibrary::games() { return m_games; }
+QList<Game>& GameLibrary::games() { return m_games; }
 
 GameLibrary::GameLibrary(){
     auto db = GameDatabase::instance();
 
-    QList<QSharedPointer<Game>> initialGameList = db.getGames();
+    QList<Game> initialGameList = db.getGames();
     m_games.append(initialGameList);
 }
 

@@ -51,16 +51,16 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
 
     if (role == Qt::DisplayRole) {
         if (index.row() < m_gameLibrary.games().size()) {
-            const QSharedPointer<Game>& game = m_gameLibrary.games().at(index.row());
+            const Game& game = m_gameLibrary.games().at(index.row());
             switch (index.column()) {
             case 0:
                 // Maybe change to use QSharedPointer<Game>& game =
                 // m_gameLibrary.games().at(index.row());
-                return game->name();
+                return game.name();
             case 1:
-                return game->desc();
+                return game.desc();
             case 2:
-                return game->genre();
+                return game.genre();
             default:
                 return {};
             }
@@ -70,7 +70,7 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
     return {};
 }
 
-void GameLibraryModel::addGame(const QSharedPointer<Game>& game)
+void GameLibraryModel::addGame(const Game& game)
 {
     int row = m_gameLibrary.games().count();
     beginInsertRows(QModelIndex(), row, row);

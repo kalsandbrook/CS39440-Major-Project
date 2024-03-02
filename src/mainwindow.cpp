@@ -5,7 +5,6 @@
 #include "mainwindow.h"
 
 #include "gameitemdelegate.h"
-#include "gameview.h"
 #include <QToolBar>
 
 /*!
@@ -40,7 +39,7 @@ MainWindow::MainWindow()
 
 void MainWindow::onAddGameDialog() { addGameDialog->exec(); }
 
-void MainWindow::onGameAdded(const QSharedPointer<Game>& game)
+void MainWindow::onGameAdded(const Game& game)
 {
     gameLibraryModel->addGame(game);
 }

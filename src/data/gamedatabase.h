@@ -12,7 +12,7 @@ public:
     bool open();
     void setup();
 
-    QList<QSharedPointer<Game>> getGames();
+    QList<Game> getGames();
 
 private:
     GameDatabase();

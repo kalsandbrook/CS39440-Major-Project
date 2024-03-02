@@ -20,7 +20,7 @@ public:
     AddGameDialog(QWidget* parent);
 
 signals:
-    void gameAdded(const QSharedPointer<Game>& game);
+    void gameAdded(const Game& game);
 
 public slots:
     int exec() override;

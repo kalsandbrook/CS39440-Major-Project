@@ -20,7 +20,7 @@ public:
 
 public slots:
     void onAddGameDialog();
-    void onGameAdded(const QSharedPointer<Game>& game);
+    void onGameAdded(const Game& game);
 
 private:
     QListView* gameListView;

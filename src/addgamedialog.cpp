@@ -70,7 +70,7 @@ void AddGameDialog::verify()
 void AddGameDialog::accept()
 {
     // TODO: use database
-    QSharedPointer<Game> newGame(new Game(0,name(), desc(), genre()));
+    Game newGame(0,name(), desc(), genre());
 
     emit gameAdded(newGame);
 

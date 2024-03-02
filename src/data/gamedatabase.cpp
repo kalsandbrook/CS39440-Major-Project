@@ -7,7 +7,6 @@
 #include <QStringList>
 #include "qlogging.h"
 #include "gamedatabase.h"
-#include "gamelibrary.h"
 
 
 GameDatabase& GameDatabase::instance()
@@ -39,27 +38,26 @@ void GameDatabase::setup(){
             "Genres TEXT"
             ")");
     // Add example game. TODO: Remove with data persistence
-    if(query.next()) {
-        query.exec("INSERT INTO games"
-                   "VALUES (0, 'Factorio', 'A factory building game','Sandbox,Automation')");
-    }
+    qDebug() << "Adding example game";
+    query.exec("INSERT INTO games"
+                "VALUES (0, 'Factorio', 'A factory building game','Sandbox,Automation')");
     db.commit();
 }
 
-QList<QSharedPointer<Game>> GameDatabase::getGames() {
+QList<Game> GameDatabase::getGames() {
     QSqlTableModel model;
     model.setTable("games");
     model.select();
 
 
-    QList<QSharedPointer<Game>> gameList;
+    QList<Game> gameList;
     for (int i = 0; i < model.rowCount(); ++i) {
         int gameId = model.record(i).value("GameID").toInt();
         QString gameName = model.record(i).value("Name").toString();
         QString gameDesc = model.record(i).value("Description").toString();
         QStringList genres = model.record(i).value("Genres").toStringList();
 
-        QSharedPointer<Game> game(new Game(gameId,gameName,gameDesc,genres));
+        Game game(gameId,gameName,gameDesc,genres);
         gameList.append(game);
     }
     return gameList;
