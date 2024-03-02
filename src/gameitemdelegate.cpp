@@ -24,9 +24,10 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
         return;
 
     // Retrieve data for each field
-    QString name = index.model()->data(index.siblingAtColumn(0)).toString();
-    QString description = index.model()->data(index.siblingAtColumn(1)).toString();
-    QString genres = index.model()->data(index.siblingAtColumn(2)).toString();
+    int id = index.model()->data(index.siblingAtColumn(0)).toInt();
+    QString name = index.model()->data(index.siblingAtColumn(1)).toString();
+    QString description = index.model()->data(index.siblingAtColumn(2)).toString();
+    QString genres = index.model()->data(index.siblingAtColumn(3)).toString();
 
     // Set up the painter with the style options
     painter->save();
