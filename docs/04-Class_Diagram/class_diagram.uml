@@ -3,7 +3,7 @@
 package UI{
     class MainWindow <<extends QMainWindow>>{
     - gameListView : GameView*
-    - gameLibraryModel : GameLibraryModel*
+    - gameModel : GameModel*
     - addGameDialog : AddGameDialog*
     - addGameAction : QAction*
     ..Slots..
@@ -18,15 +18,28 @@ package UI{
         + QString desc()
         + QList<QString> genre()
     }
+    note right of MainWindow
+        This should be
+        seperated out into
+        the UI and a
+        Game Controller class.
+    end note
+}
 
-    package "View Model Controller"{
-        class GameView <<extends QAbstractItemView>>
-        class GameLibraryModel <<extends QAbstractItemModel>>
-        class GameItemDelegate <<extends QStyledItemDelegate>>{
+package "Model / View"{
+        class GameView <<extends QAbstractItemView>>{
+        - gameModel: GameModel
+        - gameItemDelegate : GameItemDelegate
         }
-        GameItemDelegate -> MainWindow : "deleteGame, editGame"
-    }
-
+        class GameModel <<extends QAbstractItemModel>>{
+        - games : QList<Game>
+        + rowCount()
+        + data()
+        }
+        class GameItemDelegate <<extends QStyledItemDelegate>>{
+        + paint()
+        }
+'         GameItemDelegate -> MainWindow : "deleteGame, editGame"
 }
 package Data{
     class GameLibrary << (S,#FFAA00) Singleton >>{
@@ -36,6 +49,18 @@ package Data{
         + removeGame(Game)
         - m_games : QList<Game>
     }
+
+    class GameDatabase{
+        - QSqlDatabase db
+        + open()
+        + close()
+        + QSqlDatabase database()
+        + executeQuery(QString query)
+        + beginTransaction()
+        + commitTransaction()
+        + rollbackTransaction()
+    }
+
     class Game{
         + int id()
         + QString name()
@@ -58,10 +83,10 @@ MainWindow *-- AddGameDialog
 
 MainWindow *-- GameView
 
-GameView *-- GameLibraryModel
-GameLibraryModel *-- GameItemDelegate
+GameView *-- GameModel
+GameModel *-- GameItemDelegate
 
 GameLibrary o-- Game
 
-
+GameDatabase --> GameLibrary : Uses
 @enduml

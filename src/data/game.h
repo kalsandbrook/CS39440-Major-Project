@@ -10,8 +10,9 @@
 
 class Game {
 public:
-    Game(QString name, QString desc, QStringList genre)
-        : m_name(std::move(name))
+    Game(int id, QString name, QString desc, QStringList genre)
+        : m_id(id)
+        , m_name(std::move(name))
         , m_desc(std::move(desc))
         , m_genre(std::move(genre))
     {

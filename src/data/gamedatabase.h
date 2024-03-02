@@ -2,13 +2,20 @@
 #define GAMEDATABASE_H
 
 #include <QSqlDatabase>
+#include <QSqlTableModel>
+#include "game.h"
 
 class GameDatabase {
 public:
-    GameDatabase();
+    static GameDatabase& instance();
+
     bool open();
+    void setup();
+
+    QList<QSharedPointer<Game>> getGames();
 
 private:
+    GameDatabase();
     QSqlDatabase db;
 };
 

@@ -3,6 +3,7 @@
 //
 
 #include "gamelibrary.h"
+#include "gamedatabase.h"
 
 GameLibrary& GameLibrary::instance()
 {
@@ -17,6 +18,11 @@ void GameLibrary::addGame(const QSharedPointer<Game>& game)
 
 QList<QSharedPointer<Game>>& GameLibrary::games() { return m_games; }
 
-GameLibrary::GameLibrary() = default;
+GameLibrary::GameLibrary(){
+    auto db = GameDatabase::instance();
+
+    QList<QSharedPointer<Game>> initialGameList = db.getGames();
+    m_games.append(initialGameList);
+}
 
 GameLibrary::~GameLibrary() = default;
