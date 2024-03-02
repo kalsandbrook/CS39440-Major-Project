@@ -13,6 +13,15 @@
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
 
+
+/*!
+ * \class MainWindow
+ * \brief The MainWindow class is the main window of the application.
+ *
+ * It contains a toolbar with an action to add a game, and a list view to
+ * display the games.
+ *
+ */
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
