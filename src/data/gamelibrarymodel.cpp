@@ -85,13 +85,13 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
     return {};
 }
 
-void GameLibraryModel::addGame(const Game& game)
-{
-    int row = m_gameLibrary.games().count();
-    beginInsertRows(QModelIndex(), row, row);
-    m_gameLibrary.addGame(game);
-    endInsertRows();
-}
+// void GameLibraryModel::addGame(const Game& game)
+// {
+//     int row = m_gameLibrary.games().count();
+//     beginInsertRows(QModelIndex(), row, row);
+//     m_gameLibrary.addGame(game);
+//     endInsertRows();
+// }
 
 QHash<int, QByteArray> GameLibraryModel::roleNames() const
 {

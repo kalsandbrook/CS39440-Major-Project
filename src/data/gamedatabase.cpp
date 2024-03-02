@@ -13,29 +13,33 @@ GameDatabase& GameDatabase::instance()
     static GameDatabase instance;
     return instance;
 }
+
+
 bool GameDatabase::open()
 {
     // TODO: Move this information to an environment variable
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setHostName("local");
-    db.setDatabaseName("games");
-    db.setUserName("app");
-    db.setPassword("bqbzKJY9RJ4=");
-    return db.open();
+    m_db = QSqlDatabase::addDatabase("QSQLITE");
+    m_db.setHostName("local");
+    m_db.setDatabaseName("games");
+    m_db.setUserName("app");
+    m_db.setPassword("bqbzKJY9RJ4=");
+    return m_db.open();
 }
+
+QSqlDatabase& GameDatabase::db() { return m_db;}
 
 void GameDatabase::close()
 {
-    db.close();
+    m_db.close();
 }
 
 void GameDatabase::setup()
 {
-    if (!db.isOpen())
+    if (!m_db.isOpen())
         qFatal("Could not setup database.");
-    QSqlQuery query(db);
+    QSqlQuery query(m_db);
     // creates games table if it doesn't exist
-    db.transaction();
+    m_db.transaction();
     query.exec(
         "CREATE TABLE IF NOT EXISTS games ("
         "GameID INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -43,12 +47,14 @@ void GameDatabase::setup()
         "Description TEXT,"
         "Genres TEXT"
         ")");
-    // Add example game. TODO: Remove with data persistence
-    qDebug() << "Adding example game";
-    query.exec("DELETE FROM games WHERE Name='Factorio'");
-    query.exec("INSERT INTO games (Name, Description, Genres)"
-               "VALUES ('Factorio', 'A factory building game','Sandbox,Automation')");
-    db.commit();
+    m_db.commit();
+}
+
+void GameDatabase::beginTransaction(){
+    m_db.transaction();
+}
+void GameDatabase::endTransaction(){
+    m_db.commit();
 }
 
 QList<Game> GameDatabase::getGames()

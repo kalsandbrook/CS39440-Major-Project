@@ -24,7 +24,7 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index,
         int role = Qt::DisplayRole) const override;
-    void addGame(const Game& game);
+    //void addGame(const Game& game);
     void deleteGameFromIndex(const QModelIndex& index);
 
 public slots:

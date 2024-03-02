@@ -5,6 +5,7 @@
 #ifndef GAMELIBRARY_H
 #define GAMELIBRARY_H
 #include "game.h"
+#include "gamedatabase.h"
 #include <QList>
 #include <QObject>
 #include <QSharedPointer>
@@ -14,7 +15,7 @@ class GameLibrary : public QObject {
 public:
     static GameLibrary& instance();
 
-    void addGame(const Game& game);
+    void addGame(Game& game);
     QList<Game>& games();
 
 signals:
@@ -26,6 +27,7 @@ private:
     GameLibrary(const GameLibrary&) = delete;
     GameLibrary& operator=(const GameLibrary&) = delete;
     QList<Game> m_games;
+    GameDatabase db = GameDatabase::instance();
 };
 
 #endif // GAMELIBRARY_H
