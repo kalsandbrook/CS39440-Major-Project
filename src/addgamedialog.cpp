@@ -8,6 +8,7 @@
 
 #include "addgamedialog.h"
 #include "data/game.h"
+#include "data/gamelibrary.h"
 
 AddGameDialog::AddGameDialog(QWidget* parent)
     : QDialog(parent)
@@ -70,9 +71,11 @@ void AddGameDialog::verify()
 void AddGameDialog::accept()
 {
     // TODO: use database
-    Game newGame(0,name(), desc(), genre());
+    Game newGame(0, name(), desc(), genre());
 
-    emit gameAdded(newGame);
+    GameLibrary& gameLibrary = GameLibrary::instance();
+
+    gameLibrary.addGame(newGame);
 
     QDialog::accept();
 }

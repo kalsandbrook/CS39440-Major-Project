@@ -27,11 +27,15 @@ public:
     void addGame(const Game& game);
     void deleteGameFromIndex(const QModelIndex& index);
 
+public slots:
+    void onGameAdded(const Game& game);
+
 protected:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
     GameLibrary& m_gameLibrary;
+    QList<Game> m_games;
 };
 
 #endif // GAMELIBRARYMODEL_H

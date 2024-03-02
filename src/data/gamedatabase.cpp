@@ -2,12 +2,11 @@
 // Created by kal on 27/02/24.
 //
 
+#include "gamedatabase.h"
+#include "qlogging.h"
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QStringList>
-#include "qlogging.h"
-#include "gamedatabase.h"
-
 
 GameDatabase& GameDatabase::instance()
 {
@@ -24,31 +23,39 @@ bool GameDatabase::open()
     db.setPassword("bqbzKJY9RJ4=");
     return db.open();
 }
-void GameDatabase::setup(){
+
+void GameDatabase::close()
+{
+    db.close();
+}
+
+void GameDatabase::setup()
+{
     if (!db.isOpen())
         qFatal("Could not setup database.");
     QSqlQuery query(db);
     // creates games table if it doesn't exist
     db.transaction();
     query.exec(
-            "CREATE TABLE IF NOT EXISTS games ("
-            "GameID INTEGER PRIMARY KEY,"
-            "Name TEXT NOT NULL,"
-            "Description TEXT,"
-            "Genres TEXT"
-            ")");
+        "CREATE TABLE IF NOT EXISTS games ("
+        "GameID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "Name TEXT NOT NULL,"
+        "Description TEXT,"
+        "Genres TEXT"
+        ")");
     // Add example game. TODO: Remove with data persistence
     qDebug() << "Adding example game";
-    query.exec("INSERT INTO games"
-                "VALUES (0, 'Factorio', 'A factory building game','Sandbox,Automation')");
+    query.exec("DELETE FROM games WHERE Name='Factorio'");
+    query.exec("INSERT INTO games (Name, Description, Genres)"
+               "VALUES ('Factorio', 'A factory building game','Sandbox,Automation')");
     db.commit();
 }
 
-QList<Game> GameDatabase::getGames() {
+QList<Game> GameDatabase::getGames()
+{
     QSqlTableModel model;
     model.setTable("games");
     model.select();
-
 
     QList<Game> gameList;
     for (int i = 0; i < model.rowCount(); ++i) {
@@ -57,7 +64,7 @@ QList<Game> GameDatabase::getGames() {
         QString gameDesc = model.record(i).value("Description").toString();
         QStringList genres = model.record(i).value("Genres").toStringList();
 
-        Game game(gameId,gameName,gameDesc,genres);
+        Game game(gameId, gameName, gameDesc, genres);
         gameList.append(game);
     }
     return gameList;

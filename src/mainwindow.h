@@ -20,10 +20,10 @@ public:
 
 public slots:
     void onAddGameDialog();
-    void onGameAdded(const Game& game);
 
 private:
     QListView* gameListView;
+    GameLibrary& gameLibrary;
     GameLibraryModel* gameLibraryModel;
     AddGameDialog* addGameDialog;
     QAction* addGameAction;

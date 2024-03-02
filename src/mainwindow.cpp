@@ -4,6 +4,7 @@
 
 #include "mainwindow.h"
 
+#include "data/gamelibrary.h"
 #include "gameitemdelegate.h"
 #include <QToolBar>
 
@@ -16,6 +17,7 @@
  *
  */
 MainWindow::MainWindow()
+    : gameLibrary(GameLibrary::instance())
 {
     QToolBar* toolBar = addToolBar("Main Toolbar");
     addGameDialog = new AddGameDialog(this);
@@ -33,13 +35,6 @@ MainWindow::MainWindow()
 
     connect(addGameAction, &QAction::triggered, this,
         &MainWindow::onAddGameDialog);
-    connect(addGameDialog, &AddGameDialog::gameAdded, this,
-        &MainWindow::onGameAdded);
 }
 
 void MainWindow::onAddGameDialog() { addGameDialog->exec(); }
-
-void MainWindow::onGameAdded(const Game& game)
-{
-    gameLibraryModel->addGame(game);
-}

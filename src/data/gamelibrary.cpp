@@ -14,11 +14,14 @@ GameLibrary& GameLibrary::instance()
 void GameLibrary::addGame(const Game& game)
 {
     m_games.append(game);
+
+    gameAdded(game);
 }
 
 QList<Game>& GameLibrary::games() { return m_games; }
 
-GameLibrary::GameLibrary(){
+GameLibrary::GameLibrary()
+{
     auto db = GameDatabase::instance();
 
     QList<Game> initialGameList = db.getGames();
