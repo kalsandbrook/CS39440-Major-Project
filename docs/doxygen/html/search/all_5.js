@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['game_0',['Game',['../classGame.html',1,'Game'],['../classGame.html#ab80f23f7334aba6f83db2cf81576c531',1,'Game::Game()']]],
+  ['game_2eh_1',['game.h',['../game_8h.html',1,'']]],
+  ['gameadded_2',['gameAdded',['../classGameLibrary.html#abdf11e71cad4779d6a0530371e9cc6b6',1,'GameLibrary']]],
+  ['gamedatabase_3',['GameDatabase',['../classGameDatabase.html',1,'']]],
+  ['gamedatabase_2ecpp_4',['gamedatabase.cpp',['../gamedatabase_8cpp.html',1,'']]],
+  ['gamedatabase_2eh_5',['gamedatabase.h',['../gamedatabase_8h.html',1,'']]],
+  ['gameitemdelegate_6',['GameItemDelegate',['../classGameItemDelegate.html',1,'GameItemDelegate'],['../classGameItemDelegate.html#a3a087f2edf38c579095535219235ff24',1,'GameItemDelegate::GameItemDelegate()']]],
+  ['gameitemdelegate_2ecpp_7',['gameitemdelegate.cpp',['../gameitemdelegate_8cpp.html',1,'']]],
+  ['gameitemdelegate_2eh_8',['gameitemdelegate.h',['../gameitemdelegate_8h.html',1,'']]],
+  ['gamelibrary_9',['GameLibrary',['../classGameLibrary.html',1,'']]],
+  ['gamelibrary_2ecpp_10',['gamelibrary.cpp',['../gamelibrary_8cpp.html',1,'']]],
+  ['gamelibrary_2eh_11',['gamelibrary.h',['../gamelibrary_8h.html',1,'']]],
+  ['gamelibrarymodel_12',['GameLibraryModel',['../classGameLibraryModel.html',1,'GameLibraryModel'],['../classGameLibraryModel.html#acd2b092a09e2ac705021a90a98831c22',1,'GameLibraryModel::GameLibraryModel()']]],
+  ['gamelibrarymodel_2ecpp_13',['gamelibrarymodel.cpp',['../gamelibrarymodel_8cpp.html',1,'']]],
+  ['gamelibrarymodel_2eh_14',['gamelibrarymodel.h',['../gamelibrarymodel_8h.html',1,'']]],
+  ['gameroles_15',['GameRoles',['../classGameLibraryModel.html#a983467144edd19f063dd2beeb2deebca',1,'GameLibraryModel']]],
+  ['games_16',['games',['../classGameLibrary.html#a3c3105900f0b6281ac0d69681d4b65d2',1,'GameLibrary']]],
+  ['gameview_17',['GameView',['../classGameView.html',1,'GameView'],['../classGameView.html#a4e80f830c4a9d7029342e9c887b3ce7e',1,'GameView::GameView()']]],
+  ['gameview_2ecpp_18',['gameview.cpp',['../gameview_8cpp.html',1,'']]],
+  ['gameview_2eh_19',['gameview.h',['../gameview_8h.html',1,'']]],
+  ['genre_20',['genre',['../classAddGameDialog.html#a81ef82aa67810092bc6e515b9e7f95b1',1,'AddGameDialog::genre()'],['../classGame.html#ad50d29a35383f3066d93126d444774d4',1,'Game::genre()']]],
+  ['genrerole_21',['GenreRole',['../classGameLibraryModel.html#a983467144edd19f063dd2beeb2deebcaa5aaba723d823e3b99af30c1608b5a621',1,'GameLibraryModel']]],
+  ['getgames_22',['getGames',['../classGameDatabase.html#adf8bd80d7d841c2d8b5e92d29f1fb822',1,'GameDatabase']]],
+  ['getid_23',['getId',['../classGame.html#a8e034cbd3b1e0b5b66bd52a51f53d2ce',1,'Game']]]
+];

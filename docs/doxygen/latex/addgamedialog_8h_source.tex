@@ -1,0 +1,51 @@
+\doxysection{addgamedialog.\+h}
+\hypertarget{addgamedialog_8h_source}{}\label{addgamedialog_8h_source}\index{src/addgamedialog.h@{src/addgamedialog.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Kal\ on\ 24/02/2024.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ ADDGAMEDIALOG\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ ADDGAMEDIALOG\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QDialog>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QDialogButtonBox>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QLineEdit>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QListWidget>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <QTextEdit>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAddGameDialog}{AddGameDialog}}\ :\ \textcolor{keyword}{public}\ QDialog\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classAddGameDialog}{AddGameDialog}}(QWidget*\ parent);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ exec()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ verify();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ accept()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ QString\ name()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ \ \ QString\ desc()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ \ \ \ \ QStringList\ genre()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ populateGenreList(QListWidget*\ genreList);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ QLabel*\ nameLabel;}
+\DoxyCodeLine{00034\ \ \ \ \ QLineEdit*\ nameLineEdit;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ QLabel*\ descLabel;}
+\DoxyCodeLine{00037\ \ \ \ \ QTextEdit*\ descTextEdit;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ QLabel*\ genreLabel;}
+\DoxyCodeLine{00040\ \ \ \ \ QListWidget*\ genreList;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ QDialogButtonBox*\ buttonBox;}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ADDGAMEDIALOG\_H}}
+
+\end{DoxyCode}

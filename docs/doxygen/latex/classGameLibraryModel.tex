@@ -1,0 +1,59 @@
+\doxysection{Game\+Library\+Model Class Reference}
+\hypertarget{classGameLibraryModel}{}\label{classGameLibraryModel}\index{GameLibraryModel@{GameLibraryModel}}
+Inheritance diagram for Game\+Library\+Model\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classGameLibraryModel}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGameLibraryModel_a983467144edd19f063dd2beeb2deebca}\label{classGameLibraryModel_a983467144edd19f063dd2beeb2deebca} 
+enum {\bfseries Game\+Roles} \{ {\bfseries Name\+Role} = Qt\+::User\+Role + 1
+, {\bfseries Desc\+Role}
+, {\bfseries Genre\+Role}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGameLibraryModel_ad9ff73fbe260e2987d0984f8b656a41f}\label{classGameLibraryModel_ad9ff73fbe260e2987d0984f8b656a41f} 
+void {\bfseries on\+Game\+Added} (const \mbox{\hyperlink{classGame}{Game}} \&game)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGameLibraryModel_acd2b092a09e2ac705021a90a98831c22}\label{classGameLibraryModel_acd2b092a09e2ac705021a90a98831c22} 
+{\bfseries Game\+Library\+Model} (QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+\Hypertarget{classGameLibraryModel_a068cf4b9bbf96dc53aae282d2a483a66}\label{classGameLibraryModel_a068cf4b9bbf96dc53aae282d2a483a66} 
+QModel\+Index {\bfseries index} (int row, int column, const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+\Hypertarget{classGameLibraryModel_a2c7e21461e8088a9ead8b4d27392b9ee}\label{classGameLibraryModel_a2c7e21461e8088a9ead8b4d27392b9ee} 
+QModel\+Index {\bfseries parent} (const QModel\+Index \&child) const override
+\item 
+\Hypertarget{classGameLibraryModel_ac3a1be405635cb75a7249576bae9f47f}\label{classGameLibraryModel_ac3a1be405635cb75a7249576bae9f47f} 
+int {\bfseries row\+Count} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+\Hypertarget{classGameLibraryModel_a342b90ee452469a08fdba64d2512e13f}\label{classGameLibraryModel_a342b90ee452469a08fdba64d2512e13f} 
+int {\bfseries column\+Count} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+\Hypertarget{classGameLibraryModel_a85f0d6cc15a8a1f8180a96a53d078830}\label{classGameLibraryModel_a85f0d6cc15a8a1f8180a96a53d078830} 
+QVariant {\bfseries data} (const QModel\+Index \&index, int role=Qt\+::\+Display\+Role) const override
+\item 
+\Hypertarget{classGameLibraryModel_ad05c0bf525775dc11816fcd08528798f}\label{classGameLibraryModel_ad05c0bf525775dc11816fcd08528798f} 
+void {\bfseries delete\+Game\+From\+Index} (const QModel\+Index \&index)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGameLibraryModel_a4b1ad779e5849778b4fa6ef7e81ab9ac}\label{classGameLibraryModel_a4b1ad779e5849778b4fa6ef7e81ab9ac} 
+QHash$<$ int, QByte\+Array $>$ {\bfseries role\+Names} () const override
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/data/gamelibrarymodel.\+h\item 
+src/data/gamelibrarymodel.\+cpp\end{DoxyCompactItemize}

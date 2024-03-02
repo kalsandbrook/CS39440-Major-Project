@@ -1,0 +1,47 @@
+\doxysection{gamelibrarymodel.\+h}
+\hypertarget{gamelibrarymodel_8h_source}{}\label{gamelibrarymodel_8h_source}\index{src/data/gamelibrarymodel.h@{src/data/gamelibrarymodel.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Kal\ on\ 24/02/2024.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ GAMELIBRARYMODEL\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ GAMELIBRARYMODEL\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QAbstractItemModel>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}gamelibrary.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGameLibraryModel}{GameLibraryModel}}\ :\ \textcolor{keyword}{public}\ QAbstractItemModel\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classGameLibraryModel}{GameLibraryModel}}(QObject*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{enum}\ GameRoles\ \{\ NameRole\ =\ Qt::UserRole\ +\ 1,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ DescRole,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ GenreRole\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ QModelIndex\ index(\textcolor{keywordtype}{int}\ row,\ \textcolor{keywordtype}{int}\ column,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QModelIndex\&\ parent\ =\ QModelIndex())\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00022\ \ \ \ \ QModelIndex\ parent(\textcolor{keyword}{const}\ QModelIndex\&\ child)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ rowCount(\textcolor{keyword}{const}\ QModelIndex\&\ parent\ =\ QModelIndex())\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ columnCount(\textcolor{keyword}{const}\ QModelIndex\&\ parent\ =\ QModelIndex())\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00025\ \ \ \ \ QVariant\ data(\textcolor{keyword}{const}\ QModelIndex\&\ index,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ role\ =\ Qt::DisplayRole)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//void\ addGame(const\ Game\&\ game);}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ deleteGameFromIndex(\textcolor{keyword}{const}\ QModelIndex\&\ index);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ onGameAdded(\textcolor{keyword}{const}\ \mbox{\hyperlink{classGame}{Game}}\&\ game);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00034\ \ \ \ \ QHash<int,\ QByteArray>\ roleNames()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classGameLibrary}{GameLibrary}}\&\ m\_gameLibrary;}
+\DoxyCodeLine{00038\ \ \ \ \ QList<Game>\ m\_games;}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GAMELIBRARYMODEL\_H}}
+
+\end{DoxyCode}

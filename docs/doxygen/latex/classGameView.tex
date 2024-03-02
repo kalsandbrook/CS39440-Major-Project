@@ -1,0 +1,50 @@
+\doxysection{Game\+View Class Reference}
+\hypertarget{classGameView}{}\label{classGameView}\index{GameView@{GameView}}
+Inheritance diagram for Game\+View\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classGameView}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGameView_a4e80f830c4a9d7029342e9c887b3ce7e}\label{classGameView_a4e80f830c4a9d7029342e9c887b3ce7e} 
+{\bfseries Game\+View} (QWidget \texorpdfstring{$\ast$}{*}parent)
+\item 
+\Hypertarget{classGameView_a446baa086397c0f7a4c09f453d4edfbd}\label{classGameView_a446baa086397c0f7a4c09f453d4edfbd} 
+QRect {\bfseries visual\+Rect} (const QModel\+Index \&index) const override
+\item 
+\Hypertarget{classGameView_af17567880e373a5c672b401b4c0799b9}\label{classGameView_af17567880e373a5c672b401b4c0799b9} 
+void {\bfseries scroll\+To} (const QModel\+Index \&index, Scroll\+Hint hint) override
+\item 
+\Hypertarget{classGameView_a19c76799891766b0bc786ba1efbdf0cc}\label{classGameView_a19c76799891766b0bc786ba1efbdf0cc} 
+QModel\+Index {\bfseries index\+At} (const QPoint \&point) const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classGameView_a22feaf9393073c559d89504901d67f63}\label{classGameView_a22feaf9393073c559d89504901d67f63} 
+QModel\+Index {\bfseries move\+Cursor} (Cursor\+Action cursor\+Action, Qt\+::\+Keyboard\+Modifiers modifiers) override
+\item 
+\Hypertarget{classGameView_a3bab4f010e1a9f3e62f1a105cac6a1f9}\label{classGameView_a3bab4f010e1a9f3e62f1a105cac6a1f9} 
+int {\bfseries horizontal\+Offset} () const override
+\item 
+\Hypertarget{classGameView_a9ff801ae8f169997dd17c36e052e7a2f}\label{classGameView_a9ff801ae8f169997dd17c36e052e7a2f} 
+int {\bfseries vertical\+Offset} () const override
+\item 
+\Hypertarget{classGameView_af207e88b5d28d492e977189e2d44736b}\label{classGameView_af207e88b5d28d492e977189e2d44736b} 
+bool {\bfseries is\+Index\+Hidden} (const QModel\+Index \&index) const override
+\item 
+\Hypertarget{classGameView_a9180d562f21e27e3c23b89663798a59e}\label{classGameView_a9180d562f21e27e3c23b89663798a59e} 
+void {\bfseries set\+Selection} (const QRect \&rect, QItem\+Selection\+Model\+::\+Selection\+Flags command) override
+\item 
+\Hypertarget{classGameView_ae1d84e14a4bf152bd2298f14de4e46f8}\label{classGameView_ae1d84e14a4bf152bd2298f14de4e46f8} 
+QRegion {\bfseries visual\+Region\+For\+Selection} (const QItem\+Selection \&selection) const override
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/gameview.\+h\item 
+src/gameview.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,27 @@
+var NAVTREEINDEX0 =
+{
+"addgamedialog_8h_source.html":[1,0,0,1],
+"annotated.html":[0,0],
+"classAddGameDialog.html":[0,0,0],
+"classGame.html":[0,0,1],
+"classGameDatabase.html":[0,0,2],
+"classGameItemDelegate.html":[0,0,3],
+"classGameLibrary.html":[0,0,4],
+"classGameLibraryModel.html":[0,0,5],
+"classGameView.html":[0,0,6],
+"classMainWindow.html":[0,0,7],
+"classes.html":[0,1],
+"dir_68267d1309a1af8e8297ef4c3efbcdba.html":[1,0,0],
+"dir_c1be8d27e7f84178e95f152701110b19.html":[1,0,0,0],
+"files.html":[1,0],
+"game_8h_source.html":[1,0,0,0,0],
+"gamedatabase_8h_source.html":[1,0,0,0,1],
+"gameitemdelegate_8h_source.html":[1,0,0,2],
+"gamelibrary_8h_source.html":[1,0,0,0,2],
+"gamelibrarymodel_8h_source.html":[1,0,0,0,3],
+"gameview_8h_source.html":[1,0,0,3],
+"hierarchy.html":[0,2],
+"index.html":[],
+"mainwindow_8h_source.html":[1,0,0,4],
+"pages.html":[]
+};
