@@ -69,6 +69,7 @@ private:
     QListView* gameListView;
     GameLibrary& gameLibrary;
     GameLibraryModel* gameLibraryModel;
+    AddGameDialog* addGameDialog;
 };
 
 #endif // MAINWINDOW_H
