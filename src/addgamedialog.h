@@ -17,7 +17,6 @@
  * @brief A dialog for adding a game to the library.
  * 
  * This will also provide a way to edit games in the library, in future.
- * @todo Add support for editing games.
  */
 class AddGameDialog : public QDialog {
     Q_OBJECT
