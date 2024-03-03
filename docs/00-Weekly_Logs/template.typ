@@ -1,0 +1,155 @@
+#import "@preview/nth:1.0.0": nth
+
+#let smallcaps(content) = {
+  text(font: "Century Supra C3")[
+    #content
+  ]
+}
+
+#let titlepage(
+  title: "Report Template",
+  subtitle: none,
+  authors: (),
+  supervisors: (),
+  date: none,
+  hasOutline: bool,
+  status: none,
+  version: none,
+  reference: none,
+) = {
+  page(
+    header: smallcaps[Reference:] + raw(reference),
+    numbering: none,
+  )[
+    #align(
+      center,
+    )[
+      #v(1fr)
+      // Title & Subtitle
+      #text(size: 2em, weight: "bold")[
+        #title
+      ]
+      \
+      #smallcaps(subtitle)
+       
+      #v(.5em)
+       
+      Department of Computer Science, \
+      Aberystwyth University \
+       
+      #line(length: 50%)
+
+      Last updated: *#date.display(nth(date.day()) + " [month repr:long], [year]")*
+      
+      #if(version != none){
+        [*#version* - #status]
+      }
+       
+      #line(length: 50%)
+       
+      #v(.5em)
+      // Document Information
+      #block[
+        // Author Information
+        *Produced by:* \
+        #authors.map((author) =>
+        [
+           
+          #author.name \
+          #link("mailto:" + author.email)[#author.email] \
+          on _Computer Science - G400 BSc_ \
+        ]).join(";")
+         
+        #v(1em)
+         
+        // List supervisors, if any.
+        #if (supervisors.len() > 0) {
+          [
+            *Supervised by:* \
+            #supervisors.map((supervisor) =>
+            [
+               
+              #supervisor.name \
+              #link("mailto:" + supervisor.email)[#supervisor.email] \
+              _Lecturer in Computer Science_
+            ]).join(";")
+          ]
+        }
+      ]
+      #v(1fr)
+      #if (hasOutline) {
+        outline(depth:1)
+      }
+      #v(1fr)
+    ]
+  ]
+}
+
+#let doc(
+  title: "",
+  subtitle: none,
+  authors: (),
+  supervisors: (),
+  date: datetime.today(),
+  margin: 2.5cm,
+  fontsize: 11pt,
+  status: none,
+  version: none,
+  hasOutline: true,
+  reference: none,
+  body,
+) = {
+  show table: set par(justify: false)
+  show link: underline
+  // Set the document's basic properties.
+  set document(author: authors.map(a => a.name), title: title)
+  set page(paper: "a4", margin: margin, footer: [
+    #subtitle
+    #h(1fr)
+    #counter(page).display("1 of 1", both: true)
+  ], header: emph[
+    #title
+    #if (version != none){
+      [#sym.dash.em]
+      [#status, #version]
+    }
+    #h(1fr)
+    #authors.map((author) => 
+    [
+      #author.name
+      #let authorEmailArray = author.email.split("@")
+      #if (authorEmailArray.at(1).ends-with(".ac.uk")) {
+        "("
+        link(author.email)[#authorEmailArray.first()]
+        ")"
+      }
+    ]).join(";")
+  ])
+  set text(font: "Century Supra T3", size: fontsize, lang: "en")
+  set heading(numbering: "1.1 -")
+   
+  show heading: it => {
+    it
+    v(.5em)
+  }
+   
+  show cite: super
+   
+  set list(marker: ([•], [⁃]))
+   
+  titlepage(
+    title: title,
+    subtitle: subtitle,
+    authors: authors,
+    supervisors: supervisors,
+    date: date,
+    hasOutline: hasOutline,
+    status: status,
+    version: version,
+    reference: reference,
+  )
+   
+  body
+}
+
+
