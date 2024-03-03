@@ -7,8 +7,25 @@
 
 #include <QAbstractItemView>
 
+/**
+ * @brief A view for displaying games in a grid.
+ * 
+ * This class is a view for displaying games in a grid, and provides the functionality for scrolling, selecting, and navigating the list of games.
+ *
+ * It is a subclass of QAbstractItemView.
+ *
+ * At this time, it is not used in the application, but it will be used in future as a part of MainWindow.
+ * @todo Implement the functionality for displaying the games in a grid.
+*/
 class GameView : public QAbstractItemView {
 public:
+    /**
+     * @brief Constructs a new GameView object.
+     * 
+     * This constructor creates a new GameView object with the given parent.
+     * 
+     * @param parent The parent of the view.
+    */
     GameView(QWidget* parent);
 
     QRect visualRect(const QModelIndex& index) const override;

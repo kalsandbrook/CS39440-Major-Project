@@ -17,22 +17,43 @@
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
 
-/*!
- * \class MainWindow
- * \brief The MainWindow class is the main window of the application.
- *
- * It contains a toolbar with an action to add a game, and a list view to
- * display the games.
- *
+/**
+ * @brief The MainWindow class is the main window of the application.
+ * 
+ * This class represents the main window of the application, and contains the toolbar, game list view, and other UI elements.
+ * 
+ * It is a subclass of QMainWindow.
  */
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
+    /**
+     * @brief Constructs a new MainWindow object.
+     * 
+     * This constructor creates a new MainWindow object.
+     */
     MainWindow();
 
 public slots:
+    /**
+     * @brief Shows the add game dialog.
+     * 
+     * This method shows the add game dialog.
+     */
     void onAddGameDialog();
+
+    /**
+     * @brief Shows the about dialog.
+     * 
+     * This method shows the about dialog.
+     */
     void onAboutAction();
+
+    /**
+     * @brief Shows the about Qt dialog.
+     * 
+     * This method shows the about Qt dialog.
+     */
     void onAboutQtAction();
 
 private:

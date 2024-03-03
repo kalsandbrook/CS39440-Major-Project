@@ -10,17 +10,73 @@
 #include <QObject>
 #include <QSharedPointer>
 
+/**
+ * @brief A class representing the library of games.
+ * 
+ * This class represents the library of games, and contains methods for adding and deleting games from the library. 
+ * It functions as a single source of truth for the games in the library, performing the actions of a Data Access Object (DAO).
+ * 
+ * This class is a singleton, and can be accessed using the instance() method.
+*/
 class GameLibrary : public QObject {
     Q_OBJECT
 public:
+    /**
+     * @brief Returns the instance of the GameLibrary.
+     * 
+     * This method returns the instance of the GameLibrary, creating it if it doesn't exist.
+     * 
+     * @return The instance of the GameLibrary.
+    */
     static GameLibrary& instance();
 
+    /**
+     * @brief Adds a game to the library.
+     * 
+     * This method adds the given game to the library.
+     * 
+     * @param game The game to add.
+    */
     void addGame(Game& game);
+
+    /**
+     * @brief Deletes a game from the library.
+     * 
+     * This method deletes the game with the given ID from the library.
+     * 
+     * @param gameId The ID of the game to delete.
+    */
     void deleteGame(int gameId);
+
+    /**
+     * @brief Returns the list of games in the library.
+     * 
+     * This method returns the list of games in the library.
+     * 
+     * @return The list of games in the library.
+    */
     QList<Game>& games();
 
 signals:
+
+    /**
+     * @brief Signals that a game has been added to the library.
+     * 
+     * This signal is emitted when a game is added to the library.
+     * 
+     * @param game The game that was added.
+     * @see GameLibraryModel::onGameAdded()
+    */
     void gameAdded(const Game& game);
+
+    /**
+     * @brief Signals that a game has been deleted from the library.
+     * 
+     * This signal is emitted when a game is deleted from the library.
+     * 
+     * @param gameId The ID of the game that was deleted.
+     * @see GameLibraryModel::onGameDeleted()
+    */
     void gameDeleted(const int gameId);
 
 private:
