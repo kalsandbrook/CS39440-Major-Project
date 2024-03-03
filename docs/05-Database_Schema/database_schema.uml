@@ -1,0 +1,92 @@
+@startuml
+skinparam linetype ortho
+
+entity games {
+    * gameId <<generated>>
+    --
+    * name
+    desc
+    genres
+    releaseDate
+    developer
+    publisher
+    platforms
+    userTags
+    *status
+}
+
+
+entity game_genres {
+    * gameId
+    * genreId
+}
+
+entity genres {
+    * genreId <<generated>>
+    --
+    * name
+}
+
+entity game_developers {
+    * gameId
+    * developerId
+}
+
+entity developers {
+    * developerId <<generated>>
+    --
+    * name
+}
+
+entity game_publishers {
+    * gameId
+    * publisherId
+}
+
+entity publishers {
+    * publisherId <<generated>>
+    --
+    * name
+}
+
+entity game_platforms{
+    * gameId
+    * platformId
+}
+
+entity platforms {
+    * platformId <<generated>>
+    --
+    * name
+}
+
+entity game_user_tags {
+    * gameId
+    * userTagId
+}
+
+entity user_tags {
+    * userTagId <<generated>>
+    --
+    * name
+}
+
+games --|{ game_genres
+game_genres }|--|{ genres
+
+
+games --|{ game_developers
+game_developers }|--|{ developers
+
+
+games --|{ game_publishers
+game_publishers }|--|{ publishers
+
+games --|{ game_platforms
+game_platforms }|--|{ platforms
+
+
+games --|{ game_user_tags
+game_user_tags }|--|{ user_tags
+
+@enduml

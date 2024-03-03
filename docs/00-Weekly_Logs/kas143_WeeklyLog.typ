@@ -108,25 +108,64 @@
 #week(
   weekCommencing: "12th February",
   focus: "Requirements and Development Begins",
+  objectives:
+  [
+    This week will result in a final choice of programming language (likely C++) and the beginning of development. The aim is to build a prototype application that displays a list of Objects and develop the project from that prototype upwards.
+
+    This will also require setting up a development environment.
+  ],
   tasks:
   [
     1. Final Decision on Programming Language
       - It has been decided that C++ will be the programming language used for this project. The Qt UI Toolkit will also be used.
-    2. Continuous Integration
+    2. Setup of Development Environment
+      - A development environment has been set up using: #link("https://www.jetbrains.com/help/clion/clion-nova-introduction.html")[CLion Nova] on Microsoft Windows, using the Clang Compiler with the Ninja build system.
+    3. Continuous Integration
+      - A GitHub workflow has been set up so when a commit is uploaded to the GitHub repository, it test to see if the source code successfully builds. This will be expanded to include testing in coming weeks.
   ],
-  plans: "ethics proc"
+  challenges:
+  [
+    Qt has a significant learning curve that I could have been better prepared for. However, steady progress is being made, although initial development may be slower due to the time spent reading documentation and tutorials. #footnote[https://doc.qt.io/ - specific documentation pages have been recorded and will be included with the report.]
+
+    I have also encountered an issue with the application crashing on Windows for no obvious reason. Further investigation pending.
+  ],
+  plans:
+  [
+    Next week will see the production of a database schema and hopefully the implementation of FR01 (basic CRUD functionality). 
+  ]
 )
 
 #week(
   weekCommencing: "19th February",
   focus: "Initial Development Complications",
+  objectives:
+  [
+    The aims of this week are to increase my proficiency with C++ and Qt, to complete FR01 and start working towards a prototype that is appropriate for the Mid-Project Demonstration. A class diagram will also be produced this week.
+  ],
   tasks: 
   [
-    1. Learning Qt (using Documentation)
+    1. Learning C++ Qt (using Documentation)
+      - I worked my way through #link("https://learncpp.com/") in order to be better prepared for further development. I also looked through some example projects provided as part of the Qt documentation. These were:
+        - #link("https://doc.qt.io/qt-6/qtwidgets-dialogs-standarddialogs-example.html")[Standard Dialogs]
+        - #link("https://doc.qt.io/qt-6/qtwidgets-richtext-orderform-example.html")[Order Form Example]
+        - #link("https://doc.qt.io/qt-6/qtdoc-demos-documentviewer-example.html")[Document Viewer]
     2. Class Diagram
-    3. Rewrite of Project Code
+      - A class diagram was produced. This is good for avoiding going into development "blind", and to visually explain the structure to those trying to understand the system.
+    3. Change of OS for Development
+      - Due to an issue with my Qt Environment on windows, I switched to developing on Linux.
+    4. Rewrite of Project Code
+      - The initial code did not have a very cohesive structure, so I started from scratch.
   ],
-  challenges: "Illness and Qt not compiling on windows bug - address that development is going slower than planned.",
+  challenges:
+  [
+    The bug with Qt crashing on Windows took up a lot of development time, and no obvious cause has yet been identified. Combined with Illness, this led to the amount of work produced this week to be below expectations.
+
+    Regarding the change of OS, Cross-Compilation #footnote[Compiling the program on Linux, to be run on Windows.] will be investigated later into the project.
+  ],
+  plans:
+  [
+    Next week, a database will be incorporated into the application and FR01 will be fulfilled.
+  ]
 )
 
 #week(
@@ -134,15 +173,29 @@
   focus: "FR01 and Gaining Momentum",
   objectives:
   [
-    This weeks objectives are to complete FR01. Last week and the beginning of this week resulted in a complete change of how the program is structured, so whilst development has been slow (in terms of the completion of Requirements) - it is anticipated that development will speed up significantly going forward.
+    This week's objectives are to complete FR01. Last week and the beginning of this week resulted in a complete change of how the program is structured, so whilst development has been slow (in terms of deliverables and visible progress) - it is anticipated that development will speed up significantly going forward.
   ],
   tasks:
   [
     1. Database Schema
     2. Data Persistence
+      - The application now uses an SQLite Database in order to maintain persistent data when restarting the application.
     3. Code Documentation Generation (doxygen)
-      - Continuous Integration
+      - #link("https://www.doxygen.nl")[doxygen] is a documentation generator that is similar to JavaDoc. It is being used to extract comments from the source code of the program and display those comments in a presentable way. The documentation produced will be included in the appendix of the project report.
+      - doxygen has also been set up with GitHub's Continuous Integration system, updating the documentation with every commit pushed to the repository. A HTML Version of the documentation is available #link("https://kalsandbrook.github.io/CS39440-Major-Project/")[here].
+    4. FR01 - Game Management
+      - Games can now be added, deleted and edited within the application. This is currently in a limited capacity, but more fields will become available when the UI is updated (thus fulfilling FR05).
   ],
+  challenges:
+  [
+    Whilst development is now starting to pick up, a lot of classes are being revised as a part of adding features. Documents that describe program structure (such as Class Diagrams) may need to be revised throughout development.
+  ],
+  plans:
+  [
+    As the Mid-Project demonstration is approaching, the intent is to finish FR02, FR03 and FR04. Whilst this initially appears to be a large undertaking for a single week, FR02 and FR03 will be able to be implemented together. 
+
+    As FR04 concerns filtering - it will be necessary to research methods of "fuzzy" searching and associated metrics such as the Levenshtein distance.
+  ]
 
 )
 
