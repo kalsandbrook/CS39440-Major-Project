@@ -30,7 +30,14 @@ public:
     */
     static GameLibrary& instance();
 
-
+    /**
+     * @brief Returns a game from it's id.
+     *
+     * This uses the m_games QMap to lookup and return the game associated with a given id.
+     *
+     * @param gameId
+     * @return The game that has the matching id.
+     */
     const Game& getGameById(int gameId) const;
 
     /**

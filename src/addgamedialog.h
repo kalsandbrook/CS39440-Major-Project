@@ -36,10 +36,20 @@ public slots:
     /**
      * @brief Executes the dialog.
      * 
-     * This clears the dialog and then shows it.
+     * This clears the dialog and then shows it. When the dialog is accepted, the GameLibrary::addGame() method is used.
+     *
      */
     int exec() override;
 
+    /**
+     * @brief Executes the dialog, with the id of a Game to edit.
+     *
+     * This launches the dialog in "editing mode", where it will load the details of a game into the dialog.
+     *
+     * When the dialog is accepted, the GameLibrary::updateGame() method is used.
+     *
+     * @param gameId
+     */
     int exec(int gameId);
 
     /**
