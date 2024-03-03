@@ -5,7 +5,7 @@ A CS39440 Major Project, produced for Aberystwyth University by Kal Sandbrook (k
 This project aims to develop an application which helps users manage their video game
 collections in an effective manner. The key goal is provide users with a platform to curate and
 view their games, offering features such as: backlog management, progress tracking and
-powerful sorting and filtering options
+powerful sorting and filtering options.
 
 ## Documents
 
