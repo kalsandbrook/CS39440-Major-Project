@@ -1,5 +1,6 @@
 # Ignore accidentally generated pdfs from templates.
 docs/*/template.pdf
+
 build/*
 .kdev4
 *.kdev4
@@ -7,7 +8,11 @@ build/*
 .cache
 _deps
 
+# Ignore generated database
 games
+
+docs/doxygen
+
 
 # C++
 # ===
