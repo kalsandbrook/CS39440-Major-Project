@@ -5,13 +5,14 @@
 #include "gamelibrarymodel.h"
 
 GameLibraryModel::GameLibraryModel(QObject* parent)
-    : QAbstractItemModel(parent)
-    , m_gameLibrary(GameLibrary::instance())
+        : QAbstractItemModel(parent)
+        , m_gameLibrary(GameLibrary::instance())
 {
     connect(&m_gameLibrary, &GameLibrary::gameAdded, this, &GameLibraryModel::onGameAdded);
     connect(&m_gameLibrary, &GameLibrary::gameDeleted, this, &GameLibraryModel::onGameDeleted);
     connect(&m_gameLibrary, &GameLibrary::gameUpdated, this, &GameLibraryModel::onGameUpdated);
     const QList<Game>& games = m_gameLibrary.games().values();
+
     // Insert data into the model
     for (const Game& game : games) {
         // Create a QModelIndex for the new row
@@ -27,7 +28,7 @@ GameLibraryModel::GameLibraryModel(QObject* parent)
 };
 
 QModelIndex GameLibraryModel::index(int row, int column,
-    const QModelIndex& parent) const
+                                    const QModelIndex& parent) const
 {
     if (!hasIndex(row, column, parent)) {
         return {};
@@ -69,29 +70,29 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
 
     const Game& game = m_games.at(index.row());
     switch (role) {
-    case Qt::DisplayRole:
-        switch (index.column()) {
-        case 0:
-            return game.getId();
-        case 1:
+        case Qt::DisplayRole:
+            switch (index.column()) {
+                case 0:
+                    return game.id();
+                case 1:
+                    return game.name();
+                case 2:
+                    return game.desc();
+                case 3:
+                    return game.genres();
+                default:
+                    return {};
+            }
+        case IdRole:
+            return game.id();
+        case NameRole:
             return game.name();
-        case 2:
+        case DescRole:
             return game.desc();
-        case 3:
-            return game.genre();
+        case GenreRole:
+            return game.genres();
         default:
             return {};
-        }
-    case IdRole:
-        return game.getId();
-    case NameRole:
-        return game.name();
-    case DescRole:
-        return game.desc();
-    case GenreRole:
-        return game.genre();
-    default:
-        return {};
     }
 }
 
@@ -100,7 +101,7 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
     QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
     roles[NameRole] = "name";
     roles[DescRole] = "desc";
-    roles[GenreRole] = "genre";
+    roles[GenreRole] = "genres";
     roles[IdRole] = "id";
     // Add other custom role names if needed
     return roles;
@@ -115,10 +116,9 @@ void GameLibraryModel::onGameDeleted(const int gameId)
 {
     // Uses a predicate and deletes the game if the id matches.
     m_games.removeIf([&gameId](const Game& game) {
-        return game.getId() == gameId;
+        return game.id() == gameId;
     });
 }
-
 void GameLibraryModel::onGameUpdated(const Game &game) {
     // TODO: This will change when GameLibraryModel is updated to use a QMap
     // This is an incredibly lazy way to do this, and it means that games go to the bottom of the list when updated :(

@@ -19,7 +19,7 @@
  * This class is a singleton, and can be accessed using the instance() method.
 */
 class GameLibrary : public QObject {
-    Q_OBJECT
+Q_OBJECT
 public:
     /**
      * @brief Returns the instance of the GameLibrary.
@@ -30,40 +30,52 @@ public:
     */
     static GameLibrary& instance();
 
+
+    const Game& getGameById(int gameId) const;
+
     /**
      * @brief Adds a game to the library.
-     * 
+     *
      * This method adds the given game to the library.
-     * 
+     *
      * @param game The game to add.
     */
     void addGame(Game& game);
 
     /**
      * @brief Deletes a game from the library.
-     * 
+     *
      * This method deletes the game with the given ID from the library.
-     * 
+     *
      * @param gameId The ID of the game to delete.
     */
     void deleteGame(int gameId);
 
     /**
+     * @brief Updates a game in the library.
+     *
+     * This method updates a game in the library with new details.
+     *
+     * @param game The game to update.
+     */
+    void updateGame(Game& game);
+
+    /**
      * @brief Returns the list of games in the library.
-     * 
+     *
      * This method returns the list of games in the library.
-     * 
+     *
      * @return The list of games in the library.
     */
-    QList<Game>& games();
+    QMap<int, Game> & games();
 
 signals:
 
     /**
      * @brief Signals that a game has been added to the library.
-     * 
+     *
      * This signal is emitted when a game is added to the library.
-     * 
+     *
      * @param game The game that was added.
      * @see GameLibraryModel::onGameAdded()
     */
@@ -71,14 +83,13 @@ signals:
 
     /**
      * @brief Signals that a game has been deleted from the library.
-     * 
+     *
      * This signal is emitted when a game is deleted from the library.
-     * 
+     *
      * @param gameId The ID of the game that was deleted.
      * @see GameLibraryModel::onGameDeleted()
     */
     void gameDeleted(const int gameId);
-
     /**
      * @brief Signals that a game in the library has been updated.
      *
@@ -94,7 +105,8 @@ private:
     ~GameLibrary(); // Private destructor - no external deletion
     GameLibrary(const GameLibrary&) = delete;
     GameLibrary& operator=(const GameLibrary&) = delete;
-    QList<Game> m_games;
+    // TODO: Investigate QMap<int, Game>
+    QMap<int, Game> m_games;
     GameDatabase db = GameDatabase::instance();
 };
 

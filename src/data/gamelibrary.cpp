@@ -5,6 +5,7 @@
 #include "gamelibrary.h"
 #include "qlogging.h"
 #include <QSqlQuery>
+#include <QSqlError>
 
 GameLibrary& GameLibrary::instance()
 {
@@ -22,7 +23,7 @@ void GameLibrary::addGame(Game& game)
                   "VALUES (:name, :description,:genres)");
     query.bindValue(0, game.name());
     query.bindValue(1, game.desc());
-    query.bindValue(2, game.genre());
+    query.bindValue(2, game.genres());
 
     if (query.exec()) {
         qint64 lastInsertedId = query.lastInsertId().toLongLong();
@@ -30,7 +31,7 @@ void GameLibrary::addGame(Game& game)
         game.setId(lastInsertedId);
 
         db.endTransaction();
-        m_games.append(game);
+        m_games[game.id()] = game;
         gameAdded(game);
     } else {
         qFatal("Failed to add a game to the DB.");
@@ -49,9 +50,7 @@ void GameLibrary::deleteGame(int gameId)
 
     db.endTransaction();
     // Uses a predicate and deletes the game if the id matches.
-    m_games.removeIf([&gameId](const Game& game) {
-        return game.getId() == gameId;
-    });
+    m_games.remove(gameId);
     gameDeleted(gameId);
 }
 
@@ -80,12 +79,22 @@ QMap<int, Game> & GameLibrary::games() {
     return m_games;
 }
 
-
 GameLibrary::GameLibrary()
 {
     // TODO: db.getGames() should be moved to be a part of this function.
     QList<Game> initialGameList = db.getGames();
-    m_games.append(initialGameList);
+
+    for (const auto& game : initialGameList ){
+        m_games[game.id()] = game;
+    }
+}
+
+const Game& GameLibrary::getGameById(int gameId) const {
+    // Uses QMap.find to avoid memory issues.
+    auto it = m_games.find(gameId);
+    if ( it != m_games.end() )
+        return it.value();
+    return Game();
 }
 
 GameLibrary::~GameLibrary() = default;
