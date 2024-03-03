@@ -1,6 +1,12 @@
 name: Build
 on:
   push:
+    branches:
+      [master]
+    paths:
+      - 'src/**'
+      - 'CMakeLists.txt'
+      - '.github/workflows/cmake.yaml'
 jobs:
   build-project:
     name: Build Project
