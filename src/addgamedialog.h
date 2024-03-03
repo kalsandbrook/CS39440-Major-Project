@@ -11,12 +11,12 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QTextEdit>
+#include "data/game.h"
 
 /**
  * @brief A dialog for adding a game to the library.
  * 
  * This will also provide a way to edit games in the library, in future.
- * @todo Add support for editing games.
  */
 class AddGameDialog : public QDialog {
     Q_OBJECT
@@ -30,15 +30,27 @@ public:
      * 
      * @param parent The parent widget of the dialog.
      */
-    AddGameDialog(QWidget* parent);
+    explicit AddGameDialog(QWidget* parent = nullptr);
 
 public slots:
     /**
      * @brief Executes the dialog.
      * 
-     * This clears the dialog and then shows it.
+     * This clears the dialog and then shows it. When the dialog is accepted, the GameLibrary::addGame() method is used.
+     *
      */
     int exec() override;
+
+    /**
+     * @brief Executes the dialog, with the id of a Game to edit.
+     *
+     * This launches the dialog in "editing mode", where it will load the details of a game into the dialog.
+     *
+     * When the dialog is accepted, the GameLibrary::updateGame() method is used.
+     *
+     * @param gameId
+     */
+    int exec(int gameId);
 
     /**
      * @brief Validates the input fields of the dialog.
@@ -78,6 +90,9 @@ public:
 private:
     static void populateGenreList(QListWidget* genreList);
 
+    bool editingGame;
+    Game editedGame;
+
     QLabel* nameLabel;
     QLineEdit* nameLineEdit;
 
@@ -88,6 +103,8 @@ private:
     QListWidget* genreList;
 
     QDialogButtonBox* buttonBox;
+
+    void setGameToEdit(const Game &game);
 };
 
 #endif // ADDGAMEDIALOG_H

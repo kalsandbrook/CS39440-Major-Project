@@ -10,7 +10,7 @@ GameLibraryModel::GameLibraryModel(QObject* parent)
 {
     connect(&m_gameLibrary, &GameLibrary::gameAdded, this, &GameLibraryModel::onGameAdded);
     connect(&m_gameLibrary, &GameLibrary::gameDeleted, this, &GameLibraryModel::onGameDeleted);
-    const QList<Game>& games = m_gameLibrary.games();
+    const QList<Game>& games = m_gameLibrary.games().values();
 
     // Insert data into the model
     for (const Game& game : games) {
@@ -72,24 +72,24 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
     case Qt::DisplayRole:
         switch (index.column()) {
         case 0:
-            return game.getId();
+            return game.id();
         case 1:
             return game.name();
         case 2:
             return game.desc();
         case 3:
-            return game.genre();
+            return game.genres();
         default:
             return {};
         }
     case IdRole:
-        return game.getId();
+        return game.id();
     case NameRole:
         return game.name();
     case DescRole:
         return game.desc();
     case GenreRole:
-        return game.genre();
+        return game.genres();
     default:
         return {};
     }
@@ -100,7 +100,7 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
     QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
     roles[NameRole] = "name";
     roles[DescRole] = "desc";
-    roles[GenreRole] = "genre";
+    roles[GenreRole] = "genres";
     roles[IdRole] = "id";
     // Add other custom role names if needed
     return roles;
@@ -115,6 +115,6 @@ void GameLibraryModel::onGameDeleted(const int gameId)
 {
     // Uses a predicate and deletes the game if the id matches.
     m_games.removeIf([&gameId](const Game& game) {
-        return game.getId() == gameId;
+        return game.id() == gameId;
     });
 }

@@ -31,6 +31,16 @@ public:
     static GameLibrary& instance();
 
     /**
+     * @brief Returns a game from it's id.
+     *
+     * This uses the m_games QMap to lookup and return the game associated with a given id.
+     *
+     * @param gameId
+     * @return The game that has the matching id.
+     */
+    const Game& getGameById(int gameId) const;
+
+    /**
      * @brief Adds a game to the library.
      * 
      * This method adds the given game to the library.
@@ -49,13 +59,22 @@ public:
     void deleteGame(int gameId);
 
     /**
+     * @brief Updates a game in the library.
+     *
+     * This method updates a game in the library with new details.
+     *
+     * @param game The game to update.
+     */
+     void updateGame(Game& game);
+
+    /**
      * @brief Returns the list of games in the library.
      * 
      * This method returns the list of games in the library.
      * 
      * @return The list of games in the library.
     */
-    QList<Game>& games();
+    QMap<int, Game> & games();
 
 signals:
 
@@ -84,7 +103,8 @@ private:
     ~GameLibrary(); // Private destructor - no external deletion
     GameLibrary(const GameLibrary&) = delete;
     GameLibrary& operator=(const GameLibrary&) = delete;
-    QList<Game> m_games;
+    // TODO: Investigate QMap<int, Game>
+    QMap<int, Game> m_games;
     GameDatabase db = GameDatabase::instance();
 };
 

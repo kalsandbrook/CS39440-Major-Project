@@ -396,7 +396,7 @@
         <else-if type="thesis">
           <group delimiter=", " suffix=".">
             <text macro="title"/>
-            <text variable="genre"/>
+            <text variable="genres"/>
             <text macro="publisher"/>
             <text macro="issued"/>
           </group>
