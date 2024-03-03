@@ -15,6 +15,7 @@
 
 GameItemDelegate::GameItemDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
+    , gameLibrary(GameLibrary::instance())
 {
 }
 
@@ -66,7 +67,6 @@ QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QMode
 bool GameItemDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option,
     const QModelIndex& index)
 {
-
     auto* gameModel = qobject_cast<GameLibraryModel*>(model);
 
     if (event->type() == QEvent::MouseButtonRelease) {
@@ -81,7 +81,13 @@ bool GameItemDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, con
             if (selectedAction == editAction) {
                 // Action 1 was triggered
             } else if (selectedAction == deleteAction) {
-                // gameModel.deleteGameFromIndex(index);
+                if (gameModel) {
+                    QVariant gameIdVariant = index.data(GameLibraryModel::IdRole); // Assuming ID is stored in DisplayRole
+                    if (gameIdVariant.isValid()) {
+                        int gameId = gameIdVariant.toInt();
+                        gameLibrary.deleteGame(gameId);
+                    }
+                }
             }
             return true;
         }

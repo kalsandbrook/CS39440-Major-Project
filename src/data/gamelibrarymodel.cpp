@@ -9,6 +9,7 @@ GameLibraryModel::GameLibraryModel(QObject* parent)
     , m_gameLibrary(GameLibrary::instance())
 {
     connect(&m_gameLibrary, &GameLibrary::gameAdded, this, &GameLibraryModel::onGameAdded);
+    connect(&m_gameLibrary, &GameLibrary::gameDeleted, this, &GameLibraryModel::onGameDeleted);
     const QList<Game>& games = m_gameLibrary.games();
 
     // Insert data into the model
@@ -66,38 +67,44 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (role == Qt::DisplayRole) {
-        if (index.row() < m_games.size()) {
-            const Game& game = m_games.at(index.row());
+
+    const Game& game = m_games.at(index.row());
+    switch (role) {
+        case Qt::DisplayRole:
             switch (index.column()) {
-            case 0:
-                return game.getId();
-            case 1:
-                return game.name();
-            case 2:
-                return game.desc();
-            case 3:
-                return game.genre();
-            default:
-                return {};
+                case 0:
+                    return game.getId();
+                case 1:
+                    return game.name();
+                case 2:
+                    return game.desc();
+                case 3:
+                    return game.genre();
+                default:
+                    return {};
             }
-        }
+        case IdRole:
+            return game.getId();
+        case NameRole:
+            return game.name();
+        case DescRole:
+            return game.desc();
+        case GenreRole:
+            return game.genre();
+        default:
+            return {};
     }
-
-    return {};
 }
-
-// void GameLibraryModel::addGame(const Game& game)
-// {
-//     int row = m_gameLibrary.games().count();
-//     beginInsertRows(QModelIndex(), row, row);
-//     m_gameLibrary.addGame(game);
-//     endInsertRows();
-// }
 
 QHash<int, QByteArray> GameLibraryModel::roleNames() const
 {
-    return QAbstractItemModel::roleNames();
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
+    roles[NameRole] = "name";
+    roles[DescRole] = "desc";
+    roles[GenreRole] = "genre";
+    roles[IdRole] = "id";
+    // Add other custom role names if needed
+    return roles;
 }
 
 void GameLibraryModel::onGameAdded(const Game& game)
@@ -105,15 +112,9 @@ void GameLibraryModel::onGameAdded(const Game& game)
     m_games.append(game);
     emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
 }
-
-void GameLibraryModel::deleteGameFromIndex(const QModelIndex& index)
-{
-    if (!index.isValid()) {
-        return;
-    }
-    beginRemoveRows(index.parent(), index.row(), index.row());
-
-    // m_gameLibrary.removeGame(index.data)
-
-    endRemoveRows();
+void GameLibraryModel::onGameDeleted(const int gameId){
+    // Uses a predicate and deletes the game if the id matches.
+    m_games.removeIf([&gameId](const Game &game) {
+        return game.getId() == gameId;
+    });
 }

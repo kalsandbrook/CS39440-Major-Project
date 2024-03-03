@@ -42,7 +42,7 @@ void GameDatabase::setup()
     m_db.transaction();
     query.exec(
         "CREATE TABLE IF NOT EXISTS games ("
-        "GameID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "GameId INTEGER PRIMARY KEY AUTOINCREMENT,"
         "Name TEXT NOT NULL,"
         "Description TEXT,"
         "Genres TEXT"
@@ -65,7 +65,7 @@ QList<Game> GameDatabase::getGames()
 
     QList<Game> gameList;
     for (int i = 0; i < model.rowCount(); ++i) {
-        int gameId = model.record(i).value("GameID").toInt();
+        int gameId = model.record(i).value("GameId").toInt();
         QString gameName = model.record(i).value("Name").toString();
         QString gameDesc = model.record(i).value("Description").toString();
         QStringList genres = model.record(i).value("Genres").toStringList();

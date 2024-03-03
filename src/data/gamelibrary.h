@@ -16,10 +16,12 @@ public:
     static GameLibrary& instance();
 
     void addGame(Game& game);
+    void deleteGame(int gameId);
     QList<Game>& games();
 
 signals:
     void gameAdded(const Game& game);
+    void gameDeleted(const int gameId);
 
 private:
     GameLibrary(); // Private constructor - Singleton

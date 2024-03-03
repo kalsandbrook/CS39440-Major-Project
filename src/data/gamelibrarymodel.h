@@ -15,7 +15,9 @@ public:
     explicit GameLibraryModel(QObject* parent = nullptr);
     enum GameRoles { NameRole = Qt::UserRole + 1,
         DescRole,
-        GenreRole };
+        GenreRole,
+        IdRole
+    };
 
     QModelIndex index(int row, int column,
         const QModelIndex& parent = QModelIndex()) const override;
@@ -24,11 +26,9 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index,
         int role = Qt::DisplayRole) const override;
-    //void addGame(const Game& game);
-    void deleteGameFromIndex(const QModelIndex& index);
-
 public slots:
     void onGameAdded(const Game& game);
+    void onGameDeleted(int gameId);
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
