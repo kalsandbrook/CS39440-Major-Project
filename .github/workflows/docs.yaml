@@ -1,6 +1,7 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy Documentation to GH Pages
 
+
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -30,6 +31,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Get git submodules before CI job.
+          submodules: 'true'
       - name: Generate Doxygen Docs
         run: doxygen
         # uses: mattnotmitt/doxygen-action@v1.9.5
