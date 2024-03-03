@@ -31,6 +31,8 @@ MainWindow::MainWindow()
     helpButton->setMenu(helpMenu);
     toolBar->addWidget(helpButton);
 
+    addGameDialog = new AddGameDialog(this);
+
     gameListView = new QListView(this);
     gameLibraryModel = new GameLibraryModel(this);
     gameListView->setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -44,10 +46,7 @@ MainWindow::MainWindow()
     connect(aboutQtAction, &QAction::triggered, this, &MainWindow::onAboutQtAction);
 }
 
-void MainWindow::onAddGameDialog() {
-    AddGameDialog addGameDialog(this);
-    addGameDialog.exec();
-}
+void MainWindow::onAddGameDialog() { addGameDialog->exec(); }
 
 void MainWindow::onAboutAction()
 {

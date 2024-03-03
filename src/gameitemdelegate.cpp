@@ -12,7 +12,6 @@
 
 #include "data/gamelibrarymodel.h"
 #include "gameitemdelegate.h"
-#include "addgamedialog.h"
 
 GameItemDelegate::GameItemDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
@@ -25,28 +24,35 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     if (!index.isValid())
         return;
 
+    // Retrieve data for each field
     int id = index.model()->data(index.siblingAtColumn(0)).toInt();
     QString name = index.model()->data(index.siblingAtColumn(1)).toString();
     QString description = index.model()->data(index.siblingAtColumn(2)).toString();
     QString genres = index.model()->data(index.siblingAtColumn(3)).toString();
 
+    // Set up the painter with the style options
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
     painter->setClipRect(option.rect);
 
+    // Draw background color for selected items
     if (option.state & QStyle::State_Selected) {
         painter->fillRect(option.rect, option.palette.highlight());
     }
 
-    QRect contentRect = option.rect.adjusted(2, 2, -2, -2);
-    int lineHeight = QFontMetrics(option.font).height();
+    // Calculate the layout for the delegate's contents
+    QRect contentRect = option.rect.adjusted(2, 2, -2, -2); // Adjust for margins
+    int lineHeight = QFontMetrics(option.font).height(); // Height of each line
 
+    // Paint the name
     QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width() / 3, lineHeight));
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignTop, name);
 
+    // Paint the description
     QRect descriptionRect = nameRect.translated(0, lineHeight);
     painter->drawText(descriptionRect, Qt::AlignLeft | Qt::AlignTop, description);
 
+    // Paint the description
     QRect genreRect = nameRect.translated(nameRect.width(), 0);
     painter->drawText(genreRect, Qt::AlignLeft | Qt::AlignTop, genres);
 
@@ -55,7 +61,7 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 
 QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    return { 200, 50 };
+    return { 200, 50 }; // Adjust size as needed
 }
 
 bool GameItemDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option,
@@ -73,17 +79,10 @@ bool GameItemDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, con
 
             QAction* selectedAction = menu.exec(mouseEvent->globalPosition().toPoint());
             if (selectedAction == editAction) {
-                if (gameModel) {
-                    QVariant gameIdVariant = index.data(GameLibraryModel::IdRole);
-                    if (gameIdVariant.isValid()) {
-                        int gameId = gameIdVariant.toInt();
-                        AddGameDialog dialog;
-                        dialog.exec(gameId);
-                    }
-                }
+                // Action 1 was triggered
             } else if (selectedAction == deleteAction) {
                 if (gameModel) {
-                    QVariant gameIdVariant = index.data(GameLibraryModel::IdRole);
+                    QVariant gameIdVariant = index.data(GameLibraryModel::IdRole); // Assuming ID is stored in DisplayRole
                     if (gameIdVariant.isValid()) {
                         int gameId = gameIdVariant.toInt();
                         gameLibrary.deleteGame(gameId);
