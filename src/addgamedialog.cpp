@@ -12,6 +12,7 @@
 
 AddGameDialog::AddGameDialog(QWidget* parent)
     : QDialog(parent)
+    , editingGame(false)
 {
     nameLabel = new QLabel(tr("Name:"));
     nameLineEdit = new QLineEdit(this);
@@ -41,7 +42,6 @@ AddGameDialog::AddGameDialog(QWidget* parent)
     resize(400, 300);
 
     setLayout(mainLayout);
-    setWindowTitle(tr("Add New Game"));
 }
 
 void AddGameDialog::populateGenreList(QListWidget* genreList)
@@ -70,13 +70,17 @@ void AddGameDialog::verify()
 
 void AddGameDialog::accept()
 {
-    // TODO: use database
-    Game newGame(0, name(), desc(), genre());
-
     GameLibrary& gameLibrary = GameLibrary::instance();
 
-    gameLibrary.addGame(newGame);
-
+    if(editingGame){
+        editedGame.setName(name());
+        editedGame.setDesc(desc());
+        editedGame.setGenres(genre());
+        gameLibrary.updateGame(editedGame);
+    } else {
+        Game newGame(0, name(), desc(), genre());
+        gameLibrary.addGame(newGame);
+    }
     QDialog::accept();
 }
 
@@ -96,9 +100,37 @@ QStringList AddGameDialog::genre() const
 
 int AddGameDialog::exec()
 {
+    editingGame = false;
+    setWindowTitle(tr("Add New Game"));
+
     nameLineEdit->clear();
     descTextEdit->clear();
     genreList->clearSelection();
+
+    return QDialog::exec();
+}
+
+void AddGameDialog::setGameToEdit(const Game &game){
+    editedGame = game;
+    nameLineEdit->setText(game.name());
+    descTextEdit->setText(game.desc());
+
+    QStringList genres = game.genres();
+    for (int i = 0; i < genreList->count();++i) {
+        QListWidgetItem *item = genreList->item(i);
+        item->setSelected(genres.contains(item->text()));
+    }
+}
+
+
+int AddGameDialog::exec(int gameId) {
+    editingGame = true;
+
+    setWindowTitle(tr("Editing Game"));
+
+    auto game = GameLibrary::instance().getGameById(gameId);
+
+    setGameToEdit(game);
 
     return QDialog::exec();
 }

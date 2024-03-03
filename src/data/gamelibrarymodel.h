@@ -31,7 +31,7 @@ public:
     /**
      * @brief The roles of the model.
      * 
-     * This enum represents the roles of the model, such as the name, description, genre and id of the game.
+     * This enum represents the roles of the model, such as the name, description, genres and id of the game.
      * 
      * These roles are used to access the data of the model.
      */

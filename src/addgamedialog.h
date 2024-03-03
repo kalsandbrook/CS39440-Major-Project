@@ -11,6 +11,7 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QTextEdit>
+#include "data/game.h"
 
 /**
  * @brief A dialog for adding a game to the library.
@@ -30,7 +31,7 @@ public:
      * 
      * @param parent The parent widget of the dialog.
      */
-    AddGameDialog(QWidget* parent);
+    explicit AddGameDialog(QWidget* parent = nullptr);
 
 public slots:
     /**
@@ -39,6 +40,8 @@ public slots:
      * This clears the dialog and then shows it.
      */
     int exec() override;
+
+    int exec(int gameId);
 
     /**
      * @brief Validates the input fields of the dialog.
@@ -78,6 +81,9 @@ public:
 private:
     static void populateGenreList(QListWidget* genreList);
 
+    bool editingGame;
+    Game editedGame;
+
     QLabel* nameLabel;
     QLineEdit* nameLineEdit;
 
@@ -88,6 +94,8 @@ private:
     QListWidget* genreList;
 
     QDialogButtonBox* buttonBox;
+
+    void setGameToEdit(const Game &game);
 };
 
 #endif // ADDGAMEDIALOG_H
