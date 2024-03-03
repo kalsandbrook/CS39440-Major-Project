@@ -55,7 +55,31 @@ void GameLibrary::deleteGame(int gameId)
     gameDeleted(gameId);
 }
 
-QList<Game>& GameLibrary::games() { return m_games; }
+void GameLibrary::updateGame(Game &game) {
+    db.beginTransaction();
+    QSqlQuery query(db.db());
+
+    query.prepare("UPDATE games "
+                  "SET Name = :name,  Description = :desc, Genres = :genres "
+                  "WHERE GameId = :gameId");
+
+    query.bindValue(":name",game.name());
+    query.bindValue(":desc",game.desc());
+    query.bindValue(":genres",game.genres());
+    query.bindValue(":gameId",game.id());
+
+    query.exec();
+
+    db.endTransaction();
+
+    m_games[game.id()] = game;
+    gameUpdated(game);
+}
+
+QMap<int, Game> & GameLibrary::games() {
+    return m_games;
+}
+
 
 GameLibrary::GameLibrary()
 {
