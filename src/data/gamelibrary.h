@@ -98,6 +98,16 @@ signals:
     */
     void gameDeleted(const int gameId);
 
+    /**
+     * @brief Signals that a game in the library has been updated.
+     *
+     * This signal is emitted when a game in the library is updated.
+     *
+     * @param game The game that is updated..
+     * @see GameLibraryModel::onGameUpdated()
+    */
+    void gameUpdated(const Game& game);
+
 private:
     GameLibrary(); // Private constructor - Singleton
     ~GameLibrary(); // Private destructor - no external deletion

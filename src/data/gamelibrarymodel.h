@@ -117,6 +117,15 @@ public slots:
      */
     void onGameDeleted(int gameId);
 
+    /**
+     * @brief Updates the model when a game is updated in the library.
+     *
+     * This method updates the model when a game in the library is updated.
+     *
+     * @param game The game that has been updated.
+     */
+    void onGameUpdated(const Game& game);
+
 protected:
     /**
      * @brief Returns the role names of the model.

@@ -69,10 +69,10 @@ void GameLibrary::updateGame(Game &game) {
 
     query.exec();
 
-    qInfo() << query.lastError().text();
-
     db.endTransaction();
 
+    m_games[game.id()] = game;
+    gameUpdated(game);
 }
 
 QMap<int, Game> & GameLibrary::games() {

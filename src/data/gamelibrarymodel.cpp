@@ -10,6 +10,7 @@ GameLibraryModel::GameLibraryModel(QObject* parent)
 {
     connect(&m_gameLibrary, &GameLibrary::gameAdded, this, &GameLibraryModel::onGameAdded);
     connect(&m_gameLibrary, &GameLibrary::gameDeleted, this, &GameLibraryModel::onGameDeleted);
+    connect(&m_gameLibrary, &GameLibrary::gameUpdated, this, &GameLibraryModel::onGameUpdated);
     const QList<Game>& games = m_gameLibrary.games().values();
 
     // Insert data into the model
@@ -117,4 +118,15 @@ void GameLibraryModel::onGameDeleted(const int gameId)
     m_games.removeIf([&gameId](const Game& game) {
         return game.id() == gameId;
     });
+}
+
+void GameLibraryModel::onGameUpdated(const Game &game) {
+    // TODO: This will change when GameLibraryModel is updated to use a QMap
+    // This is an incredibly lazy way to do this, and it means that games go to the bottom of the list when updated :(
+
+    // Delete the game from the library
+    onGameDeleted(game.id());
+
+    // Add the updated game to the library
+    onGameAdded(game);
 }
