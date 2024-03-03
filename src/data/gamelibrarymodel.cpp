@@ -67,32 +67,31 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
     if (!index.isValid())
         return QVariant();
 
-
     const Game& game = m_games.at(index.row());
     switch (role) {
-        case Qt::DisplayRole:
-            switch (index.column()) {
-                case 0:
-                    return game.getId();
-                case 1:
-                    return game.name();
-                case 2:
-                    return game.desc();
-                case 3:
-                    return game.genre();
-                default:
-                    return {};
-            }
-        case IdRole:
+    case Qt::DisplayRole:
+        switch (index.column()) {
+        case 0:
             return game.getId();
-        case NameRole:
+        case 1:
             return game.name();
-        case DescRole:
+        case 2:
             return game.desc();
-        case GenreRole:
+        case 3:
             return game.genre();
         default:
             return {};
+        }
+    case IdRole:
+        return game.getId();
+    case NameRole:
+        return game.name();
+    case DescRole:
+        return game.desc();
+    case GenreRole:
+        return game.genre();
+    default:
+        return {};
     }
 }
 
@@ -112,9 +111,10 @@ void GameLibraryModel::onGameAdded(const Game& game)
     m_games.append(game);
     emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
 }
-void GameLibraryModel::onGameDeleted(const int gameId){
+void GameLibraryModel::onGameDeleted(const int gameId)
+{
     // Uses a predicate and deletes the game if the id matches.
-    m_games.removeIf([&gameId](const Game &game) {
+    m_games.removeIf([&gameId](const Game& game) {
         return game.getId() == gameId;
     });
 }

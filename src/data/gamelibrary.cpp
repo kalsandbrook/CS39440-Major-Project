@@ -19,12 +19,12 @@ void GameLibrary::addGame(Game& game)
     QSqlQuery query(db.db());
 
     query.prepare("INSERT INTO games (Name, Description, Genres)"
-               "VALUES (:name, :description,:genres)");
+                  "VALUES (:name, :description,:genres)");
     query.bindValue(0, game.name());
     query.bindValue(1, game.desc());
     query.bindValue(2, game.genre());
 
-    if(query.exec()){
+    if (query.exec()) {
         qint64 lastInsertedId = query.lastInsertId().toLongLong();
 
         game.setId(lastInsertedId);
@@ -38,7 +38,8 @@ void GameLibrary::addGame(Game& game)
     }
 }
 
-void GameLibrary::deleteGame(int gameId) {
+void GameLibrary::deleteGame(int gameId)
+{
     db.beginTransaction();
     QSqlQuery query(db.db());
 
@@ -48,7 +49,7 @@ void GameLibrary::deleteGame(int gameId) {
 
     db.endTransaction();
     // Uses a predicate and deletes the game if the id matches.
-    m_games.removeIf([&gameId](const Game &game) {
+    m_games.removeIf([&gameId](const Game& game) {
         return game.getId() == gameId;
     });
     gameDeleted(gameId);
@@ -58,6 +59,7 @@ QList<Game>& GameLibrary::games() { return m_games; }
 
 GameLibrary::GameLibrary()
 {
+    // TODO: db.getGames() should be moved to be a part of this function.
     QList<Game> initialGameList = db.getGames();
     m_games.append(initialGameList);
 }

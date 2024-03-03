@@ -14,7 +14,6 @@ GameDatabase& GameDatabase::instance()
     return instance;
 }
 
-
 bool GameDatabase::open()
 {
     // TODO: Move this information to an environment variable
@@ -26,7 +25,7 @@ bool GameDatabase::open()
     return m_db.open();
 }
 
-QSqlDatabase& GameDatabase::db() { return m_db;}
+QSqlDatabase& GameDatabase::db() { return m_db; }
 
 void GameDatabase::close()
 {
@@ -50,10 +49,12 @@ void GameDatabase::setup()
     m_db.commit();
 }
 
-void GameDatabase::beginTransaction(){
+void GameDatabase::beginTransaction()
+{
     m_db.transaction();
 }
-void GameDatabase::endTransaction(){
+void GameDatabase::endTransaction()
+{
     m_db.commit();
 }
 

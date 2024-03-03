@@ -8,11 +8,14 @@
 #include <QAction>
 #include <QListView>
 #include <QMainWindow>
+#include <QMenu>
+#include <QMessageBox>
 #include <QTableView>
+#include <QToolBar>
+#include <QToolButton>
 
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
-
 
 /*!
  * \class MainWindow
@@ -29,13 +32,23 @@ public:
 
 public slots:
     void onAddGameDialog();
+    void onAboutAction();
+    void onAboutQtAction();
 
 private:
+    QToolBar* toolBar;
+
+    QToolButton* helpButton;
+    QMenu* helpMenu;
+
+    QAction* addGameAction;
+    QAction* aboutAction;
+    QAction* aboutQtAction;
+
     QListView* gameListView;
     GameLibrary& gameLibrary;
     GameLibraryModel* gameLibraryModel;
     AddGameDialog* addGameDialog;
-    QAction* addGameAction;
 };
 
 #endif // MAINWINDOW_H
