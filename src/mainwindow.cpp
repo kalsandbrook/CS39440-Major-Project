@@ -33,7 +33,7 @@ MainWindow::MainWindow()
 
     addGameDialog = new AddGameDialog(this);
 
-    gameView = new QListView(this);
+    gameView = new QTreeView(this);
     gameLibraryModel = new GameLibraryModel(this);
     gameView->setContextMenuPolicy(Qt::ActionsContextMenu);
     gameView->setItemDelegate(new GameItemDelegate(this));

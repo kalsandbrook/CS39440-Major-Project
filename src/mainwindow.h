@@ -10,7 +10,7 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <QMessageBox>
-#include <QTableView>
+#include <QTreeView>
 #include <QToolBar>
 #include <QToolButton>
 
@@ -67,7 +67,7 @@ private:
     QAction* aboutAction;
     QAction* aboutQtAction;
 
-    QListView* gameView;
+    QTreeView* gameView;
     GameLibrary& gameLibrary;
     GameLibraryModel* gameLibraryModel;
     AddGameDialog* addGameDialog;

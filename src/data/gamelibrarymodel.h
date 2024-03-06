@@ -98,6 +98,8 @@ public:
     QVariant data(const QModelIndex& index,
                   int role = Qt::DisplayRole) const override;
 
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+
 public slots:
     /**
      * @brief Updates the model when a game is added to the library.

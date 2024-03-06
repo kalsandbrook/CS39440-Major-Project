@@ -25,10 +25,7 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     if (!index.isValid())
         return;
 
-    int id = index.model()->data(index.siblingAtColumn(0)).toInt();
-    QString name = index.model()->data(index.siblingAtColumn(1)).toString();
-    QString description = index.model()->data(index.siblingAtColumn(2)).toString();
-    QString genres = index.model()->data(index.siblingAtColumn(3)).toString();
+    QString name = index.data().toString();
 
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
@@ -44,11 +41,11 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width() / 3, lineHeight));
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignTop, name);
 
-    QRect descriptionRect = nameRect.translated(0, lineHeight);
-    painter->drawText(descriptionRect, Qt::AlignLeft | Qt::AlignTop, description);
-
-    QRect genreRect = nameRect.translated(nameRect.width(), 0);
-    painter->drawText(genreRect, Qt::AlignLeft | Qt::AlignTop, genres);
+//    QRect descriptionRect = nameRect.translated(0, lineHeight);
+//    painter->drawText(descriptionRect, Qt::AlignLeft | Qt::AlignTop, description);
+//
+//    QRect genreRect = nameRect.translated(nameRect.width(), 0);
+//    painter->drawText(genreRect, Qt::AlignLeft | Qt::AlignTop, genres);
 
     painter->restore();
 }
