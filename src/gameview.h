@@ -6,6 +6,7 @@
 #define GAMEPILE_GAMEVIEW_H
 
 #include <QAbstractItemView>
+#include <QScrollBar>
 
 /**
  * @brief A view for displaying games in a grid.
@@ -30,7 +31,7 @@ public:
 
     QRect visualRect(const QModelIndex& index) const override;
 
-    void scrollTo(const QModelIndex& index, ScrollHint hint) override;
+    void scrollTo(QModelIndex const& index, QAbstractItemView::ScrollHint hint) override;
 
     QModelIndex indexAt(const QPoint& point) const override;
 
@@ -46,6 +47,8 @@ protected:
     void setSelection(const QRect& rect, QItemSelectionModel::SelectionFlags command) override;
 
     QRegion visualRegionForSelection(const QItemSelection& selection) const override;
+
+    void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // GAMEPILE_GAMEVIEW_H

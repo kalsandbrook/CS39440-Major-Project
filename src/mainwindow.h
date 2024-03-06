@@ -14,6 +14,7 @@
 #include <QToolBar>
 #include <QToolButton>
 
+#include "gameview.h"
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
 
@@ -66,7 +67,7 @@ private:
     QAction* aboutAction;
     QAction* aboutQtAction;
 
-    QListView* gameListView;
+    QListView* gameView;
     GameLibrary& gameLibrary;
     GameLibraryModel* gameLibraryModel;
     AddGameDialog* addGameDialog;

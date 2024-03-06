@@ -33,12 +33,12 @@ MainWindow::MainWindow()
 
     addGameDialog = new AddGameDialog(this);
 
-    gameListView = new QListView(this);
+    gameView = new QListView(this);
     gameLibraryModel = new GameLibraryModel(this);
-    gameListView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    gameListView->setItemDelegate(new GameItemDelegate(this));
-    gameListView->setModel(gameLibraryModel);
-    setCentralWidget(gameListView);
+    gameView->setContextMenuPolicy(Qt::ActionsContextMenu);
+    gameView->setItemDelegate(new GameItemDelegate(this));
+    gameView->setModel(gameLibraryModel);
+    setCentralWidget(gameView);
 
     connect(addGameAction, &QAction::triggered, this,
         &MainWindow::onAddGameDialog);
