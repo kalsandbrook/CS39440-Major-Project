@@ -33,6 +33,10 @@ MainWindow::MainWindow()
     helpButton->setMenu(helpMenu);
     mainToolBar->addWidget(helpButton);
 
+    gameDetailsBar = new QToolBar("Game Details Toolbar",this);
+    addToolBar(Qt::RightToolBarArea,gameDetailsBar);
+    gameDetailsBar->setMovable(false);
+
 
 
     addGameDialog = new AddGameDialog(this);
