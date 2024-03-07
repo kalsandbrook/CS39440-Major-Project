@@ -28,67 +28,61 @@ public:
  * @param desc The description of the game.
  * @param genres The genres(s) of the game.
 */
-    Game(int id, QString name, QString desc, QStringList genres)
-            : m_id(id)
-            , m_name(std::move(name))
-            , m_desc(std::move(desc))
-            , m_genres(std::move(genres))
-    {
-    }
+    Game(int id, QString name, QString desc, QStringList genres);
     Game() = default;
     /**
      * @brief Sets the ID of the game.
      *
      * @param newId
     */
-    void setId(int newId) { m_id = newId; }
+    void setId(int newId);
     /**
      * @brief Sets the Name of the game.
      *
      * @param name
      */
-    void setName(QString name){ m_name = std::move(name); };
+    void setName(QString name);;
     /**
      * @brief Sets the Description of the game.
      *
      * @param desc
      */
-    void setDesc(QString desc){ m_desc = std::move(desc); };
+    void setDesc(QString desc);;
     /**
      * @brief Sets the list of genres for the game.
      *
      * @param genres
      */
-    void setGenres(QStringList genres){ m_genres = std::move(genres); };
+    void setGenres(QStringList genres);;
 
     /**
      * @brief Returns the ID of the game.
      *
      * @return The ID of the game.
     */
-    [[nodiscard]] int id() const { return m_id; }
+    [[nodiscard]] int id() const;
 
     /**
      * @brief Returns the name of the game.
      *
      * @return The name of the game.
     */
-    [[nodiscard]] QString name() const { return m_name; }
+    [[nodiscard]] QString name() const;
     /**
      * @brief Returns the description of the game.
      *
      * @return The description of the game.
     */
-    [[nodiscard]] QString desc() const { return m_desc; }
+    [[nodiscard]] QString desc() const;
     /**
      * @brief Returns the genres of the game.
      *
      * @return The genres of the game.
     */
-    [[nodiscard]] QStringList genres() const { return m_genres; }
+    [[nodiscard]] QStringList genres() const;
 
 private:
-    int m_id;
+    int m_id{};
     QString m_name;
     QString m_desc;
     QStringList m_genres;
