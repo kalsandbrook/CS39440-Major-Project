@@ -58,10 +58,11 @@ public slots:
     void onAboutQtAction();
 
 private:
-    QToolBar* toolBar;
-
+    QToolBar* mainToolBar;
     QToolButton* helpButton;
     QMenu* helpMenu;
+
+    QToolBar* gameDetailsBar;
 
     QAction* addGameAction;
     QAction* aboutAction;

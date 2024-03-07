@@ -26,6 +26,7 @@ add_executable(GamePile
     src/data/gamelibrarymodel.cpp
     src/data/gamelibrarymodel.h
     src/data/gamedatabase.h
+    src/data/gamedatabase.cpp
     src/addgamedialog.cpp
     src/addgamedialog.h
     src/main.cpp
@@ -35,7 +36,7 @@ add_executable(GamePile
     src/gameitemdelegate.h
     src/gameview.cpp
     src/gameview.h
-        src/data/gamedatabase.cpp
+        src/resources.qrc
 )
 
 target_link_libraries(GamePile

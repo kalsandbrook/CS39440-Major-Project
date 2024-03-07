@@ -12,6 +12,8 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
+    Q_INIT_RESOURCE(resources);
+
     GameDatabase db = GameDatabase::instance();
     db.open();
     db.setup();

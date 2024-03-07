@@ -12,11 +12,13 @@
 MainWindow::MainWindow()
     : gameLibrary(GameLibrary::instance())
 {
-    toolBar = addToolBar("Main Toolbar");
-    toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    this->setWindowIcon(QIcon(":/icon.png"));
+
+    mainToolBar = addToolBar("Main Toolbar");
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     addGameAction = new QAction(QIcon::fromTheme("list-add"), "&Add Game", this);
-    toolBar->addAction(addGameAction);
-    toolBar->addSeparator();
+    mainToolBar->addAction(addGameAction);
+    mainToolBar->addSeparator();
 
     helpButton = new QToolButton(this);
     helpButton->setIcon(QIcon::fromTheme("help-contextual"));
@@ -29,7 +31,9 @@ MainWindow::MainWindow()
     aboutQtAction = helpMenu->addAction(tr("About &Qt"));
 
     helpButton->setMenu(helpMenu);
-    toolBar->addWidget(helpButton);
+    mainToolBar->addWidget(helpButton);
+
+
 
     addGameDialog = new AddGameDialog(this);
 
@@ -40,8 +44,7 @@ MainWindow::MainWindow()
     gameView->setModel(gameLibraryModel);
     setCentralWidget(gameView);
 
-    connect(addGameAction, &QAction::triggered, this,
-        &MainWindow::onAddGameDialog);
+    connect(addGameAction, &QAction::triggered, this,&MainWindow::onAddGameDialog);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::onAboutAction);
     connect(aboutQtAction, &QAction::triggered, this, &MainWindow::onAboutQtAction);
 }
