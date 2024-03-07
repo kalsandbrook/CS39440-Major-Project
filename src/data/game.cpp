@@ -5,11 +5,11 @@
 #include "game.h"
 
 Game::Game(int id, QString name, QString desc, QStringList genres)
-        : m_id(id)
-        , m_name(std::move(name))
-        , m_desc(std::move(desc))
-        , m_genres(std::move(genres))
-        {}
+        : m_id(id), m_name(std::move(name)), m_desc(std::move(desc)), m_genres(std::move(genres)) {
+    m_status = Status::NONE;
+};
+
+
 
 int Game::id() const { return m_id; }
 
@@ -26,3 +26,11 @@ void Game::setName(QString name) { m_name = std::move(name); }
 void Game::setDesc(QString desc) { m_desc = std::move(desc); }
 
 void Game::setGenres(QStringList genres) { m_genres = std::move(genres); }
+
+void Game::setStatus(Game::Status status) {
+    m_status = status;
+}
+
+Game::Status Game::status() const {
+    return m_status;
+}

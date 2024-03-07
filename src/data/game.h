@@ -30,6 +30,15 @@ public:
 */
     Game(int id, QString name, QString desc, QStringList genres);
     Game() = default;
+
+    enum class Status { // Possible expansion of this feature: allow users to set custom status?
+        NONE,
+        BACKLOG,
+        PLAYING,
+        COMPLETED,
+        ABANDONED
+    };
+
     /**
      * @brief Sets the ID of the game.
      *
@@ -41,19 +50,21 @@ public:
      *
      * @param name
      */
-    void setName(QString name);;
+    void setName(QString name);
     /**
      * @brief Sets the Description of the game.
      *
      * @param desc
      */
-    void setDesc(QString desc);;
+    void setDesc(QString desc);
     /**
      * @brief Sets the list of genres for the game.
      *
      * @param genres
      */
-    void setGenres(QStringList genres);;
+    void setGenres(QStringList genres);
+
+    void setStatus(Status status);
 
     /**
      * @brief Returns the ID of the game.
@@ -81,11 +92,14 @@ public:
     */
     [[nodiscard]] QStringList genres() const;
 
+    Status status() const;
+
 private:
     int m_id{};
     QString m_name;
     QString m_desc;
     QStringList m_genres;
+    Status m_status;
 };
 
 #endif // GAME_H
