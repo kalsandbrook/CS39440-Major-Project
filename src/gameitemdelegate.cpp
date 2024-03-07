@@ -11,14 +11,14 @@
 #include <QVBoxLayout>
 
 #include "data/gamelibrarymodel.h"
+#include "gamedetailswidget.h"
 #include "gameitemdelegate.h"
 #include "addgamedialog.h"
 
 GameItemDelegate::GameItemDelegate(QObject* parent)
         : QStyledItemDelegate(parent)
         , gameLibrary(GameLibrary::instance())
-{
-}
+{}
 
 void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
@@ -38,14 +38,8 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     QRect contentRect = option.rect.adjusted(2, 2, -2, -2);
     int lineHeight = QFontMetrics(option.font).height();
 
-    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width() / 3, lineHeight));
+    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight));
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignTop, name);
-
-//    QRect descriptionRect = nameRect.translated(0, lineHeight);
-//    painter->drawText(descriptionRect, Qt::AlignLeft | Qt::AlignTop, description);
-//
-//    QRect genreRect = nameRect.translated(nameRect.width(), 0);
-//    painter->drawText(genreRect, Qt::AlignLeft | Qt::AlignTop, genres);
 
     painter->restore();
 }

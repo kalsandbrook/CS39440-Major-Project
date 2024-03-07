@@ -39,7 +39,8 @@ public:
         NameRole = Qt::UserRole + 1,
         DescRole,
         GenreRole,
-        IdRole
+        IdRole,
+        StatusRole
     };
 
     /**
@@ -128,7 +129,9 @@ public slots:
      */
     void onGameUpdated(const Game& game);
 
+    Game getGame(QModelIndex index);
 protected:
+
     /**
      * @brief Returns the role names of the model.
      *
@@ -139,9 +142,9 @@ protected:
      * @see GameRoles
      */
     QHash<int, QByteArray> roleNames() const override;
-
 private:
     GameLibrary& m_gameLibrary;
+
     QList<Game> m_games;
 };
 

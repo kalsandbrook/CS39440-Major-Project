@@ -89,6 +89,8 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
             return game.desc();
         case GenreRole:
             return game.genres();
+        case StatusRole:
+            return game.status();
         default:
             return {};
     }
@@ -101,6 +103,7 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
     roles[DescRole] = "desc";
     roles[GenreRole] = "genres";
     roles[IdRole] = "id";
+    roles[StatusRole] = "status";
     // Add other custom role names if needed
     return roles;
 }
@@ -143,4 +146,8 @@ QVariant GameLibraryModel::headerData(int section, Qt::Orientation orientation, 
         }
     }
     return QAbstractItemModel::headerData(section, orientation, role);
+}
+
+Game GameLibraryModel::getGame(QModelIndex index){
+    return m_gameLibrary.getGameById(data(index, IdRole).toInt());
 }

@@ -96,6 +96,8 @@ public:
 
     Status status() const;
 
+    QString status_str() const;
+
 private:
     int m_id{};
     QString m_name;

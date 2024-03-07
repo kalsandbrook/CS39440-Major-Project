@@ -6,6 +6,7 @@
 
 #include "data/gamelibrary.h"
 #include "gameitemdelegate.h"
+#include "gamedetailswidget.h"
 #include <qnamespace.h>
 #include <qstyleoption.h>
 
@@ -33,11 +34,6 @@ MainWindow::MainWindow()
     helpButton->setMenu(helpMenu);
     mainToolBar->addWidget(helpButton);
 
-    gameDetailsBar = new QToolBar("Game Details Toolbar",this);
-    addToolBar(Qt::RightToolBarArea,gameDetailsBar);
-    gameDetailsBar->setMovable(false);
-
-
 
     addGameDialog = new AddGameDialog(this);
 
@@ -47,6 +43,14 @@ MainWindow::MainWindow()
     gameView->setItemDelegate(new GameItemDelegate(this));
     gameView->setModel(gameLibraryModel);
     setCentralWidget(gameView);
+
+    gameDetailsBar = new QToolBar("Game Details Toolbar",this);
+    addToolBar(Qt::RightToolBarArea,gameDetailsBar);
+    gameDetailsBar->setMovable(false);
+    gameDetailsWidget = new GameDetailsWidget(gameLibraryModel,this);
+    gameDetailsBar->addWidget(gameDetailsWidget);
+
+    connect(gameView, &QAbstractItemView::clicked, gameDetailsWidget, &GameDetailsWidget::updateGame);
 
     connect(addGameAction, &QAction::triggered, this,&MainWindow::onAddGameDialog);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::onAboutAction);

@@ -17,6 +17,7 @@
 #include "gameview.h"
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
+#include "gamedetailswidget.h"
 
 /**
  * @brief The MainWindow class is the main window of the application.
@@ -57,15 +58,18 @@ public slots:
      */
     void onAboutQtAction();
 
+
 private:
     QToolBar* mainToolBar;
     QToolButton* helpButton;
     QMenu* helpMenu;
 
     QToolBar* gameDetailsBar;
+    GameDetailsWidget* gameDetailsWidget;
 
     QAction* addGameAction;
     QAction* aboutAction;
+
     QAction* aboutQtAction;
 
     QTreeView* gameView;
