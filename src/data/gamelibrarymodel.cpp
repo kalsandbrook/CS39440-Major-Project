@@ -107,8 +107,11 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
 
 void GameLibraryModel::onGameAdded(const Game& game)
 {
+    int row = m_games.size();
+    beginInsertRows(QModelIndex(),row,row);
     m_games.append(game);
-    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
+    endInsertRows();
+    //emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
 }
 void GameLibraryModel::onGameDeleted(const int gameId)
 {

@@ -6,7 +6,9 @@
 #define GAME_H
 #include <QList>
 #include <QString>
+#include <QObject>
 #include <utility>
+
 
 /**
  * @brief A class representing a video game.
@@ -16,7 +18,7 @@
  * This will contain more fields in future, such as the game's release date, developer, and publisher.
  * As it stands (as of 2024-03-03), the class is very simple and only contains the game's name, description, and genres.
 */
-class Game {
+class Game{
 public:
 /**
  * @brief Constructs a new Game object.
@@ -31,12 +33,12 @@ public:
     Game(int id, QString name, QString desc, QStringList genres);
     Game() = default;
 
-    enum class Status { // Possible expansion of this feature: allow users to set custom status?
-        NONE,
-        BACKLOG,
-        PLAYING,
-        COMPLETED,
-        ABANDONED
+    enum Status { // Possible expansion of this feature: allow users to set custom status?
+        NONE=0,
+        BACKLOG=1,
+        PLAYING=2,
+        COMPLETED=3,
+        ABANDONED=4
     };
 
     /**
