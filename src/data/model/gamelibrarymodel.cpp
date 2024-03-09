@@ -151,6 +151,8 @@ QVariant GameLibraryModel::headerData(int section, Qt::Orientation orientation, 
                 return "Description";
             case 2:
                 return "Genres";
+            case 3:
+                return "Status";
         }
     }
     return QAbstractItemModel::headerData(section, orientation, role);
