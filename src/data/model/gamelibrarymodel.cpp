@@ -60,7 +60,7 @@ int GameLibraryModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
     // This will be expanded to include other game properties soon
-    return 3;
+    return 4;
 }
 
 QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
@@ -78,6 +78,8 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
                     return game.desc();
                 case 2:
                     return game.genres();
+                case 3:
+                    return game.status_str();
                 default:
                     return {};
             }
