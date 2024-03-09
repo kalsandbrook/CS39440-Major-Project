@@ -63,38 +63,40 @@ public:
      *
      * @return The name of the game.
      */
-    QString name() const;
+    QString getName() const;
 
     /**
      * @brief Returns the description of the game.
      *
      * @return The description of the game.
      */
-    QString desc() const;
+    QString getDesc() const;
 
     /**
      * @brief Returns the genres of the game.
      *
      * @return The genres of the game.
      */
-    QStringList genre() const;
+    QStringList getGenre() const;
 
+    Game::Status getStatus() const;
 private:
+
     static void populateGenreList(QListWidget* genreList);
-
     bool editingGame;
+
     Game editedGame;
-
     QLabel* nameLabel;
+
     QLineEdit* nameLineEdit;
-
     QLabel* descLabel;
+
     QTextEdit* descTextEdit;
-
     QLabel* genreLabel;
-    QListWidget* genreList;
 
+    QListWidget* genreList;
     QLabel* statusLabel;
+
     QComboBox* statusBox;
 
     QDialogButtonBox* buttonBox;

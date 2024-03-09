@@ -82,22 +82,26 @@ void GameEditDialog::accept()
     GameLibrary& gameLibrary = GameLibrary::instance();
 
     if(editingGame){
-        editedGame.setName(name());
-        editedGame.setDesc(desc());
-        editedGame.setGenres(genre());
+        editedGame.setName(getName());
+        editedGame.setDesc(getDesc());
+        editedGame.setGenres(getGenre());
+        editedGame.setStatus(getStatus());
         gameLibrary.updateGame(editedGame);
     } else {
-        Game newGame(0, name(), desc(), genre());
+        Game newGame(0, getName(), getDesc(), getGenre());
+        newGame.setStatus(getStatus());
         gameLibrary.addGame(newGame);
     }
     QDialog::accept();
 }
 
-QString GameEditDialog::name() const { return nameLineEdit->text(); }
+Game::Status GameEditDialog::getStatus() const { return GameHelper::stringToStatus(statusBox->currentText()); }
 
-QString GameEditDialog::desc() const { return descTextEdit->toPlainText(); }
+QString GameEditDialog::getName() const { return nameLineEdit->text(); }
 
-QStringList GameEditDialog::genre() const
+QString GameEditDialog::getDesc() const { return descTextEdit->toPlainText(); }
+
+QStringList GameEditDialog::getGenre() const
 {
     QStringList genres;
     QList<QListWidgetItem*> items = genreList->selectedItems();
@@ -115,6 +119,7 @@ int GameEditDialog::exec()
     nameLineEdit->clear();
     descTextEdit->clear();
     genreList->clearSelection();
+    statusBox->setCurrentIndex(0);
 
     return QDialog::exec();
 }
