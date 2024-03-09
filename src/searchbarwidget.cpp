@@ -11,12 +11,20 @@ SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent){
     searchIcon = QIcon::fromTheme("search");
 
     searchBox = new QLineEdit();
-    completer = new QCompleter();
 
     layout->addWidget(searchLabel);
     layout->addWidget(searchBox);
 
-
     setMaximumWidth(250);
     setLayout(layout);
+
+    connect(searchBox, &QLineEdit::editingFinished, this, &SearchBarWidget::searchBoxEdited);
+}
+
+void SearchBarWidget::searchBoxEdited(){
+    searchUpdated(searchBox->text());
+}
+
+QString SearchBarWidget::getQuery(){
+    return searchBox->text();
 }

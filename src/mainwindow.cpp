@@ -64,6 +64,8 @@ MainWindow::MainWindow()
 
     connect(gameView, &QAbstractItemView::clicked, gameDetailsWidget, &GameDetailsWidget::updateGame);
 
+    connect(searchBar,&SearchBarWidget::searchUpdated,this,&MainWindow::onSearchUpdated);
+
     connect(addGameAction, &QAction::triggered, this,&MainWindow::onAddGameDialog);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::onAboutAction);
     connect(aboutQtAction, &QAction::triggered, this, &MainWindow::onAboutQtAction);
@@ -83,4 +85,9 @@ void MainWindow::onAboutAction()
 void MainWindow::onAboutQtAction()
 {
     QMessageBox::aboutQt(this);
+}
+
+void MainWindow::onSearchUpdated(QString query) {
+    // TODO: Use Fuzzy Searching
+    gameLibraryProxyModel->setFilterRegularExpression(query);
 }

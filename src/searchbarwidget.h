@@ -13,14 +13,21 @@
 #include <QCompleter>
 
 class SearchBarWidget : public QWidget {
+    Q_OBJECT
 public:
     SearchBarWidget(QWidget* parent);
+    QString getQuery();
+
+signals:
+    void searchUpdated(QString query);
+
+private slots:
+    void searchBoxEdited();
 private:
     QHBoxLayout* layout;
     QLabel* searchLabel;
     QIcon searchIcon;
     QLineEdit* searchBox;
-    QCompleter* completer;
 };
 
 

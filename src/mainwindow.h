@@ -60,6 +60,7 @@ public slots:
      */
     void onAboutQtAction();
 
+    void onSearchUpdated(QString query);
 
 private:
     QToolBar* mainToolBar;
