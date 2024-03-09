@@ -42,6 +42,8 @@ add_executable(GamePile
         src/data/gamedatabasehelper.h
         src/gamedetailswidget.cpp
         src/gamedetailswidget.h
+        src/searchbarwidget.cpp
+        src/searchbarwidget.h
 )
 
 target_link_libraries(GamePile

@@ -15,6 +15,7 @@
 #include <QToolButton>
 #include <QSortFilterProxyModel>
 
+#include "searchbarwidget.h"
 #include "gameview.h"
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
@@ -64,18 +65,19 @@ private:
     QToolBar* mainToolBar;
     QToolButton* helpButton;
     QMenu* helpMenu;
+    SearchBarWidget* searchBar;
 
     QToolBar* gameDetailsBar;
     GameDetailsWidget* gameDetailsWidget;
 
     QAction* addGameAction;
-    QAction* aboutAction;
 
+    QAction* aboutAction;
     QAction* aboutQtAction;
 
     QTreeView* gameView;
-    GameLibrary& gameLibrary;
     GameLibraryModel* gameLibraryModel;
+    QSortFilterProxyModel* gameLibraryProxyModel;
     AddGameDialog* addGameDialog;
 };
 

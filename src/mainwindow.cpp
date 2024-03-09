@@ -9,9 +9,9 @@
 #include "gamedetailswidget.h"
 #include <qnamespace.h>
 #include <qstyleoption.h>
+#include <QSizePolicy>
 
 MainWindow::MainWindow()
-    : gameLibrary(GameLibrary::instance())
 {
     this->setWindowIcon(QIcon(":/icon.png"));
 
@@ -19,7 +19,15 @@ MainWindow::MainWindow()
     mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     addGameAction = new QAction(QIcon::fromTheme("list-add"), "&Add Game", this);
     mainToolBar->addAction(addGameAction);
+
     mainToolBar->addSeparator();
+
+    searchBar = new SearchBarWidget(this);
+    mainToolBar->addWidget(searchBar);
+
+
+    mainToolBar->addSeparator();
+
 
     helpButton = new QToolButton(this);
     helpButton->setIcon(QIcon::fromTheme("help-contextual"));
@@ -39,7 +47,7 @@ MainWindow::MainWindow()
 
     gameView = new QTreeView(this);
     gameLibraryModel = new GameLibraryModel(this);
-    QSortFilterProxyModel* gameLibraryProxyModel = new QSortFilterProxyModel(this);
+    gameLibraryProxyModel = new QSortFilterProxyModel(this);
     gameView->setContextMenuPolicy(Qt::ActionsContextMenu);
     gameView->setItemDelegate(new GameItemDelegate(this));
     gameLibraryProxyModel->setSourceModel(gameLibraryModel);
