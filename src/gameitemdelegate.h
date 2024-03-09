@@ -36,18 +36,6 @@ public:
     */
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
-    /**
-     * @brief Handles editor events.
-     * 
-     * This method handles editor events (such as the context menu) for the given event, model, style option, and model index.
-     * 
-     * @param event The event to handle.
-     * @param model The model to use.
-     * @param option The style option to use.
-     * @param index The model index to use.
-     * @return True if the event was handled, false if not.
-    */
-    bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
 
     /**
      * @brief Returns the size hint for the game item.
