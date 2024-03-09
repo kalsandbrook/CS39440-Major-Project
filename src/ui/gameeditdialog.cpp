@@ -25,7 +25,8 @@ GameEditDialog::GameEditDialog(QWidget* parent)
 
     statusLabel = new QLabel(tr("Status:"));
     statusBox = new QComboBox(this);
-    statusBox->addItems({Game::Status::NONE});
+    statusBox->addItems({"NONE","BACKLOG","PLAYING","COMPLETED","ABANDONED"});
+    statusBox->setCurrentIndex(0); // Default to NONE
 
     populateGenreList(genreList);
 
@@ -34,6 +35,7 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &GameEditDialog::verify);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &GameEditDialog::reject);
 
+    QSpacerItem* spacer = new QSpacerItem(20,20);
     auto* mainLayout = new QGridLayout;
     mainLayout->addWidget(nameLabel, 0, 0);
     mainLayout->addWidget(nameLineEdit, 0, 1);
@@ -41,7 +43,10 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     mainLayout->addWidget(descTextEdit, 1, 1);
     mainLayout->addWidget(genreLabel, 2, 0);
     mainLayout->addWidget(genreList, 2, 1, 3, 2);
-    mainLayout->addWidget(buttonBox, 5, 1, 1, 2);
+    mainLayout->addWidget(statusLabel,5,0);
+    mainLayout->addWidget(statusBox,5,1);
+    mainLayout->addItem(spacer,6,0);
+    mainLayout->addWidget(buttonBox, 7, 1, 1, 2);
 
     resize(400, 300);
 
