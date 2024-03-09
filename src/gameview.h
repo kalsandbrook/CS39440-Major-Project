@@ -5,20 +5,21 @@
 #ifndef GAMEPILE_GAMEVIEW_H
 #define GAMEPILE_GAMEVIEW_H
 
-#include <QAbstractItemView>
+#include <QTreeView>
 #include <QScrollBar>
 
 /**
  * @brief A view for displaying games in a grid.
  * 
- * This class is a view for displaying games in a grid, and provides the functionality for scrolling, selecting, and navigating the list of games.
+ * This class is a view for displaying games in a list, and provides the functionality for scrolling, selecting, and navigating the list of games.
  *
- * It is a subclass of QAbstractItemView.
  *
- * At this time, it is not used in the application, but it will be used in future as a part of MainWindow.
- * @todo Implement the functionality for displaying the games in a grid.
+ * It is a subclass of QTreeView.
+ *
+ * In future, this may instead display games in a grid, instead subclassing QAbstractItemView.
+ * @todo Investigate grid views
 */
-class GameView : public QAbstractItemView {
+class GameView : public QTreeView {
 public:
     /**
      * @brief Constructs a new GameView object.
@@ -29,26 +30,12 @@ public:
     */
     GameView(QWidget* parent);
 
-    QRect visualRect(const QModelIndex& index) const override;
-
-    void scrollTo(QModelIndex const& index, QAbstractItemView::ScrollHint hint) override;
-
-    QModelIndex indexAt(const QPoint& point) const override;
-
 protected:
-    QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) override;
+    void setupContextMenu();
 
-    int horizontalOffset() const override;
-
-    int verticalOffset() const override;
-
-    bool isIndexHidden(const QModelIndex& index) const override;
-
-    void setSelection(const QRect& rect, QItemSelectionModel::SelectionFlags command) override;
-
-    QRegion visualRegionForSelection(const QItemSelection& selection) const override;
-
-    void paintEvent(QPaintEvent *event) override;
+private slots:
+    void handleEdit();
+    void handleDelete();
 };
 
 #endif // GAMEPILE_GAMEVIEW_H

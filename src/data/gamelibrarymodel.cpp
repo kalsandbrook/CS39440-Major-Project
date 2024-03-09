@@ -118,20 +118,26 @@ void GameLibraryModel::onGameAdded(const Game& game)
 }
 void GameLibraryModel::onGameDeleted(const int gameId)
 {
-    // Uses a predicate and deletes the game if the id matches.
-    m_games.removeIf([&gameId](const Game& game) {
-        return game.id() == gameId;
-    });
+    QModelIndexList matchingIndexes = match(index(0, 0), IdRole, gameId, 1, Qt::MatchExactly);
+
+    if (!matchingIndexes.isEmpty()) {
+        QModelIndex matchedIndex = matchingIndexes.first();
+
+        beginRemoveRows(QModelIndex(), matchedIndex.row(), matchedIndex.row());
+        m_games.removeAt(matchedIndex.row());
+        endRemoveRows();
+    }
 }
 void GameLibraryModel::onGameUpdated(const Game &game) {
-    // TODO: This will change when GameLibraryModel is updated to use a QMap
-    // This is an incredibly lazy way to do this, and it means that games go to the bottom of the list when updated :(
+    QModelIndexList matchingIndexes = match(index(0, 0), IdRole, game.id(), 1, Qt::MatchExactly);
 
-    // Delete the game from the library
-    onGameDeleted(game.id());
+    if (!matchingIndexes.isEmpty()) {
+        QModelIndex matchedIndex = matchingIndexes.first();
 
-    // Add the updated game to the library
-    onGameAdded(game);
+        m_games[matchedIndex.row()] = game;
+
+        emit dataChanged(matchedIndex, matchedIndex, {Qt::DisplayRole, NameRole, DescRole, GenreRole, StatusRole});
+    }
 }
 
 QVariant GameLibraryModel::headerData(int section, Qt::Orientation orientation, int role) const {

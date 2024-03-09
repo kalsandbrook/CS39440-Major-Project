@@ -17,7 +17,7 @@
 
 #include "searchbarwidget.h"
 #include "gameview.h"
-#include "addgamedialog.h"
+#include "gameeditdialog.h"
 #include "data/gamelibrarymodel.h"
 #include "gamedetailswidget.h"
 
@@ -75,10 +75,10 @@ private:
     QAction* aboutAction;
     QAction* aboutQtAction;
 
-    QTreeView* gameView;
+    GameView* gameView;
     GameLibraryModel* gameLibraryModel;
     QSortFilterProxyModel* gameLibraryProxyModel;
-    AddGameDialog* addGameDialog;
+    GameEditDialog* addGameDialog;
 };
 
 #endif // MAINWINDOW_H

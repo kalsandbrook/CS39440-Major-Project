@@ -13,7 +13,7 @@
 #include "data/gamelibrarymodel.h"
 #include "gamedetailswidget.h"
 #include "gameitemdelegate.h"
-#include "addgamedialog.h"
+#include "gameeditdialog.h"
 
 GameItemDelegate::GameItemDelegate(QObject* parent)
         : QStyledItemDelegate(parent)
@@ -38,7 +38,7 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     QRect contentRect = option.rect.adjusted(2, 2, -2, -2);
     int lineHeight = QFontMetrics(option.font).height();
 
-    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight));
+    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight*2));
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignTop, name);
 
     painter->restore();

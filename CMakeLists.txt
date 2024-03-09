@@ -27,8 +27,8 @@ add_executable(GamePile
     src/data/gamelibrarymodel.h
     src/data/gamedatabase.h
     src/data/gamedatabase.cpp
-    src/addgamedialog.cpp
-    src/addgamedialog.h
+        src/gameeditdialog.cpp
+        src/gameeditdialog.h
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h

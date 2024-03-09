@@ -18,6 +18,8 @@
  * It functions as a single source of truth for the games in the library, performing the actions of a Data Access Object (DAO).
  * 
  * This class is a singleton, and can be accessed using the instance() method.
+ *
+ * This should probably be merged with GameLibraryModel, as they handle very similar responsibilities.
 */
 class GameLibrary : public QObject {
 Q_OBJECT

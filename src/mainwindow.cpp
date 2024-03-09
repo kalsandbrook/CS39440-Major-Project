@@ -43,16 +43,17 @@ MainWindow::MainWindow()
     mainToolBar->addWidget(helpButton);
 
 
-    addGameDialog = new AddGameDialog(this);
+    addGameDialog = new GameEditDialog(this);
 
-    gameView = new QTreeView(this);
+    gameView = new GameView(this);
     gameLibraryModel = new GameLibraryModel(this);
     gameLibraryProxyModel = new QSortFilterProxyModel(this);
-    gameView->setContextMenuPolicy(Qt::ActionsContextMenu);
-    gameView->setItemDelegate(new GameItemDelegate(this));
     gameLibraryProxyModel->setSourceModel(gameLibraryModel);
-    gameView->setModel(gameLibraryProxyModel);
+
     gameView->setSortingEnabled(true);
+    gameView->setModel(gameLibraryProxyModel);
+    gameView->setItemDelegate(new GameItemDelegate(this));
+
     setCentralWidget(gameView);
 
     gameDetailsBar = new QToolBar("Game Details Toolbar",this);
