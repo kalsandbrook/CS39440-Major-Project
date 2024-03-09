@@ -13,6 +13,7 @@
 #include <QTreeView>
 #include <QToolBar>
 #include <QToolButton>
+#include <QSortFilterProxyModel>
 
 #include "gameview.h"
 #include "addgamedialog.h"

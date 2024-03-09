@@ -39,9 +39,12 @@ MainWindow::MainWindow()
 
     gameView = new QTreeView(this);
     gameLibraryModel = new GameLibraryModel(this);
+    QSortFilterProxyModel* gameLibraryProxyModel = new QSortFilterProxyModel(this);
     gameView->setContextMenuPolicy(Qt::ActionsContextMenu);
     gameView->setItemDelegate(new GameItemDelegate(this));
-    gameView->setModel(gameLibraryModel);
+    gameLibraryProxyModel->setSourceModel(gameLibraryModel);
+    gameView->setModel(gameLibraryProxyModel);
+    gameView->setSortingEnabled(true);
     setCentralWidget(gameView);
 
     gameDetailsBar = new QToolBar("Game Details Toolbar",this);
