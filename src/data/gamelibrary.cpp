@@ -3,6 +3,7 @@
 //
 
 #include "gamelibrary.h"
+#include "gamedatabasehelper.h"
 #include "qlogging.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -19,11 +20,13 @@ void GameLibrary::addGame(Game& game)
     db.beginTransaction();
     QSqlQuery query(db.db());
 
-    query.prepare("INSERT INTO games (Name, Description, Genres)"
-                  "VALUES (:name, :description,:genres)");
-    query.bindValue(0, game.name());
-    query.bindValue(1, game.desc());
-    query.bindValue(2, game.genres());
+    query.prepare("INSERT INTO games (Status, Name, Description, Genres)"
+                  "VALUES (:status, :name, :description,:genres)");
+
+    query.bindValue(":status", GameDBHelper::statusToString(game.status()));
+    query.bindValue(":name", game.name());
+    query.bindValue(":description", game.desc());
+    query.bindValue(":genres", game.genres());
 
     if (query.exec()) {
         qint64 lastInsertedId = query.lastInsertId().toLongLong();
@@ -32,6 +35,7 @@ void GameLibrary::addGame(Game& game)
 
         db.endTransaction();
         m_games[game.id()] = game;
+
         gameAdded(game);
     } else {
         qFatal("Failed to add a game to the DB.");
@@ -59,9 +63,10 @@ void GameLibrary::updateGame(Game &game) {
     QSqlQuery query(db.db());
 
     query.prepare("UPDATE games "
-                  "SET Name = :name,  Description = :desc, Genres = :genres "
+                  "SET Status = :status, Name = :name, Description = :desc, Genres = :genres "
                   "WHERE GameId = :gameId");
 
+    query.bindValue(":status",GameDBHelper::statusToString(game.status()));
     query.bindValue(":name",game.name());
     query.bindValue(":desc",game.desc());
     query.bindValue(":genres",game.genres());
@@ -94,7 +99,7 @@ const Game& GameLibrary::getGameById(int gameId) const {
     auto it = m_games.find(gameId);
     if ( it != m_games.end() )
         return it.value();
-    return Game();
+    else qFatal("Unable to fetch Game from GameLibrary.");
 }
 
 GameLibrary::~GameLibrary() = default;

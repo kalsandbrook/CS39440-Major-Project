@@ -10,12 +10,16 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <QMessageBox>
-#include <QTableView>
+#include <QTreeView>
 #include <QToolBar>
 #include <QToolButton>
+#include <QSortFilterProxyModel>
 
+#include "searchbarwidget.h"
+#include "gameview.h"
 #include "addgamedialog.h"
 #include "data/gamelibrarymodel.h"
+#include "gamedetailswidget.h"
 
 /**
  * @brief The MainWindow class is the main window of the application.
@@ -56,19 +60,24 @@ public slots:
      */
     void onAboutQtAction();
 
-private:
-    QToolBar* toolBar;
 
+private:
+    QToolBar* mainToolBar;
     QToolButton* helpButton;
     QMenu* helpMenu;
+    SearchBarWidget* searchBar;
+
+    QToolBar* gameDetailsBar;
+    GameDetailsWidget* gameDetailsWidget;
 
     QAction* addGameAction;
+
     QAction* aboutAction;
     QAction* aboutQtAction;
 
-    QListView* gameListView;
-    GameLibrary& gameLibrary;
+    QTreeView* gameView;
     GameLibraryModel* gameLibraryModel;
+    QSortFilterProxyModel* gameLibraryProxyModel;
     AddGameDialog* addGameDialog;
 };
 

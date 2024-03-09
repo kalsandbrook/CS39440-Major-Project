@@ -60,7 +60,7 @@ int GameLibraryModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
     // This will be expanded to include other game properties soon
-    return 4;
+    return 3;
 }
 
 QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
@@ -73,12 +73,10 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
         case Qt::DisplayRole:
             switch (index.column()) {
                 case 0:
-                    return game.id();
-                case 1:
                     return game.name();
-                case 2:
+                case 1:
                     return game.desc();
-                case 3:
+                case 2:
                     return game.genres();
                 default:
                     return {};
@@ -91,6 +89,8 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
             return game.desc();
         case GenreRole:
             return game.genres();
+        case StatusRole:
+            return game.status();
         default:
             return {};
     }
@@ -103,14 +103,18 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
     roles[DescRole] = "desc";
     roles[GenreRole] = "genres";
     roles[IdRole] = "id";
+    roles[StatusRole] = "status";
     // Add other custom role names if needed
     return roles;
 }
 
 void GameLibraryModel::onGameAdded(const Game& game)
 {
+    int row = m_games.size();
+    beginInsertRows(QModelIndex(),row,row);
     m_games.append(game);
-    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
+    endInsertRows();
+    //emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
 }
 void GameLibraryModel::onGameDeleted(const int gameId)
 {
@@ -128,4 +132,22 @@ void GameLibraryModel::onGameUpdated(const Game &game) {
 
     // Add the updated game to the library
     onGameAdded(game);
+}
+
+QVariant GameLibraryModel::headerData(int section, Qt::Orientation orientation, int role) const {
+    if(section < columnCount() && orientation == Qt::Horizontal && role == Qt::DisplayRole){
+        switch(section){
+            case 0:
+                return "Name";
+            case 1:
+                return "Description";
+            case 2:
+                return "Genres";
+        }
+    }
+    return QAbstractItemModel::headerData(section, orientation, role);
+}
+
+Game GameLibraryModel::getGame(QModelIndex index){
+    return m_gameLibrary.getGameById(data(index, IdRole).toInt());
 }

@@ -12,6 +12,8 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
+    Q_INIT_RESOURCE(resources);
+
     GameDatabase db = GameDatabase::instance();
     db.open();
     db.setup();
@@ -35,5 +37,8 @@ int main(int argc, char* argv[])
  * This is the documentation for the GamePile application. GamePile is a C++ Qt application designed to facilitate convenient and informative management of your video game collection.
  * 
  * This project is being made as a part of the CS39440 module at Aberystwyth University.
+ *
+ * \todo Editing games should be done via GameLibraryModel
+ * \todo Investigate tips given in https://doc.qt.io/qt-6/qabstractitemmodel.html#subclassing
  * 
 */
