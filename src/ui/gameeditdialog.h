@@ -11,7 +11,8 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QTextEdit>
-#include "data/game.h"
+#include <QComboBox>
+#include "../data/game.h"
 
 /**
  * @brief A dialog for adding a game to the library.
@@ -92,6 +93,9 @@ private:
 
     QLabel* genreLabel;
     QListWidget* genreList;
+
+    QLabel* statusLabel;
+    QComboBox* statusBox;
 
     QDialogButtonBox* buttonBox;
 

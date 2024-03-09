@@ -6,7 +6,7 @@
 #define GAMELIBRARY_H
 #include "game.h"
 #include "gamedatabase.h"
-#include "gamedatabasehelper.h"
+#include "gamehelper.h"
 #include <QList>
 #include <QObject>
 #include <QSharedPointer>

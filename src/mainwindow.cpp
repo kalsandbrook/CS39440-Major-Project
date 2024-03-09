@@ -5,8 +5,8 @@
 #include "mainwindow.h"
 
 #include "data/gamelibrary.h"
-#include "gameitemdelegate.h"
-#include "gamedetailswidget.h"
+#include "ui/gameitemdelegate.h"
+#include "ui/gamedetailswidget.h"
 #include <qnamespace.h>
 #include <qstyleoption.h>
 #include <QSizePolicy>

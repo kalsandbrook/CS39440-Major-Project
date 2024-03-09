@@ -10,7 +10,7 @@
 #include <QTextItem>
 #include <QVBoxLayout>
 
-#include "data/gamelibrarymodel.h"
+#include "../data/model/gamelibrarymodel.h"
 #include "gamedetailswidget.h"
 #include "gameitemdelegate.h"
 #include "gameeditdialog.h"

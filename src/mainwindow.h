@@ -15,11 +15,11 @@
 #include <QToolButton>
 #include <QSortFilterProxyModel>
 
-#include "searchbarwidget.h"
-#include "gameview.h"
-#include "gameeditdialog.h"
-#include "data/gamelibrarymodel.h"
-#include "gamedetailswidget.h"
+#include "ui/searchbarwidget.h"
+#include "ui/gameview.h"
+#include "ui/gameeditdialog.h"
+#include "data/model/gamelibrarymodel.h"
+#include "ui/gamedetailswidget.h"
 
 /**
  * @brief The MainWindow class is the main window of the application.

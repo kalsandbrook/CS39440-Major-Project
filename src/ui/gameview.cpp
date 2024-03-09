@@ -5,7 +5,7 @@
 #include <QContextMenuEvent>
 #include <QSortFilterProxyModel>
 #include "gameeditdialog.h"
-#include "data/gamelibrarymodel.h"
+#include "../data/model/gamelibrarymodel.h"
 
 GameView::GameView(QWidget *parent) : QTreeView(parent) {
     setContextMenuPolicy(Qt::ActionsContextMenu);

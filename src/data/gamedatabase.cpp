@@ -68,7 +68,7 @@ QList<Game> GameDatabase::getGames()
     QList<Game> gameList;
     for (int i = 0; i < model.rowCount(); ++i) {
         int gameId = model.record(i).value("GameId").toInt();
-        Game::Status gameStatus = GameDBHelper::stringToStatus(model.record(i).value("Status").toString());
+        Game::Status gameStatus = GameHelper::stringToStatus(model.record(i).value("Status").toString());
         QString gameName = model.record(i).value("Name").toString();
         QString gameDesc = model.record(i).value("Description").toString();
         QStringList genres = model.record(i).value("Genres").toStringList();

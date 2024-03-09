@@ -3,7 +3,7 @@
 //
 
 #include "gamelibrary.h"
-#include "gamedatabasehelper.h"
+#include "gamehelper.h"
 #include "qlogging.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -23,7 +23,7 @@ void GameLibrary::addGame(Game& game)
     query.prepare("INSERT INTO games (Status, Name, Description, Genres)"
                   "VALUES (:status, :name, :description,:genres)");
 
-    query.bindValue(":status", GameDBHelper::statusToString(game.status()));
+    query.bindValue(":status", GameHelper::statusToString(game.status()));
     query.bindValue(":name", game.name());
     query.bindValue(":description", game.desc());
     query.bindValue(":genres", game.genres());
@@ -66,7 +66,7 @@ void GameLibrary::updateGame(Game &game) {
                   "SET Status = :status, Name = :name, Description = :desc, Genres = :genres "
                   "WHERE GameId = :gameId");
 
-    query.bindValue(":status",GameDBHelper::statusToString(game.status()));
+    query.bindValue(":status", GameHelper::statusToString(game.status()));
     query.bindValue(":name",game.name());
     query.bindValue(":desc",game.desc());
     query.bindValue(":genres",game.genres());

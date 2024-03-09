@@ -20,64 +20,35 @@ find_package(Qt6 COMPONENTS
 )
 
 add_executable(GamePile
-    src/data/game.h
-    src/data/gamelibrary.cpp
-    src/data/gamelibrary.h
-    src/data/gamelibrarymodel.cpp
-    src/data/gamelibrarymodel.h
-    src/data/gamedatabase.h
-    src/data/gamedatabase.cpp
-        src/gameeditdialog.cpp
-        src/gameeditdialog.h
-    src/main.cpp
-    src/mainwindow.cpp
-    src/mainwindow.h
-    src/gameitemdelegate.cpp
-    src/gameitemdelegate.h
-    src/gameview.cpp
-    src/gameview.h
-        src/resources.qrc
+        src/main.cpp
+        src/mainwindow.h
+        src/mainwindow.cpp
+        src/data/model/gamelibrarymodel.h
+        src/data/model/gamelibrarymodel.cpp
+        src/data/game.h
         src/data/game.cpp
-        src/data/gamedatabasehelper.cpp
-        src/data/gamedatabasehelper.h
-        src/gamedetailswidget.cpp
-        src/gamedetailswidget.h
-        src/searchbarwidget.cpp
-        src/searchbarwidget.h
+        src/data/gamehelper.h
+        src/data/gamehelper.cpp
+        src/data/gamedatabase.h
+        src/data/gamedatabase.cpp
+        src/data/gamelibrary.h
+        src/data/gamelibrary.cpp
+        src/ui/gameitemdelegate.h
+        src/ui/gameitemdelegate.cpp
+        src/ui/gamedetailswidget.h
+        src/ui/gamedetailswidget.cpp
+        src/ui/gameeditdialog.h
+        src/ui/gameeditdialog.cpp
+        src/ui/gameview.h
+        src/ui/gameview.cpp
+        src/ui/searchbarwidget.h
+        src/ui/searchbarwidget.cpp
 )
 
 target_link_libraries(GamePile
-    Qt::Core
-    Qt::Gui
-    Qt::Widgets
-    Qt::Sql
+        Qt::Core
+        Qt::Gui
+        Qt::Widgets
+        Qt::Sql
 )
 
-#if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-#set(DEBUG_SUFFIX)
-#if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")
-#set(DEBUG_SUFFIX "d")
-#endif()
-#set(QT_INSTALL_PATH "${CMAKE_PREFIX_PATH}")
-#if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
-#set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-#if (NOT EXISTS "${QT_INSTALL_PATH}/bin")
-#set(QT_INSTALL_PATH "${QT_INSTALL_PATH}/..")
-#endif()
-#endif()
-#if (EXISTS "${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll")
-#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#COMMAND ${CMAKE_COMMAND } - E make_directory
-#"$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
-#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#COMMAND ${CMAKE_COMMAND } - E copy
-#"${QT_INSTALL_PATH}/plugins/platforms/qwindows${DEBUG_SUFFIX}.dll"
-#"$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/platforms/")
-#endif()
-#foreach (QT_LIB Core Gui Widgets)
-#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-#COMMAND ${CMAKE_COMMAND } - E copy
-#"${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
-#"$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-#endforeach(QT_LIB)
-#endif()

@@ -7,8 +7,8 @@
 #include <QStringList>
 
 #include "gameeditdialog.h"
-#include "data/game.h"
-#include "data/gamelibrary.h"
+#include "../data/game.h"
+#include "../data/gamelibrary.h"
 
 GameEditDialog::GameEditDialog(QWidget* parent)
         : QDialog(parent)
@@ -22,6 +22,10 @@ GameEditDialog::GameEditDialog(QWidget* parent)
 
     genreLabel = new QLabel(tr("Genres:"));
     genreList = new QListWidget(this);
+
+    statusLabel = new QLabel(tr("Status:"));
+    statusBox = new QComboBox(this);
+    statusBox->addItems({Game::Status::NONE});
 
     populateGenreList(genreList);
 

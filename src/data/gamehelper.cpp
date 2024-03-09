@@ -2,9 +2,9 @@
 // Created by kal on 07/03/24.
 //
 
-#include "gamedatabasehelper.h"
+#include "gamehelper.h"
 
-namespace GameDBHelper {
+namespace GameHelper {
     QString statusToString(Game::Status status) {
         switch (status) {
             case Game::Status::NONE:

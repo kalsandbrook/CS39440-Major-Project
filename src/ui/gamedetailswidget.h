@@ -5,7 +5,7 @@
 #ifndef GAMEPILE_GAMEDETAILSWIDGET_H
 #define GAMEPILE_GAMEDETAILSWIDGET_H
 
-#include "data/gamelibrarymodel.h"
+#include "../data/model/gamelibrarymodel.h"
 
 #include <QVBoxLayout>
 #include <QLabel>
