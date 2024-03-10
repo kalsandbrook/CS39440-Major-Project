@@ -4,7 +4,6 @@
 
 #include "mainwindow.h"
 
-#include "data/gamelibrary.h"
 #include "ui/gameitemdelegate.h"
 #include "ui/gamedetailswidget.h"
 #include <qnamespace.h>
@@ -42,8 +41,8 @@ MainWindow::MainWindow()
     helpButton->setMenu(helpMenu);
     mainToolBar->addWidget(helpButton);
 
-
-    addGameDialog = new GameEditDialog(this);
+    filterToolBar = new FilterToolBar(this);
+    addToolBar(Qt::LeftToolBarArea, filterToolBar);
 
     gameView = new GameView(this);
     gameLibraryModel = new GameLibraryModel(this);

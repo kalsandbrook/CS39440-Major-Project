@@ -15,6 +15,7 @@
 #include <QToolButton>
 #include <QSortFilterProxyModel>
 
+#include "ui/filtertoolbar.h"
 #include "ui/searchbarwidget.h"
 #include "ui/gameview.h"
 #include "ui/gameeditdialog.h"
@@ -67,6 +68,8 @@ private:
     QToolButton* helpButton;
     QMenu* helpMenu;
     SearchBarWidget* searchBar;
+
+    FilterToolBar* filterToolBar;
 
     QToolBar* gameDetailsBar;
     GameDetailsWidget* gameDetailsWidget;
