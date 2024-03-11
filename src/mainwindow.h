@@ -15,7 +15,7 @@
 #include <QToolButton>
 #include <QSortFilterProxyModel>
 
-#include "ui/filtertoolbar.h"
+#include "ui/statusfilter.h"
 #include "ui/searchbarwidget.h"
 #include "ui/gameview.h"
 #include "ui/gameeditdialog.h"
@@ -56,12 +56,15 @@ public slots:
 
     /**
      * @brief Shows the about Qt dialog.
-     * 
+     *
      * This method shows the about Qt dialog.
      */
     void onAboutQtAction();
 
+    void clearFilters();
+
     void onSearchUpdated(QString query);
+    void onStatusFilterUpdated(Game::Status statusFilter);
 
 private:
     QToolBar* mainToolBar;
@@ -69,7 +72,8 @@ private:
     QMenu* helpMenu;
     SearchBarWidget* searchBar;
 
-    FilterToolBar* filterToolBar;
+    QToolBar* filterToolBar;
+    StatusFilter* statusFilter;
 
     QToolBar* gameDetailsBar;
     GameDetailsWidget* gameDetailsWidget;
@@ -83,6 +87,10 @@ private:
     GameLibraryModel* gameLibraryModel;
     QSortFilterProxyModel* gameLibraryProxyModel;
     GameEditDialog* addGameDialog;
+
+    void createToolBars();
+
+    void createActions();
 };
 
 #endif // MAINWINDOW_H
