@@ -14,7 +14,7 @@
 
 class GameDetailsWidget : public QWidget{
 public:
-    GameDetailsWidget(GameLibraryModel* model, QWidget* parent);
+    GameDetailsWidget(QWidget* parent);
 public slots:
     void updateGame(const QModelIndex &index);
 

@@ -9,7 +9,7 @@
 
 GameView::GameView(QWidget *parent) : QTreeView(parent) {
     setContextMenuPolicy(Qt::ActionsContextMenu);
-
+    setExpandsOnDoubleClick(false);
     setupContextMenu();
 }
 

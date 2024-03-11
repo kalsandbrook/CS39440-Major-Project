@@ -4,8 +4,7 @@
 
 #include "gamedetailswidget.h"
 
-GameDetailsWidget::GameDetailsWidget(GameLibraryModel* model, QWidget *parent) : QWidget(parent){
-    m_model = model;
+GameDetailsWidget::GameDetailsWidget(QWidget *parent) : QWidget(parent){
     layout = new QVBoxLayout(this);
 
     gameIdLabel = new QLabel();
@@ -26,11 +25,16 @@ GameDetailsWidget::GameDetailsWidget(GameLibraryModel* model, QWidget *parent) :
 void GameDetailsWidget::updateGame(const QModelIndex &index) {
     if(!index.isValid()) return;
 
-    const Game &game = m_model->getGame(index);
+    // TODO: Add a role that returns a struct of data.
+    QString id = index.data(GameLibraryModel::GameRoles::IdRole).toString();
+    QString name = index.data(GameLibraryModel::GameRoles::NameRole).toString();
+    QString description = index.data(GameLibraryModel::GameRoles::DescRole).toString();
+    QString genres = index.data(GameLibraryModel::GameRoles::GenreRole).toString();
+    QString status = index.data(GameLibraryModel::GameRoles::StatusRole).toString();
 
-    gameIdLabel->setText("Id: " + QString::number(game.id()));
-    gameNameLabel->setText("Name: " + game.name());
-    gameDescriptionLabel->setText("Description: " + game.desc());
-    gameGenresLabel->setText("Genres: " + game.genres().join(','));
-    gameStatusLabel->setText("Status: " + game.status_str());
+    gameIdLabel->setText("Id: " + id);
+    gameNameLabel->setText("Name: " + name);
+    gameDescriptionLabel->setText("Description: " + description);
+    gameGenresLabel->setText("Genres: " + genres);
+    gameStatusLabel->setText("Status: " + status);
 }

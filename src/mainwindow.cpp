@@ -31,7 +31,6 @@ MainWindow::MainWindow()
 
     setCentralWidget(gameView);
 
-
     connect(gameView, &QAbstractItemView::clicked, gameDetailsWidget, &GameDetailsWidget::updateGame);
 
     connect(searchBar,&SearchBarWidget::searchUpdated,this,&MainWindow::onSearchUpdated);
@@ -85,7 +84,7 @@ void MainWindow::createToolBars(){
     // Setup Right ToolBar (Game Details)
     gameDetailsBar = new QToolBar("Game Details Toolbar",this);
     gameDetailsBar->setMovable(false);
-    gameDetailsWidget = new GameDetailsWidget(gameLibraryModel,this);
+    gameDetailsWidget = new GameDetailsWidget(this);
     gameDetailsBar->addWidget(gameDetailsWidget);
     addToolBar(Qt::RightToolBarArea,gameDetailsBar);
 }
