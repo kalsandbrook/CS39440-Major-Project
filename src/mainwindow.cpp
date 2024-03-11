@@ -33,13 +33,13 @@ MainWindow::MainWindow()
 
     gameDetailsWidget = new GameDetailsWidget(this);
 
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QWidget* mainWidget = new QWidget(this);
+    QHBoxLayout* layout = new QHBoxLayout(mainWidget);
 
     layout->addWidget(statusFilter,1);
     layout->addWidget(gameView,5);
     layout->addWidget(gameDetailsWidget,1);
 
-    QWidget* mainWidget = new QWidget(this);
     setCentralWidget(mainWidget);
     mainWidget->setLayout(layout);
 
@@ -57,7 +57,9 @@ MainWindow::MainWindow()
 void MainWindow::createActions()
 {
     addGameAction = new QAction(QIcon::fromTheme("list-add"), "&Add Game", this);
-    aboutAction = helpMenu->addAction(tr("&About"));
+    aboutAction = new QAction(tr("About"),this);
+    aboutAction -> setShortcut(QKeySequence("F1"));
+    helpMenu->addAction(aboutAction);
     aboutQtAction = helpMenu->addAction(tr("About &Qt"));
 }
 
