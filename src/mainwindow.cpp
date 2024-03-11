@@ -29,7 +29,19 @@ MainWindow::MainWindow()
     gameView->setModel(gameLibraryProxyModel);
     gameView->setItemDelegate(new GameItemDelegate(this));
 
-    setCentralWidget(gameView);
+    statusFilter = new StatusFilter(this);
+
+    gameDetailsWidget = new GameDetailsWidget(this);
+
+    QHBoxLayout* layout = new QHBoxLayout(this);
+
+    layout->addWidget(statusFilter,1);
+    layout->addWidget(gameView,5);
+    layout->addWidget(gameDetailsWidget,1);
+
+    QWidget* mainWidget = new QWidget(this);
+    setCentralWidget(mainWidget);
+    mainWidget->setLayout(layout);
 
     connect(gameView, &QAbstractItemView::clicked, gameDetailsWidget, &GameDetailsWidget::updateGame);
 
@@ -73,19 +85,6 @@ void MainWindow::createToolBars()
     mainToolBar->addWidget(searchBar);
 
     addToolBar(mainToolBar);
-
-    // Setup Filter ToolBar
-    filterToolBar = new QToolBar("Filter Toolbar", this);
-    statusFilter = new StatusFilter(this);
-    filterToolBar->addWidget(statusFilter);
-    addToolBar(Qt::LeftToolBarArea, filterToolBar);
-
-    // Setup Right ToolBar (Game Details)
-    gameDetailsBar = new QToolBar("Game Details Toolbar", this);
-    gameDetailsBar->setMovable(false);
-    gameDetailsWidget = new GameDetailsWidget(this);
-    gameDetailsBar->addWidget(gameDetailsWidget);
-    addToolBar(Qt::RightToolBarArea, gameDetailsBar);
 }
 
 void MainWindow::onAddGameDialog()
