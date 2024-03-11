@@ -178,6 +178,7 @@
   tasks:
   [
     1. Database Schema
+      - A database schema showing a rough implementation of how the database could be implemented was produced.
     2. Data Persistence
       - The application now uses an SQLite Database in order to maintain persistent data when restarting the application.
     3. Code Documentation Generation (doxygen)
@@ -200,13 +201,38 @@
 )
 
 #week(
-  weekCommencing: "4th March"
+  weekCommencing: "4th March",
+  focus: "FR02 & FR03 First Implementation",
+  objectives:
+  [
+    This week will involve the implementations of FR02 and FR03 along with early implementations of FR04. This is in order to provide a sufficient program for presentation at the Mid-Project Demonstration next week. Time allowing, some research into fuzzy searching will take place.
+  ],
+  tasks:
+  [
+    1. Implementations of FR02 and FR03.
+      - The application now allows users to mark games with a "Status", the current list being #raw("['NONE','BACKLOG','PLAYING','COMPLETED','ABANDONED']"). It is planned in future to allow users to customise the available list of statuses.
+    2. Basic Sorting and Filtering functionality (FR04).
+      - Users can now filter and sort through the list of available games. However, at the moment users cannot sort by status and name at the same time. Filtering by name also only returns exact matches.
+    3. UI Update
+      - The UI of the application has been enhanced to provide a better User Experience. The UI is still planned to change drastically before final submission.
+
+    Some internal refactoring of the programs structure also took place this week.
+  ],
+  challenges:
+  [
+    While there were no direct challenges this week, it is becoming increasingly clear that some significant changes will need to be made to the underlying code of the application in order to provide a satisfying final product. I am planning to perform any major code changes over the Easter Vacation on a different branch of the Git Repository.
+  ],
+  plans:
+  [
+    Next week, as the Mid-Project Demonstration will be taking place on the Friday, I plan to produce some slides and supplementary material. Further, I expect to start improving on FR04, adding fuzzy searching and more ways to filter the library.
+  ]
 )
 
 
 #week(
   weekCommencing: "11th March",
   focus: "Mid-Project Demo"
+  // TODO: Include section on how the mid-project demo went.
 )
 
 #week(
