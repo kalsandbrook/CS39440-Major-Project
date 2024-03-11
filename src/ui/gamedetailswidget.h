@@ -21,6 +21,9 @@ private:
     GameLibraryModel* m_model;
 
     QVBoxLayout* layout;
+
+    QLabel* titleLabel;
+
     QLabel* gameNameLabel;
     QLabel* gameDescriptionLabel;
     QLabel* gameGenresLabel;
