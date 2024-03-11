@@ -5,14 +5,14 @@
 #ifndef ADDGAMEDIALOG_H
 #define ADDGAMEDIALOG_H
 
+#include "../data/game.h"
+#include <QComboBox>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QTextEdit>
-#include <QComboBox>
-#include "../data/game.h"
 
 /**
  * @brief A dialog for adding a game to the library.
@@ -20,7 +20,7 @@
  * This will also provide a way to edit games in the library, in future.
  */
 class GameEditDialog : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 public:
     /**
      * @brief Constructs a new GameEditDialog object.
@@ -47,13 +47,13 @@ public slots:
      * @brief Validates the input fields of the dialog.
      *
      * Verifies the input fields of the dialog (for example, if required fields are not empty.) and then calls accept() if the input is valid.
-    */
+     */
     void verify();
 
     /**
      * Accepts the input and adds the game to the library by signaling the GameLibrary object.
      * @see GameLibrary::addGame()
-    */
+     */
     void accept() override;
 
 public:
@@ -79,8 +79,8 @@ public:
     QStringList getGenre() const;
 
     Game::Status getStatus() const;
-private:
 
+private:
     static void populateGenreList(QListWidget* genreList);
     bool editingGame;
 
@@ -100,7 +100,7 @@ private:
 
     QDialogButtonBox* buttonBox;
 
-    void setGameToEdit(const Game &game);
+    void setGameToEdit(const Game& game);
 };
 
 #endif // ADDGAMEDIALOG_H

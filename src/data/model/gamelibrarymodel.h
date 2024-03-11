@@ -17,7 +17,7 @@
  * It is a subclass of QAbstractItemModel, and provides the data for the game library view.
  */
 class GameLibraryModel : public QAbstractItemModel {
-Q_OBJECT
+    Q_OBJECT
 public:
     /**
      * @brief Constructs a new GameLibraryModel object.
@@ -54,7 +54,7 @@ public:
      * @return The index of the item.
      */
     QModelIndex index(int row, int column,
-                      const QModelIndex& parent = QModelIndex()) const override;
+        const QModelIndex& parent = QModelIndex()) const override;
 
     /**
      * @brief Returns the parent index of the child index.
@@ -97,7 +97,7 @@ public:
      * @return The data of the item.
      */
     QVariant data(const QModelIndex& index,
-                  int role) const override;
+        int role) const override;
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
@@ -130,8 +130,8 @@ public slots:
     void onGameUpdated(const Game& game);
 
     Game getGame(QModelIndex index);
-protected:
 
+protected:
     /**
      * @brief Returns the role names of the model.
      *
@@ -142,6 +142,7 @@ protected:
      * @see GameRoles
      */
     QHash<int, QByteArray> roleNames() const override;
+
 private:
     GameLibrary& m_gameLibrary;
 

@@ -7,16 +7,15 @@
 
 #include "../data/model/gamelibrarymodel.h"
 
-#include <QVBoxLayout>
 #include <QLabel>
+#include <QVBoxLayout>
 #include <QWidget>
 
-
-class GameDetailsWidget : public QWidget{
+class GameDetailsWidget : public QWidget {
 public:
     GameDetailsWidget(QWidget* parent);
 public slots:
-    void updateGame(const QModelIndex &index);
+    void updateGame(const QModelIndex& index);
 
 private:
     GameLibraryModel* m_model;
@@ -27,8 +26,6 @@ private:
     QLabel* gameGenresLabel;
     QLabel* gameIdLabel;
     QLabel* gameStatusLabel;
-
 };
 
-
-#endif //GAMEPILE_GAMEDETAILSWIDGET_H
+#endif // GAMEPILE_GAMEDETAILSWIDGET_H

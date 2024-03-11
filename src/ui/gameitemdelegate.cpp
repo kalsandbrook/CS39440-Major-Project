@@ -12,13 +12,14 @@
 
 #include "../data/model/gamelibrarymodel.h"
 #include "gamedetailswidget.h"
-#include "gameitemdelegate.h"
 #include "gameeditdialog.h"
+#include "gameitemdelegate.h"
 
 GameItemDelegate::GameItemDelegate(QObject* parent)
-        : QStyledItemDelegate(parent)
-        , gameLibrary(GameLibrary::instance())
-{}
+    : QStyledItemDelegate(parent)
+    , gameLibrary(GameLibrary::instance())
+{
+}
 
 void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
@@ -38,7 +39,7 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     QRect contentRect = option.rect.adjusted(2, 2, -2, -2);
     int lineHeight = QFontMetrics(option.font).height();
 
-    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight*2));
+    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight * 2));
     painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignTop, name);
 
     painter->restore();

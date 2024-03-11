@@ -13,26 +13,25 @@
 
 /**
  * @brief A class representing the library of games.
- * 
- * This class represents the library of games, and contains methods for adding and deleting games from the library. 
+ *
+ * This class represents the library of games, and contains methods for adding and deleting games from the library.
  * It functions as a single source of truth for the games in the library, performing the actions of a Data Access Object (DAO).
- * 
+ *
  * This class is a singleton, and can be accessed using the instance() method.
  *
  * This should probably be merged with GameLibraryModel, as they handle very similar responsibilities.
-*/
+ */
 class GameLibrary : public QObject {
-Q_OBJECT
+    Q_OBJECT
 public:
     /**
      * @brief Returns the instance of the GameLibrary.
-     * 
+     *
      * This method returns the instance of the GameLibrary, creating it if it doesn't exist.
-     * 
+     *
      * @return The instance of the GameLibrary.
-    */
+     */
     static GameLibrary& instance();
-
 
     const Game& getGameById(int gameId) const;
 
@@ -42,7 +41,7 @@ public:
      * This method adds the given game to the library.
      *
      * @param game The game to add.
-    */
+     */
     void addGame(Game& game);
 
     /**
@@ -51,7 +50,7 @@ public:
      * This method deletes the game with the given ID from the library.
      *
      * @param gameId The ID of the game to delete.
-    */
+     */
     void deleteGame(int gameId);
 
     /**
@@ -69,8 +68,8 @@ public:
      * This method returns the list of games in the library.
      *
      * @return The list of games in the library.
-    */
-    QMap<int, Game> & games();
+     */
+    QMap<int, Game>& games();
 
 signals:
 
@@ -81,7 +80,7 @@ signals:
      *
      * @param game The game that was added.
      * @see GameLibraryModel::onGameAdded()
-    */
+     */
     void gameAdded(const Game& game);
 
     /**
@@ -91,7 +90,7 @@ signals:
      *
      * @param gameId The ID of the game that was deleted.
      * @see GameLibraryModel::onGameDeleted()
-    */
+     */
     void gameDeleted(const int gameId);
     /**
      * @brief Signals that a game in the library has been updated.
@@ -100,7 +99,7 @@ signals:
      *
      * @param game The game that is updated..
      * @see GameLibraryModel::onGameUpdated()
-    */
+     */
     void gameUpdated(const Game& game);
 
 private:

@@ -4,7 +4,9 @@
 
 #include "gamedetailswidget.h"
 
-GameDetailsWidget::GameDetailsWidget(QWidget *parent) : QWidget(parent){
+GameDetailsWidget::GameDetailsWidget(QWidget* parent)
+    : QWidget(parent)
+{
     layout = new QVBoxLayout(this);
 
     gameIdLabel = new QLabel();
@@ -22,8 +24,10 @@ GameDetailsWidget::GameDetailsWidget(QWidget *parent) : QWidget(parent){
     setLayout(layout);
 };
 
-void GameDetailsWidget::updateGame(const QModelIndex &index) {
-    if(!index.isValid()) return;
+void GameDetailsWidget::updateGame(const QModelIndex& index)
+{
+    if (!index.isValid())
+        return;
 
     // TODO: Add a role that returns a struct of data.
     QString id = index.data(GameLibraryModel::GameRoles::IdRole).toString();

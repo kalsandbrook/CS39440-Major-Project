@@ -5,10 +5,13 @@
 #include "game.h"
 
 Game::Game(int id, QString name, QString desc, QStringList genres)
-        : m_id(id), m_name(std::move(name)), m_desc(std::move(desc)), m_genres(std::move(genres)) {
+    : m_id(id)
+    , m_name(std::move(name))
+    , m_desc(std::move(desc))
+    , m_genres(std::move(genres))
+{
     m_status = NONE;
 }
-
 
 int Game::id() const { return m_id; }
 
@@ -28,24 +31,25 @@ void Game::setDesc(QString desc) { m_desc = std::move(desc); }
 
 void Game::setGenres(QStringList genres) { m_genres = std::move(genres); }
 
-void Game::setStatus(Status status) {
+void Game::setStatus(Status status)
+{
     m_status = status;
 }
 
-QString Game::status_str() const {
+QString Game::status_str() const
+{
     switch (m_status) {
-        case Game::Status::NONE:
-            return "NONE";
-        case Game::Status::BACKLOG:
-            return "BACKLOG";
-        case Game::Status::PLAYING:
-            return "PLAYING";
-        case Game::Status::COMPLETED:
-            return "COMPLETED";
-        case Game::Status::ABANDONED:
-            return "ABANDONED";
-        default:
-            return {};
+    case Game::Status::NONE:
+        return "NONE";
+    case Game::Status::BACKLOG:
+        return "BACKLOG";
+    case Game::Status::PLAYING:
+        return "PLAYING";
+    case Game::Status::COMPLETED:
+        return "COMPLETED";
+    case Game::Status::ABANDONED:
+        return "ABANDONED";
+    default:
+        return {};
     }
-
 }

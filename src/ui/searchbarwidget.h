@@ -5,12 +5,12 @@
 #ifndef GAMEPILE_SEARCHBARWIDGET_H
 #define GAMEPILE_SEARCHBARWIDGET_H
 
-#include <QWidget>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QIcon>
-#include <QLineEdit>
 #include <QCompleter>
+#include <QHBoxLayout>
+#include <QIcon>
+#include <QLabel>
+#include <QLineEdit>
+#include <QWidget>
 
 class SearchBarWidget : public QWidget {
     Q_OBJECT
@@ -23,6 +23,7 @@ signals:
 
 private slots:
     void searchBoxEdited();
+
 private:
     QHBoxLayout* layout;
     QLabel* searchLabel;
@@ -30,5 +31,4 @@ private:
     QLineEdit* searchBox;
 };
 
-
-#endif //GAMEPILE_SEARCHBARWIDGET_H
+#endif // GAMEPILE_SEARCHBARWIDGET_H

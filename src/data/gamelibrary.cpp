@@ -5,8 +5,8 @@
 #include "gamelibrary.h"
 #include "gamehelper.h"
 #include "qlogging.h"
-#include <QSqlQuery>
 #include <QSqlError>
+#include <QSqlQuery>
 
 GameLibrary& GameLibrary::instance()
 {
@@ -58,7 +58,8 @@ void GameLibrary::deleteGame(int gameId)
     gameDeleted(gameId);
 }
 
-void GameLibrary::updateGame(Game &game) {
+void GameLibrary::updateGame(Game& game)
+{
     db.beginTransaction();
     QSqlQuery query(db.db());
 
@@ -67,10 +68,10 @@ void GameLibrary::updateGame(Game &game) {
                   "WHERE GameId = :gameId");
 
     query.bindValue(":status", GameHelper::statusToString(game.status()));
-    query.bindValue(":name",game.name());
-    query.bindValue(":desc",game.desc());
-    query.bindValue(":genres",game.genres());
-    query.bindValue(":gameId",game.id());
+    query.bindValue(":name", game.name());
+    query.bindValue(":desc", game.desc());
+    query.bindValue(":genres", game.genres());
+    query.bindValue(":gameId", game.id());
 
     query.exec();
 
@@ -80,7 +81,8 @@ void GameLibrary::updateGame(Game &game) {
     gameUpdated(game);
 }
 
-QMap<int, Game> & GameLibrary::games() {
+QMap<int, Game>& GameLibrary::games()
+{
     return m_games;
 }
 
@@ -89,17 +91,19 @@ GameLibrary::GameLibrary()
     // TODO: db.getGames() should be moved to be a part of this function.
     QList<Game> initialGameList = db.getGames();
 
-    for (const auto& game : initialGameList ){
+    for (const auto& game : initialGameList) {
         m_games[game.id()] = game;
     }
 }
 
-const Game& GameLibrary::getGameById(int gameId) const {
+const Game& GameLibrary::getGameById(int gameId) const
+{
     // Uses QMap.find to avoid memory issues.
     auto it = m_games.find(gameId);
-    if ( it != m_games.end() )
+    if (it != m_games.end())
         return it.value();
-    else qFatal("Unable to fetch Game from GameLibrary.");
+    else
+        qFatal("Unable to fetch Game from GameLibrary.");
 }
 
 GameLibrary::~GameLibrary() = default;

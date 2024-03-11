@@ -4,7 +4,9 @@
 
 #include "searchbarwidget.h"
 
-SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent){
+SearchBarWidget::SearchBarWidget(QWidget* parent)
+    : QWidget(parent)
+{
     layout = new QHBoxLayout();
 
     searchLabel = new QLabel(tr("Search: "));
@@ -21,10 +23,12 @@ SearchBarWidget::SearchBarWidget(QWidget *parent) : QWidget(parent){
     connect(searchBox, &QLineEdit::editingFinished, this, &SearchBarWidget::searchBoxEdited);
 }
 
-void SearchBarWidget::searchBoxEdited(){
+void SearchBarWidget::searchBoxEdited()
+{
     searchUpdated(searchBox->text());
 }
 
-QString SearchBarWidget::getQuery(){
+QString SearchBarWidget::getQuery()
+{
     return searchBox->text();
 }

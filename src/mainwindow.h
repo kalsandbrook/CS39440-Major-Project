@@ -10,23 +10,23 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <QMessageBox>
-#include <QTreeView>
+#include <QSortFilterProxyModel>
 #include <QToolBar>
 #include <QToolButton>
-#include <QSortFilterProxyModel>
+#include <QTreeView>
 
-#include "ui/statusfilter.h"
-#include "ui/searchbarwidget.h"
-#include "ui/gameview.h"
-#include "ui/gameeditdialog.h"
 #include "data/model/gamelibrarymodel.h"
 #include "ui/gamedetailswidget.h"
+#include "ui/gameeditdialog.h"
+#include "ui/gameview.h"
+#include "ui/searchbarwidget.h"
+#include "ui/statusfilter.h"
 
 /**
  * @brief The MainWindow class is the main window of the application.
- * 
+ *
  * This class represents the main window of the application, and contains the toolbar, game list view, and other UI elements.
- * 
+ *
  * It is a subclass of QMainWindow.
  */
 class MainWindow : public QMainWindow {
@@ -34,7 +34,7 @@ class MainWindow : public QMainWindow {
 public:
     /**
      * @brief Constructs a new MainWindow object.
-     * 
+     *
      * This constructor creates a new MainWindow object.
      */
     MainWindow();
@@ -42,14 +42,14 @@ public:
 public slots:
     /**
      * @brief Shows the add game dialog.
-     * 
+     *
      * This method shows the add game dialog.
      */
     void onAddGameDialog();
 
     /**
      * @brief Shows the about dialog.
-     * 
+     *
      * This method shows the about dialog.
      */
     void onAboutAction();

@@ -4,11 +4,11 @@
 
 #include "mainwindow.h"
 
-#include "ui/gameitemdelegate.h"
 #include "ui/gamedetailswidget.h"
+#include "ui/gameitemdelegate.h"
+#include <QSizePolicy>
 #include <qnamespace.h>
 #include <qstyleoption.h>
-#include <QSizePolicy>
 
 MainWindow::MainWindow()
 {
@@ -33,29 +33,29 @@ MainWindow::MainWindow()
 
     connect(gameView, &QAbstractItemView::clicked, gameDetailsWidget, &GameDetailsWidget::updateGame);
 
-    connect(searchBar,&SearchBarWidget::searchUpdated,this,&MainWindow::onSearchUpdated);
+    connect(searchBar, &SearchBarWidget::searchUpdated, this, &MainWindow::onSearchUpdated);
     connect(statusFilter, &StatusFilter::filterChanged, this, &MainWindow::onStatusFilterUpdated);
-    connect(statusFilter,&StatusFilter::filterCleared,this,&MainWindow::clearFilters);
+    connect(statusFilter, &StatusFilter::filterCleared, this, &MainWindow::clearFilters);
 
-    connect(addGameAction, &QAction::triggered, this,&MainWindow::onAddGameDialog);
+    connect(addGameAction, &QAction::triggered, this, &MainWindow::onAddGameDialog);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::onAboutAction);
     connect(aboutQtAction, &QAction::triggered, this, &MainWindow::onAboutQtAction);
 }
 
-void MainWindow::createActions(){
+void MainWindow::createActions()
+{
     addGameAction = new QAction(QIcon::fromTheme("list-add"), "&Add Game", this);
     aboutAction = helpMenu->addAction(tr("&About"));
     aboutQtAction = helpMenu->addAction(tr("About &Qt"));
 }
 
-void MainWindow::createToolBars(){
+void MainWindow::createToolBars()
+{
     // Setup Main Toolbars
-    mainToolBar = new QToolBar("Main Toolbar",this);
+    mainToolBar = new QToolBar("Main Toolbar", this);
     mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
-
     searchBar = new SearchBarWidget(this);
-
 
     helpButton = new QToolButton(this);
     helpButton->setIcon(QIcon::fromTheme("help-contextual"));
@@ -75,21 +75,21 @@ void MainWindow::createToolBars(){
     addToolBar(mainToolBar);
 
     // Setup Filter ToolBar
-    filterToolBar = new QToolBar("Filter Toolbar",this);
+    filterToolBar = new QToolBar("Filter Toolbar", this);
     statusFilter = new StatusFilter(this);
     filterToolBar->addWidget(statusFilter);
     addToolBar(Qt::LeftToolBarArea, filterToolBar);
 
-
     // Setup Right ToolBar (Game Details)
-    gameDetailsBar = new QToolBar("Game Details Toolbar",this);
+    gameDetailsBar = new QToolBar("Game Details Toolbar", this);
     gameDetailsBar->setMovable(false);
     gameDetailsWidget = new GameDetailsWidget(this);
     gameDetailsBar->addWidget(gameDetailsWidget);
-    addToolBar(Qt::RightToolBarArea,gameDetailsBar);
+    addToolBar(Qt::RightToolBarArea, gameDetailsBar);
 }
 
-void MainWindow::onAddGameDialog() {
+void MainWindow::onAddGameDialog()
+{
     addGameDialog = new GameEditDialog(this);
     addGameDialog->exec();
 }
@@ -108,19 +108,22 @@ void MainWindow::onAboutQtAction()
     QMessageBox::aboutQt(this);
 }
 
-void MainWindow::onSearchUpdated(QString query) {
+void MainWindow::onSearchUpdated(QString query)
+{
     // TODO: Use Fuzzy Searching
     gameLibraryProxyModel->setFilterKeyColumn(0);
     gameLibraryProxyModel->setFilterRegularExpression(query);
 }
 
-void MainWindow::onStatusFilterUpdated(Game::Status statusFilter) {
+void MainWindow::onStatusFilterUpdated(Game::Status statusFilter)
+{
     // Filter by status - this will need to be changed as this only supports filtering by name OR status.
     gameLibraryProxyModel->setFilterKeyColumn(3);
     gameLibraryProxyModel->setFilterRegularExpression(GameHelper::statusToString(statusFilter));
 }
 
-void MainWindow::clearFilters() {
+void MainWindow::clearFilters()
+{
     // Set filter to empty (match any pattern)
     gameLibraryProxyModel->setFilterRegularExpression(".*");
 }
