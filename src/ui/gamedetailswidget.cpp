@@ -36,9 +36,9 @@ void GameDetailsWidget::updateGame(const QModelIndex& index)
     QString genres = index.data(GameLibraryModel::GameRoles::GenreRole).toString();
     QString status = index.data(GameLibraryModel::GameRoles::StatusRole).toString();
 
-    gameIdLabel->setText("Id: " + id);
-    gameNameLabel->setText("Name: " + name);
-    gameDescriptionLabel->setText("Description: " + description);
-    gameGenresLabel->setText("Genres: " + genres);
-    gameStatusLabel->setText("Status: " + status);
+    gameIdLabel->setText("Id:\n" + id);
+    gameNameLabel->setText("Name:\n" + name);
+    gameDescriptionLabel->setText("Description:\n" + description);
+    gameGenresLabel->setText("Genres:\n" + genres);
+    gameStatusLabel->setText("Status:\n" + status);
 }
