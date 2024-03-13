@@ -40,7 +40,7 @@ Game::Status stringToStatus(const QString& status)
 }
 
     QIcon getStatusIcon(const QString &status) {
-        getStatusIcon(stringToStatus(status));
+        return getStatusIcon(stringToStatus(status));
     }
 
     QIcon getStatusIcon(Game::Status status) {
