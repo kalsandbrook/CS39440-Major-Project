@@ -6,9 +6,9 @@
 StatusFilter::StatusFilter(QWidget* parent)
     : QWidget(parent)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    QLabel* statusFiltersLabel = new QLabel(tr("Game Status"), this);
-    QListWidget* statusFilterList = new QListWidget();
+    layout = new QVBoxLayout(this);
+    statusFiltersLabel = new QLabel(tr("Game Status"), this);
+    statusFilterList = new QListWidget();
 
     // This should not be hard-coded.
     QStringList statusList = { "ANY", "NONE", "BACKLOG", "PLAYING", "COMPLETED", "ABANDONED" };
