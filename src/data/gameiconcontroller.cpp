@@ -36,8 +36,17 @@ void GameIconController::loadIcons() {
 
 QIcon GameIconController::getIcon(const QString &fileName) {
     QString iconFile(getIconDirectory().path() + "/" + fileName);
-    QIcon icon;
-    icon.addFile(iconFile);
 
-    return icon;
+    QFile file(iconFile);
+    QIcon icon;
+
+    if(file.exists() && fileName != ""){
+        qDebug() << "Loading icon: " << file.fileName();
+        icon.addFile(iconFile);
+        return icon;
+    } else{
+        qDebug() << "Couldn't find icon file: " << file.fileName();
+        // Fallback icon if file can't be found.
+        return icon.fromTheme("input-gamepad-symbolic");
+    }
 }

@@ -85,6 +85,8 @@ void GameEditDialog::accept()
 
     QString gameIconName {};
 
+    // TODO: This functionality should be moved to a helper class.
+
     if(m_selectedIconFile->exists()){
         QFileInfo iconFileInfo(m_selectedIconFile->fileName());
         QString saveDir = iconController->getIconDirectory().path() + "/" + iconFileInfo.fileName();
