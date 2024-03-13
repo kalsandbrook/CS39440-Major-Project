@@ -7,11 +7,17 @@
 
 #include "game.h"
 #include <QString>
+#include <QIcon>
 
 namespace GameHelper {
 QString statusToString(Game::Status status);
 
 Game::Status stringToStatus(const QString& status);
+
+QIcon getStatusIcon(const QString& status);
+
+QIcon getStatusIcon(Game::Status status);
+
 };
 
 #endif // GAMEPILE_GAMEHELPER_H

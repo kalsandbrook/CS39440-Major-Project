@@ -38,4 +38,27 @@ Game::Status stringToStatus(const QString& status)
 
     return Game::Status::NONE;
 }
+
+    QIcon getStatusIcon(const QString &status) {
+        getStatusIcon(stringToStatus(status));
+    }
+
+    QIcon getStatusIcon(Game::Status status) {
+        // TODO: Implement proper icons.
+        switch(status){
+            case Game::NONE:
+                return QIcon::fromTheme("edit-none-symbolic");
+            case Game::BACKLOG:
+                return QIcon::fromTheme("dialog-layers-symbolic");
+            case Game::PLAYING:
+                return QIcon::fromTheme("media-playback-start-symbolic");
+            case Game::COMPLETED:
+                return QIcon::fromTheme("checkmark-symbolic");
+            case Game::ABANDONED:
+                return QIcon::fromTheme("dropboxstatus-logo-symbolic");
+            default:
+                return {};
+        }
+    }
+
 }
