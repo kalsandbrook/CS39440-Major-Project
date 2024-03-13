@@ -81,16 +81,29 @@ void GameEditDialog::verify()
 void GameEditDialog::accept()
 {
     GameLibrary& gameLibrary = GameLibrary::instance();
+    GameIconController* iconController = gameLibrary.iconController;
+
+    QString gameIconName {};
+
+    if(m_selectedIconFile->exists()){
+        QFileInfo iconFileInfo(m_selectedIconFile->fileName());
+        QString saveDir = iconController->getIconDirectory().path() + "/" + iconFileInfo.fileName();
+        m_selectedIconFile->copy(saveDir) ? qDebug() << "Writing file " << m_selectedIconFile->fileName() << " to icons folder." : qDebug() << m_selectedIconFile->fileName() << " already exists.";
+
+        gameIconName = iconFileInfo.fileName();
+    }
 
     if (editingGame) {
         editedGame.setName(getName());
         editedGame.setDesc(getDesc());
         editedGame.setGenres(getGenre());
         editedGame.setStatus(getStatus());
+        editedGame.setIconName(gameIconName);
         gameLibrary.updateGame(editedGame);
     } else {
         Game newGame(0, getName(), getDesc(), getGenre());
         newGame.setStatus(getStatus());
+        newGame.setIconName(gameIconName);
         gameLibrary.addGame(newGame);
     }
     QDialog::accept();
@@ -154,7 +167,9 @@ int GameEditDialog::exec(int gameId)
 void GameEditDialog::openFileDialog() {
     fileDialog = new QFileDialog(this, "Choose Icon");
     fileDialog->setFileMode(QFileDialog::ExistingFile);
-    fileDialog->setNameFilter("Image Files (*.png, *.jpg, *.jpeg)");
+    fileDialog->setNameFilter("Image Files (*.png *.jpg *.jpeg)");
 
-    fileDialog->exec();
+    if(fileDialog->exec()){
+        m_selectedIconFile = new QFile(fileDialog->selectedFiles()[0]);
+    }
 }

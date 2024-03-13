@@ -115,6 +115,8 @@ private:
 
     QDialogButtonBox* buttonBox;
 
+    QFile* m_selectedIconFile;
+
     void setGameToEdit(const Game& game);
 };
 

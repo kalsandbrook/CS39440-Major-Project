@@ -35,5 +35,9 @@ void GameIconController::loadIcons() {
 }
 
 QIcon GameIconController::getIcon(const QString &fileName) {
+    QString iconFile(getIconDirectory().path() + "/" + fileName);
+    QIcon icon;
+    icon.addFile(iconFile);
 
+    return icon;
 }
