@@ -10,23 +10,14 @@
 #include <QTextItem>
 #include <QVBoxLayout>
 
-#include "../data/model/gamelibrarymodel.h"
-#include "gamedetailswidget.h"
-#include "gameeditdialog.h"
 #include "gameitemdelegate.h"
 
-GameItemDelegate::GameItemDelegate(QObject* parent)
-    : QStyledItemDelegate(parent)
-    , gameLibrary(GameLibrary::instance())
-{
+GameItemDelegate::GameItemDelegate(QObject *parent)
+        : QStyledItemDelegate(parent) {
 }
 
-void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
-{
-    if (!index.isValid())
-        return;
-
-    QString name = index.data().toString();
+void GameItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    if (!index.isValid()) return;
 
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
@@ -36,16 +27,34 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
         painter->fillRect(option.rect, option.palette.highlight());
     }
 
-    QRect contentRect = option.rect.adjusted(2, 2, -2, -2);
+    QRect contentRect = option.rect.adjusted(2,0,-2,0);
+
     int lineHeight = QFontMetrics(option.font).height();
 
-    QRect nameRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight * 2));
-    painter->drawText(nameRect, Qt::AlignLeft | Qt::AlignTop, name);
+    QRect iconRect;
+    QRect valueRect;
+    // This is throwing an error, and I'm not sure why - update: it's just CLion being weird.
+    QIcon icon = index.data(Qt::DecorationRole).value<QIcon>();
+
+
+    if (index.column() == 0) {
+
+        iconRect = QRect(contentRect.topLeft(), QSize(lineHeight * 3, lineHeight * 3)).adjusted(0,2,0,0);
+        icon.paint(painter, iconRect);
+        valueRect = QRect(iconRect.topRight(), QSize(contentRect.width() - lineHeight*3, lineHeight * 3)).adjusted(11,-2,0,0);
+
+    } else {
+        valueRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight * 3));
+    }
+
+    painter->drawText(valueRect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString());
 
     painter->restore();
 }
 
-QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
-{
-    return { 200, 50 };
+QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    int height = QFontMetrics(option.font).height()*3;
+    height += 2;
+
+    return {200, height};
 }

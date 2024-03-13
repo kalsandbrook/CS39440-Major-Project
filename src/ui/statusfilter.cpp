@@ -6,14 +6,15 @@
 StatusFilter::StatusFilter(QWidget* parent)
     : QWidget(parent)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    QLabel* statusFiltersLabel = new QLabel(tr("Game Status"), this);
-    QListWidget* statusFilterList = new QListWidget();
+    layout = new QVBoxLayout(this);
+    statusFiltersLabel = new QLabel(tr("Game Status"), this);
+    statusFilterList = new QListWidget();
 
     // This should not be hard-coded.
     QStringList statusList = { "ANY", "NONE", "BACKLOG", "PLAYING", "COMPLETED", "ABANDONED" };
 
     statusFilterList->addItems(statusList);
+    setIconsForStatuses();
 
     layout->addWidget(statusFiltersLabel);
     layout->addWidget(statusFilterList);
@@ -29,5 +30,15 @@ void StatusFilter::onStatusFilterListActivated(QListWidgetItem* item)
     } else {
         Game::Status selectedStatus = GameHelper::stringToStatus(selectedItem);
         emit filterChanged(selectedStatus);
+    }
+}
+
+void StatusFilter::setIconsForStatuses() {
+    for (int i = 0; i < statusFilterList->count(); ++i) {
+        auto item = statusFilterList->item(i);
+
+        // Handles the "ANY" status in the list. This should not have an icon.
+        if(item->text() != "ANY")
+            item->setIcon(GameHelper::getStatusIcon(item->text()));
     }
 }

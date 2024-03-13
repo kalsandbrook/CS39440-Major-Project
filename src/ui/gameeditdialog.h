@@ -6,12 +6,16 @@
 #define ADDGAMEDIALOG_H
 
 #include "../data/game.h"
+
+#include <QFormLayout>
 #include <QComboBox>
+#include <QFileDialog>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QPushButton>
 #include <QTextEdit>
 
 /**
@@ -80,25 +84,38 @@ public:
 
     Game::Status getStatus() const;
 
+private slots:
+    void openFileDialog();
 private:
+
     static void populateGenreList(QListWidget* genreList);
+
     bool editingGame;
-
     Game editedGame;
+
+    QFormLayout* layout;
+
+    QFileDialog* fileDialog;
+
+    QPushButton* pickIconButton;
+    QLabel* pickIconLabel;
+
     QLabel* nameLabel;
-
     QLineEdit* nameLineEdit;
+
     QLabel* descLabel;
-
     QTextEdit* descTextEdit;
-    QLabel* genreLabel;
 
+    QLabel* genreLabel;
     QListWidget* genreList;
+
     QLabel* statusLabel;
 
     QComboBox* statusBox;
 
     QDialogButtonBox* buttonBox;
+
+    QFile* m_selectedIconFile;
 
     void setGameToEdit(const Game& game);
 };

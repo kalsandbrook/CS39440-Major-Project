@@ -7,6 +7,7 @@
 #include "game.h"
 #include "gamedatabase.h"
 #include "gamehelper.h"
+#include "gameiconcontroller.h"
 #include <QList>
 #include <QObject>
 #include <QSharedPointer>
@@ -71,6 +72,7 @@ public:
      */
     QMap<int, Game>& games();
 
+    GameIconController* iconController;
 signals:
 
     /**

@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QString>
 #include <utility>
+#include <QIcon>
 
 /**
  * @brief A class representing a video game.
@@ -67,6 +68,8 @@ public:
 
     void setStatus(Status status);
 
+    void setIconName(QString iconName);
+
     /**
      * @brief Returns the ID of the game.
      *
@@ -93,15 +96,18 @@ public:
      */
     [[nodiscard]] QStringList genres() const;
 
+    QString iconName() const;
+
     Status status() const;
 
     QString status_str() const;
-
 private:
     int m_id {};
+    QString m_iconName;
     QString m_name;
     QString m_desc;
     QStringList m_genres;
+
     Status m_status;
 };
 

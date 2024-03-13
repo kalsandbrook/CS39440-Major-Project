@@ -7,6 +7,8 @@
 #include <QListWidgetItem>
 #include <QToolBar>
 #include <QWidget>
+#include <QVBoxLayout>
+#include <QLabel>
 
 class StatusFilter : public QWidget {
     Q_OBJECT
@@ -17,4 +19,11 @@ private slots:
 signals:
     void filterChanged(Game::Status newStatusFilter);
     void filterCleared();
+
+private:
+    void setIconsForStatuses();
+
+    QVBoxLayout* layout;
+    QLabel* statusFiltersLabel;
+    QListWidget* statusFilterList;
 };
