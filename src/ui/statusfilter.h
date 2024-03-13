@@ -21,6 +21,8 @@ signals:
     void filterCleared();
 
 private:
+    void setIconsForStatuses();
+
     QVBoxLayout* layout;
     QLabel* statusFiltersLabel;
     QListWidget* statusFilterList;
