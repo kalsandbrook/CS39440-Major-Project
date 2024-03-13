@@ -141,7 +141,7 @@ void GameLibraryModel::onGameUpdated(const Game& game)
 
         m_games[matchedIndex.row()] = game;
 
-        emit dataChanged(matchedIndex, matchedIndex, { Qt::DisplayRole, NameRole, DescRole, GenreRole, StatusRole });
+        emit dataChanged(matchedIndex, matchedIndex, { Qt::DecorationRole, Qt::DisplayRole, NameRole, DescRole, GenreRole, StatusRole });
     }
 }
 

@@ -20,11 +20,12 @@ void GameLibrary::addGame(Game& game)
     db.beginTransaction();
     QSqlQuery query(db.db());
 
-    query.prepare("INSERT INTO games (Status, Name, Description, Genres)"
-                  "VALUES (:status, :name, :description,:genres)");
+    query.prepare("INSERT INTO games (Status, Name, IconName, Description, Genres)"
+                  "VALUES (:status, :name, :iconName, :description, :genres)");
 
     query.bindValue(":status", GameHelper::statusToString(game.status()));
     query.bindValue(":name", game.name());
+    query.bindValue(":iconName", game.iconName());
     query.bindValue(":description", game.desc());
     query.bindValue(":genres", game.genres());
 
@@ -64,11 +65,12 @@ void GameLibrary::updateGame(Game& game)
     QSqlQuery query(db.db());
 
     query.prepare("UPDATE games "
-                  "SET Status = :status, Name = :name, Description = :desc, Genres = :genres "
+                  "SET Status = :status, Name = :name, IconName = :iconName, Description = :desc, Genres = :genres "
                   "WHERE GameId = :gameId");
 
     query.bindValue(":status", GameHelper::statusToString(game.status()));
     query.bindValue(":name", game.name());
+    query.bindValue(":iconName", game.iconName());
     query.bindValue(":desc", game.desc());
     query.bindValue(":genres", game.genres());
     query.bindValue(":gameId", game.id());

@@ -41,11 +41,11 @@ QIcon GameIconController::getIcon(const QString &fileName) {
     QIcon icon;
 
     if(file.exists() && fileName != ""){
-        qDebug() << "Loading icon: " << file.fileName();
+        // qDebug() << "Loading icon: " << file.fileName();
         icon.addFile(iconFile);
         return icon;
     } else{
-        qDebug() << "Couldn't find icon file: " << file.fileName();
+        // qDebug() << "Couldn't find icon file: " << file.fileName();
         // Fallback icon if file can't be found.
         return icon.fromTheme("input-gamepad-symbolic");
     }
