@@ -28,6 +28,8 @@ MainWindow::MainWindow()
     gameView->setSortingEnabled(true);
     gameView->setModel(gameLibraryProxyModel);
     gameView->setItemDelegate(new GameItemDelegate(this));
+    gameView->setColumnWidth(0,200);
+
 
     statusFilter = new StatusFilter(this);
 

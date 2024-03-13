@@ -48,9 +48,6 @@ public:
      * @return The size hint for the item.
      */
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
-
-private:
-    GameLibrary& gameLibrary;
 };
 
 #endif // GAMEPILE_GAMEITEMDELEGATE_H

@@ -94,6 +94,8 @@ GameLibrary::GameLibrary()
     for (const auto& game : initialGameList) {
         m_games[game.id()] = game;
     }
+
+    iconController = new GameIconController();
 }
 
 const Game& GameLibrary::getGameById(int gameId) const

@@ -70,6 +70,8 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
 
     const Game& game = m_games.at(index.row());
     switch (role) {
+        case Qt::DecorationRole:
+            return QIcon::fromTheme("input-gamepad-symbolic");
     case Qt::DisplayRole:
         switch (index.column()) {
         case 0:
@@ -145,16 +147,20 @@ void GameLibraryModel::onGameUpdated(const Game& game)
 
 QVariant GameLibraryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (section < columnCount() && orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        switch (section) {
-        case 0:
-            return "Name";
-        case 1:
-            return "Description";
-        case 2:
-            return "Genres";
-        case 3:
-            return "Status";
+    if (section < columnCount() && orientation == Qt::Horizontal) {
+        switch(role){
+            case Qt::DisplayRole:
+                switch (section){
+                    case 0:
+                        return "Name";
+                    case 1:
+                        return "Description";
+                    case 2:
+                        return "Genres";
+                    case 3:
+                        return "Status";
+                }
+                break;
         }
     }
     return QAbstractItemModel::headerData(section, orientation, role);

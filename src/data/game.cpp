@@ -4,6 +4,8 @@
 
 #include "game.h"
 
+#include <utility>
+
 Game::Game(int id, QString name, QString desc, QStringList genres)
     : m_id(id)
     , m_name(std::move(name))
@@ -21,6 +23,8 @@ QString Game::desc() const { return m_desc; }
 
 QStringList Game::genres() const { return m_genres; }
 
+QString Game::iconName() const { return m_iconName; }
+
 Game::Status Game::status() const { return m_status; }
 
 void Game::setId(int newId) { m_id = newId; }
@@ -30,6 +34,10 @@ void Game::setName(QString name) { m_name = std::move(name); }
 void Game::setDesc(QString desc) { m_desc = std::move(desc); }
 
 void Game::setGenres(QStringList genres) { m_genres = std::move(genres); }
+
+void Game::setIconName(QString iconName) {
+    m_iconName = std::move(iconName);
+}
 
 void Game::setStatus(Status status)
 {

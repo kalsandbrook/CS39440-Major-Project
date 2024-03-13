@@ -45,6 +45,8 @@ add_executable(GamePile
         src/ui/searchbarwidget.cpp
         src/ui/statusfilter.cpp
         src/ui/statusfilter.h
+        src/data/gameiconcontroller.cpp
+        src/data/gameiconcontroller.h
 )
 
 target_link_libraries(GamePile

@@ -2,7 +2,6 @@
 // Created by Kal on 24/02/2024.
 //
 
-#include <QGridLayout>
 #include <QMessageBox>
 #include <QStringList>
 
@@ -14,6 +13,10 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     : QDialog(parent)
     , editingGame(false)
 {
+
+    pickIconLabel = new QLabel(tr("Icon:"));
+    pickIconButton = new QPushButton(QIcon::fromTheme("document-open"),tr("Choose file..."),this);
+
     nameLabel = new QLabel(tr("Name:"));
     nameLineEdit = new QLineEdit(this);
 
@@ -35,22 +38,20 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &GameEditDialog::verify);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &GameEditDialog::reject);
 
-    QSpacerItem* spacer = new QSpacerItem(20, 20);
-    auto* mainLayout = new QGridLayout;
-    mainLayout->addWidget(nameLabel, 0, 0);
-    mainLayout->addWidget(nameLineEdit, 0, 1);
-    mainLayout->addWidget(descLabel, 1, 0);
-    mainLayout->addWidget(descTextEdit, 1, 1);
-    mainLayout->addWidget(genreLabel, 2, 0);
-    mainLayout->addWidget(genreList, 2, 1, 3, 2);
-    mainLayout->addWidget(statusLabel, 5, 0);
-    mainLayout->addWidget(statusBox, 5, 1);
-    mainLayout->addItem(spacer, 6, 0);
-    mainLayout->addWidget(buttonBox, 7, 1, 1, 2);
+    layout = new QFormLayout();
 
-    resize(400, 300);
+    layout->addRow(pickIconLabel, pickIconButton);
+    layout->addRow(nameLabel,nameLineEdit);
+    layout->addRow(descLabel,descTextEdit);
+    layout->addRow(genreLabel,genreList);
+    layout->addRow(statusLabel,statusBox);
 
-    setLayout(mainLayout);
+    layout->addRow(buttonBox);
+
+    resize({400,640});
+    setLayout(layout);
+
+    connect(pickIconButton, &QPushButton::clicked, this, &GameEditDialog::openFileDialog);
 }
 
 void GameEditDialog::populateGenreList(QListWidget* genreList)
@@ -148,4 +149,12 @@ int GameEditDialog::exec(int gameId)
     setGameToEdit(game);
 
     return QDialog::exec();
+}
+
+void GameEditDialog::openFileDialog() {
+    fileDialog = new QFileDialog(this, "Choose Icon");
+    fileDialog->setFileMode(QFileDialog::ExistingFile);
+    fileDialog->setNameFilter("Image Files (*.png, *.jpg, *.jpeg)");
+
+    fileDialog->exec();
 }
