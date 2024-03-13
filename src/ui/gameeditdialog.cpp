@@ -13,6 +13,7 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     : QDialog(parent)
     , editingGame(false)
     , m_selectedIconFile(new QFile())
+    , fileDialog(new QFileDialog(this, "Choose Icon"))
 {
     pickIconLabel = new QLabel(tr("Icon:"));
     pickIconButton = new QPushButton(QIcon::fromTheme("document-open"),tr("Choose file..."),this);
@@ -167,7 +168,6 @@ int GameEditDialog::exec(int gameId)
 }
 
 void GameEditDialog::openFileDialog() {
-    fileDialog = new QFileDialog(this, "Choose Icon");
     fileDialog->setFileMode(QFileDialog::ExistingFile);
     fileDialog->setNameFilter("Image Files (*.png *.jpg *.jpeg)");
 
