@@ -21,6 +21,8 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     nameLabel = new QLabel(tr("Name:"));
     nameLineEdit = new QLineEdit(this);
 
+    gameIcon = new QIcon();
+
     descLabel = new QLabel(tr("Description:"));
     descTextEdit = new QTextEdit(this);
 
@@ -91,7 +93,7 @@ void GameEditDialog::accept()
     if(m_selectedIconFile->exists()){
         QFileInfo iconFileInfo(m_selectedIconFile->fileName());
         QString saveDir = iconController->getIconDirectory().path() + "/" + iconFileInfo.fileName();
-        m_selectedIconFile->copy(saveDir) ? qDebug() << "Writing file " << m_selectedIconFile->fileName() << " to icons folder." : qDebug() << m_selectedIconFile->fileName() << " already exists.";
+        m_selectedIconFile->copy(saveDir) ? qDebug() << "Writing file" << m_selectedIconFile->fileName() << "to icons folder." : qDebug() << m_selectedIconFile->fileName() << "already exists.";
 
         gameIconName = iconFileInfo.fileName();
     }
@@ -133,6 +135,8 @@ int GameEditDialog::exec()
     editingGame = false;
     setWindowTitle(tr("Add New Game"));
 
+    delete m_selectedIconFile;
+    m_selectedIconFile = new QFile();
     nameLineEdit->clear();
     descTextEdit->clear();
     genreList->clearSelection();
@@ -144,6 +148,8 @@ int GameEditDialog::exec()
 void GameEditDialog::setGameToEdit(const Game& game)
 {
     editedGame = game;
+    m_selectedIconFile->setFileName(GameIconController::getIconDirectory().path() + "/" + game.iconName());
+
     nameLineEdit->setText(game.name());
     descTextEdit->setText(game.desc());
 

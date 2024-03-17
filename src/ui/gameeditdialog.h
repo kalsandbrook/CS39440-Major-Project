@@ -97,6 +97,8 @@ private:
 
     QFileDialog* fileDialog;
 
+    QIcon* gameIcon;
+
     QPushButton* pickIconButton;
     QLabel* pickIconLabel;
 
