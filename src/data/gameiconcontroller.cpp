@@ -30,10 +30,6 @@ void GameIconController::createIconDirectory() {
                                                        : qDebug() << "Icons Directory exists at: " << m_iconDirectory.path();
 }
 
-void GameIconController::loadIcons() {
-
-}
-
 QIcon GameIconController::getIcon(const QString &fileName) {
     QString iconFile(getIconDirectory().path() + "/" + fileName);
 

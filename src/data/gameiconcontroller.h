@@ -16,8 +16,6 @@ public:
 
     static QDir getIconDirectory();
 
-    void loadIcons();
-
     QIcon getIcon(const QString& fileName);
 private:
     QDir m_iconDirectory;
