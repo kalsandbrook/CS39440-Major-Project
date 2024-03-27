@@ -2,6 +2,8 @@
 // Created by kal on 13/03/24.
 //
 
+#include <QStandardPaths>
+#include <qstandardpaths.h>
 #include "gameiconcontroller.h"
 
 GameIconController::GameIconController() {
@@ -11,18 +13,9 @@ GameIconController::GameIconController() {
 }
 
 QDir GameIconController::getIconDirectory() {
-#ifdef linux
-    QString dirPrefix = {};
+    QString path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 
-    if (std::getenv("XDG_DATA_HOME")) {
-        dirPrefix += qgetenv("XDG_DATA_HOME");
-    } else {
-        dirPrefix += qgetenv("HOME") + "/.local/share";
-    }
-
-    QDir iconsDirectory(dirPrefix + "/GamePile/icons");
-    return iconsDirectory;
-#endif
+    return QDir(path + "/icons");
 }
 
 void GameIconController::createIconDirectory() {
