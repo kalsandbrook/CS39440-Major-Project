@@ -80,7 +80,7 @@ public:
      *
      * @return The genres of the game.
      */
-    QStringList getGenre() const;
+    QStringList getGenres() const;
 
     Game::Status getStatus() const;
 

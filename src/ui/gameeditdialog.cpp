@@ -8,6 +8,7 @@
 #include "../data/game.h"
 #include "../data/gamelibrary.h"
 #include "gameeditdialog.h"
+#include "../data/gamehelper.h"
 
 GameEditDialog::GameEditDialog(QWidget* parent)
     : QDialog(parent)
@@ -28,6 +29,8 @@ GameEditDialog::GameEditDialog(QWidget* parent)
 
     genreLabel = new QLabel(tr("Genres:"));
     genreList = new QListWidget(this);
+    genreList->setSelectionMode(QAbstractItemView::MultiSelection);
+    // Add checkboxes?
 
     statusLabel = new QLabel(tr("Status:"));
     statusBox = new QComboBox(this);
@@ -101,12 +104,12 @@ void GameEditDialog::accept()
     if (editingGame) {
         editedGame.setName(getName());
         editedGame.setDesc(getDesc());
-        editedGame.setGenres(getGenre());
+        editedGame.setGenres(getGenres());
         editedGame.setStatus(getStatus());
         editedGame.setIconName(gameIconName);
         gameLibrary.updateGame(editedGame);
     } else {
-        Game newGame(0, getName(), getDesc(), getGenre());
+        Game newGame(0, getName(), getDesc(), getGenres());
         newGame.setStatus(getStatus());
         newGame.setIconName(gameIconName);
         gameLibrary.addGame(newGame);
@@ -120,7 +123,7 @@ QString GameEditDialog::getName() const { return nameLineEdit->text(); }
 
 QString GameEditDialog::getDesc() const { return descTextEdit->toPlainText(); }
 
-QStringList GameEditDialog::getGenre() const
+QStringList GameEditDialog::getGenres() const
 {
     QStringList genres;
     QList<QListWidgetItem*> items = genreList->selectedItems();

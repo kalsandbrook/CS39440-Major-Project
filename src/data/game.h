@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QString>
 #include <QIcon>
+#include <QMap>
 
 /**
  * @brief A class representing a video game.

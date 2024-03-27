@@ -7,6 +7,8 @@
 #include "qlogging.h"
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlTableModel>
+#include <QSqlRecord>
 
 GameLibrary& GameLibrary::instance()
 {
@@ -31,6 +33,8 @@ void GameLibrary::addGame(Game& game)
     if (query.exec()) {
         qint64 lastInsertedId = query.lastInsertId().toLongLong();
 
+        setGameGenres(lastInsertedId, game.genres());
+
         game.setId(lastInsertedId);
 
         db.endTransaction();
@@ -42,6 +46,71 @@ void GameLibrary::addGame(Game& game)
         db.endTransaction();
     }
 }
+
+void GameLibrary::setGameGenres(int gameId, QStringList genres){
+        for(const auto& genre : genres){
+            addGenre(genre);
+
+            QSqlQuery findGenreQuery(db.db());
+            findGenreQuery.prepare("SELECT genreId FROM genres WHERE name = :genreName");
+            findGenreQuery.bindValue(":genreName", genre);
+            findGenreQuery.exec();
+
+            if (findGenreQuery.next()) {
+                int genreId = findGenreQuery.value(0).toInt();
+                QSqlQuery genreQuery(db.db());
+                genreQuery.prepare(
+                    "INSERT INTO game_genres (gameId, genreId) "
+                    "VALUES (:gameId, :genreId)"
+                );
+                genreQuery.bindValue(":gameId", gameId);
+                genreQuery.bindValue(":genreId", genreId);
+                genreQuery.exec();
+            }   else {
+            qWarning() << "Genre" << genre << "not found in the genres table.";
+            }
+        }
+}
+
+void GameLibrary::addGenre(const QString& genreName){
+    QSqlQuery checkQuery(db.db());
+    checkQuery.prepare("SELECT genreId FROM genres WHERE name = :name");
+    checkQuery.bindValue(":name",genreName);
+    checkQuery.exec();
+
+    if(checkQuery.next()){
+        qDebug() << "Genre already exists.";
+        return;
+    }
+
+    QSqlQuery insertQuery(db.db());
+    insertQuery.prepare("INSERT INTO genres (name) VALUES (:name)");
+    insertQuery.bindValue(":name", genreName);
+
+    insertQuery.exec() ? qDebug() << "Genre added." : qWarning() << "Failed to add genre:" << insertQuery.lastError().text();
+}
+
+QStringList GameLibrary::getGameGenres(Game game){
+    QStringList genres;
+    QSqlQuery query(db.db());
+
+    query.prepare(R"""(
+        SELECT genres.name
+        FROM game_genres
+        JOIN genres ON game_genres.genreId = genres.genreId
+        WHERE game_genres.gameId = :gameId;
+    )""");
+    query.bindValue(":gameId", game.id());
+
+    if(query.exec()){
+        while(query.next()){
+            QString genreName = query.value(0).toString();
+            genres.append(genreName);
+        }
+    }
+
+    return genres;
+};
 
 void GameLibrary::deleteGame(int gameId)
 {
@@ -75,6 +144,14 @@ void GameLibrary::updateGame(Game& game)
 
     query.exec();
 
+    // Handle genres
+    QSqlQuery deleteQuery(db.db());
+    deleteQuery.prepare("DELETE FROM game_genres WHERE gameId = :gameId");
+    deleteQuery.bindValue(":gameId", game.id());
+    deleteQuery.exec();
+
+    setGameGenres(game.id(), game.genres());
+
     db.endTransaction();
 
     m_games[game.id()] = game;
@@ -88,8 +165,25 @@ QMap<int, Game>& GameLibrary::games()
 
 GameLibrary::GameLibrary()
 {
-    // TODO: db.getGames() should be moved to be a part of this function.
-    QList<Game> initialGameList = db.getGames();
+    QSqlTableModel model;
+    model.setTable("games");
+    model.select();
+
+    QList<Game> initialGameList;
+    for (int i = 0; i < model.rowCount(); ++i) {
+        int gameId = model.record(i).value("GameId").toInt();
+        Game::Status gameStatus = GameHelper::stringToStatus(model.record(i).value("Status").toString());
+        QString gameIcon = model.record(i).value("IconName").toString();
+        QString gameName = model.record(i).value("Name").toString();
+        QString gameDesc = model.record(i).value("Description").toString();
+        QStringList genres = model.record(i).value("Genres").toStringList();
+
+        Game game(gameId, gameName, gameDesc, genres);
+        game.setIconName(gameIcon);
+        game.setStatus(gameStatus);
+        game.setGenres(getGameGenres(game));
+        initialGameList.append(game);
+    }
 
     for (const auto& game : initialGameList) {
         m_games[game.id()] = game;

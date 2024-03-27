@@ -29,7 +29,9 @@ bool GameDatabase::open()
     m_db.setDatabaseName(databaseDir + "/data.sqlite");
     m_db.setUserName("app");
     m_db.setPassword("bqbzKJY9RJ4=");
+
     return m_db.open();
+
 }
 
 QSqlDatabase GameDatabase::db() { return m_db; }
@@ -43,6 +45,11 @@ void GameDatabase::setup()
 {
     if (!m_db.isOpen())
         qFatal("Could not setup database.");
+
+
+    QSqlQuery fkSetupQuery(m_db);
+    fkSetupQuery.exec("PRAGMA foreign_keys = ON;");
+
     QSqlQuery query(m_db);
     // creates games table if it doesn't exist
     m_db.transaction();
@@ -97,14 +104,14 @@ void GameDatabase::setup()
 	"gameId"	INTEGER NOT NULL,
 	"genreId"	INTEGER NOT NULL,
 	FOREIGN KEY("genreId") REFERENCES "genres"("genreId"),
-	FOREIGN KEY("gameId") REFERENCES "games"("gameId"))
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE)
     )""");
 
     query.exec(R"""(
     CREATE TABLE IF NOT EXISTS "game_developers" (
 	"gameId"	INTEGER NOT NULL,
 	"developerId"	INTEGER NOT NULL,
-	FOREIGN KEY("gameId") REFERENCES "games"("gameId"),
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE,
 	FOREIGN KEY("developerId") REFERENCES "developers"("developerId"))
     )""");
 
@@ -112,7 +119,7 @@ void GameDatabase::setup()
     CREATE TABLE IF NOT EXISTS "game_publishers" (
 	"gameId"	INTEGER NOT NULL,
 	"publisherId"	INTEGER NOT NULL,
-	FOREIGN KEY("gameId") REFERENCES "games"("gameId"),
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE,
 	FOREIGN KEY("publisherId") REFERENCES "publishers"("publisherId"))
     )""");
 
@@ -121,14 +128,14 @@ void GameDatabase::setup()
 	"gameId"	INTEGER NOT NULL,
 	"platformId"	INTEGER NOT NULL,
 	FOREIGN KEY("platformId") REFERENCES "platforms"("platformId"),
-	FOREIGN KEY("gameId") REFERENCES "games"("gameId"))
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE)
     )""");
 
     query.exec(R"""(
     CREATE TABLE IF NOT EXISTS "game_user_tags" (
 	"gameId"	INTEGER NOT NULL,
 	"userTagId"	INTEGER NOT NULL,
-	FOREIGN KEY("gameId") REFERENCES "games"("gameId"),
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE,
 	FOREIGN KEY("userTagId") REFERENCES "user_tags"("userTagId"))
     )""");
 

@@ -6,7 +6,6 @@
 #define GAMELIBRARY_H
 #include "game.h"
 #include "gamedatabase.h"
-#include "gamehelper.h"
 #include "gameiconcontroller.h"
 #include <QList>
 #include <QObject>
@@ -44,6 +43,13 @@ public:
      * @param game The game to add.
      */
     void addGame(Game& game);
+
+    void addGenre(const QString& genreName);
+
+    void setGameGenres(int gameId, QStringList genres);
+
+    QStringList getGameGenres(Game game);
+
 
     /**
      * @brief Deletes a game from the library.

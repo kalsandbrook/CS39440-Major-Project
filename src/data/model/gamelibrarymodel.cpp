@@ -79,7 +79,7 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
         case 1:
             return game.desc();
         case 2:
-            return game.genres();
+            return game.genres().join(", ");
         case 3:
             return game.status_str();
         default:
