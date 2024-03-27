@@ -3,6 +3,7 @@
 //
 
 #include "gamedatabase.h"
+#include "gamehelper.h"
 #include "qlogging.h"
 #include <QSqlQuery>
 #include <QSqlRecord>

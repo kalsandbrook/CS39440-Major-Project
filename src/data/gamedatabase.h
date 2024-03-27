@@ -2,7 +2,6 @@
 #define GAMEDATABASE_H
 
 #include "game.h"
-#include "gamehelper.h"
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 

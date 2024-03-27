@@ -7,7 +7,6 @@
 #include <QList>
 #include <QObject>
 #include <QString>
-#include <utility>
 #include <QIcon>
 
 /**
