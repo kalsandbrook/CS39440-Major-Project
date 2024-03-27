@@ -8,6 +8,7 @@
 #include <QSqlQuery>
 #include <QDir>
 #include <QSqlRecord>
+#include <QSqlError>
 #include <QStringList>
 #include <QStandardPaths>
 
@@ -31,7 +32,7 @@ bool GameDatabase::open()
     return m_db.open();
 }
 
-QSqlDatabase GameDatabase::db() { return m_db.database(); }
+QSqlDatabase GameDatabase::db() { return m_db; }
 
 void GameDatabase::close()
 {
@@ -45,15 +46,92 @@ void GameDatabase::setup()
     QSqlQuery query(m_db);
     // creates games table if it doesn't exist
     m_db.transaction();
-    query.exec(
-        "CREATE TABLE IF NOT EXISTS games ("
-        "GameId INTEGER PRIMARY KEY AUTOINCREMENT,"
-        "IconName TEXT,"
-        "Name TEXT NOT NULL,"
-        "Status TEXT,"
-        "Description TEXT,"
-        "Genres TEXT"
-        ")");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "games" (
+	"gameId"	INTEGER NOT NULL UNIQUE,
+	"iconName"	TEXT,
+	"name"	TEXT NOT NULL,
+	"status"	TEXT NOT NULL DEFAULT 'NONE',
+	"description"	TEXT,
+	PRIMARY KEY("gameId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "genres" (
+	"genreId"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("genreId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "developers" (
+	"developerId"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("developerId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "publishers" (
+	"publisherId"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("publisherId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "platforms" (
+	"platformId"	INTEGER NOT NULL UNIQUE,
+	"platformName"	TEXT NOT NULL,
+	PRIMARY KEY("platformId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "user_tags" (
+	"userTagId"	INTEGER NOT NULL UNIQUE,
+	"name"	INTEGER NOT NULL,
+	PRIMARY KEY("userTagId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_genres" (
+	"gameId"	INTEGER NOT NULL,
+	"genreId"	INTEGER NOT NULL,
+	FOREIGN KEY("genreId") REFERENCES "genres"("genreId"),
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId"))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_developers" (
+	"gameId"	INTEGER NOT NULL,
+	"developerId"	INTEGER NOT NULL,
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId"),
+	FOREIGN KEY("developerId") REFERENCES "developers"("developerId"))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_publishers" (
+	"gameId"	INTEGER NOT NULL,
+	"publisherId"	INTEGER NOT NULL,
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId"),
+	FOREIGN KEY("publisherId") REFERENCES "publishers"("publisherId"))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_platforms" (
+	"gameId"	INTEGER NOT NULL,
+	"platformId"	INTEGER NOT NULL,
+	FOREIGN KEY("platformId") REFERENCES "platforms"("platformId"),
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId"))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_user_tags" (
+	"gameId"	INTEGER NOT NULL,
+	"userTagId"	INTEGER NOT NULL,
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId"),
+	FOREIGN KEY("userTagId") REFERENCES "user_tags"("userTagId"))
+    )""");
+
     m_db.commit();
 }
 
