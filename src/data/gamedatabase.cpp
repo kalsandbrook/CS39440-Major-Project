@@ -6,8 +6,10 @@
 #include "gamehelper.h"
 #include "qlogging.h"
 #include <QSqlQuery>
+#include <QDir>
 #include <QSqlRecord>
 #include <QStringList>
+#include <QStandardPaths>
 
 GameDatabase& GameDatabase::instance()
 {
@@ -18,15 +20,18 @@ GameDatabase& GameDatabase::instance()
 bool GameDatabase::open()
 {
     // TODO: Move this information to an environment variable
+
+    QString databaseDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setHostName("local");
-    m_db.setDatabaseName("games");
+    m_db.setDatabaseName(databaseDir + "/data.sqlite");
     m_db.setUserName("app");
     m_db.setPassword("bqbzKJY9RJ4=");
     return m_db.open();
 }
 
-QSqlDatabase& GameDatabase::db() { return m_db; }
+QSqlDatabase GameDatabase::db() { return m_db.database(); }
 
 void GameDatabase::close()
 {

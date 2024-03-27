@@ -50,7 +50,7 @@ public:
     /**
      * @brief Returns the database.
      */
-    QSqlDatabase& db();
+    QSqlDatabase db();
 
     /**
      * @brief Sets up the database.
