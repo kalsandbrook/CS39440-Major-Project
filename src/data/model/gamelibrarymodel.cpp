@@ -69,22 +69,28 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
         return QVariant();
 
     const Game& game = m_games.at(index.row());
+    QImage icon;
     switch (role) {
         case Qt::DecorationRole:
-            return m_gameLibrary.iconController->getIcon(game.iconName());
-    case Qt::DisplayRole:
-        switch (index.column()) {
-        case 0:
-            return game.name();
-        case 1:
-            return game.desc();
-        case 2:
-            return game.genres().join(", ");
-        case 3:
-            return game.status_str();
-        default:
-            return {};
-        }
+            icon = m_gameLibrary.iconController->getIcon(game.iconName());
+            if(!icon.isNull())
+                return icon;
+            else
+                return QIcon::fromTheme("input-gamepad-symbolic");
+            break;
+        case Qt::DisplayRole:
+            switch (index.column()) {
+            case 0:
+                return game.name();
+            case 1:
+                return game.desc();
+            case 2:
+                return game.genres().join(", ");
+            case 3:
+                return game.status_str();
+            default:
+                return {};
+            }
     case IdRole:
         return game.id();
     case NameRole:

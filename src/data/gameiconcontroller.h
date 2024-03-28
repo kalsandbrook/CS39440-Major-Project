@@ -8,7 +8,7 @@
 #define GAMEPILE_GAMEICONCONTROLLER_H
 
 #include <QDir>
-#include <QIcon>
+#include <QImage>
 
 class GameIconController {
 public:
@@ -16,7 +16,7 @@ public:
 
     static QDir getIconDirectory();
 
-    QIcon getIcon(const QString& fileName);
+    QImage getIcon(const QString& fileName);
 private:
     QDir m_iconDirectory;
 
