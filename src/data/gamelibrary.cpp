@@ -112,6 +112,17 @@ QStringList GameLibrary::getGameGenres(Game game){
     return genres;
 };
 
+QStringList GameLibrary::getAllGenres(){
+    QStringList genres;
+    QSqlQuery query(db.db());
+
+    query.exec("SELECT name FROM genres");
+    while(query.next()){
+        genres.append(query.value(0).toString());
+    }
+    return genres;
+}
+
 void GameLibrary::deleteGame(int gameId)
 {
     db.beginTransaction();

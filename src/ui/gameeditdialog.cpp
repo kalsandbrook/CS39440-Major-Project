@@ -4,11 +4,14 @@
 
 #include <QMessageBox>
 #include <QStringList>
+#include <QCompleter>
+#include <qnamespace.h>
 
 #include "../data/game.h"
 #include "../data/gamelibrary.h"
 #include "gameeditdialog.h"
 #include "../data/gamehelper.h"
+#include "removableitemwidget.h"
 
 GameEditDialog::GameEditDialog(QWidget* parent)
     : QDialog(parent)
@@ -27,17 +30,23 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     descLabel = new QLabel(tr("Description:"));
     descTextEdit = new QTextEdit(this);
 
+    QStringList allGenres = GameLibrary::instance().getAllGenres();
+    QCompleter* genreCompleter = new QCompleter(allGenres, this);
+    genreCompleter->setCompletionMode(QCompleter::InlineCompletion);
+
     genreLabel = new QLabel(tr("Genres:"));
+    genreLineEdit = new QLineEdit(this);
+    genreLineEdit->setCompleter(genreCompleter);
+
+    QAction* addGenreAction = new QAction(QIcon::fromTheme("list-add"),"Add Genre", this);
+    genreLineEdit->addAction(addGenreAction, QLineEdit::ActionPosition::TrailingPosition);
     genreList = new QListWidget(this);
-    genreList->setSelectionMode(QAbstractItemView::MultiSelection);
-    // Add checkboxes?
+    connect(addGenreAction, &QAction::triggered, this, &GameEditDialog::addGenre);
 
     statusLabel = new QLabel(tr("Status:"));
     statusBox = new QComboBox(this);
     statusBox->addItems({ "NONE", "BACKLOG", "PLAYING", "COMPLETED", "ABANDONED" });
     statusBox->setCurrentIndex(0); // Default to NONE
-
-    populateGenreList(genreList);
 
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
@@ -46,10 +55,12 @@ GameEditDialog::GameEditDialog(QWidget* parent)
 
     layout = new QFormLayout();
 
+
     layout->addRow(pickIconLabel, pickIconButton);
     layout->addRow(nameLabel,nameLineEdit);
     layout->addRow(descLabel,descTextEdit);
-    layout->addRow(genreLabel,genreList);
+    layout->addRow(genreLabel,genreLineEdit);
+    layout->addRow(nullptr, genreList);
     layout->addRow(statusLabel,statusBox);
 
     layout->addRow(buttonBox);
@@ -60,24 +71,10 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     connect(pickIconButton, &QPushButton::clicked, this, &GameEditDialog::openFileDialog);
 }
 
-void GameEditDialog::populateGenreList(QListWidget* genreList)
-{
-    QStringList genres {};
-    genres << tr("Action") << tr("Adventure") << tr("Arcade") << tr("Board")
-           << tr("Card") << tr("Casino") << tr("Educational") << tr("Family")
-           << tr("Fighting") << tr("Music") << tr("Platform") << tr("Puzzle")
-           << tr("Racing") << tr("Role-Playing") << tr("Shooter")
-           << tr("Simulation") << tr("Sports") << tr("Strategy") << tr("Trivia")
-           << tr("Word");
-    genreList->addItems(genres);
-}
-
 void GameEditDialog::verify()
 {
     if (!nameLineEdit->text().isEmpty() && !descTextEdit->toPlainText().isEmpty()) {
-        if (!genreList->selectedItems().empty()) {
-            accept();
-        }
+        accept();
     } else {
         QMessageBox::information(this, tr("Error"),
             tr("Please fill in all fields."));
@@ -126,11 +123,24 @@ QString GameEditDialog::getDesc() const { return descTextEdit->toPlainText(); }
 QStringList GameEditDialog::getGenres() const
 {
     QStringList genres;
-    QList<QListWidgetItem*> items = genreList->selectedItems();
-    for (QListWidgetItem* item : items) {
-        genres << item->text();
+
+    for (int i = 0; i < genreList->count(); ++i) {
+            QListWidgetItem *item = genreList->item(i);
+            RemovableItemWidget *itemWidget = dynamic_cast<RemovableItemWidget*>(genreList->itemWidget(item));
+            if (itemWidget) {
+                genres.append(itemWidget->getText());
+            }
     }
+
     return genres;
+}
+
+void GameEditDialog::addGenre(){
+    QString newGenreName = genreLineEdit->text();
+    QListWidgetItem* newGenre = new QListWidgetItem();
+    genreList->addItem(newGenre);
+    genreList->setItemWidget(newGenre, new RemovableItemWidget(newGenreName, genreList));
+    genreLineEdit->clear();
 }
 
 int GameEditDialog::exec()
@@ -157,9 +167,10 @@ void GameEditDialog::setGameToEdit(const Game& game)
     descTextEdit->setText(game.desc());
 
     QStringList genres = game.genres();
-    for (int i = 0; i < genreList->count(); ++i) {
-        QListWidgetItem* item = genreList->item(i);
-        item->setSelected(genres.contains(item->text()));
+    for(QString genre : genres){
+        QListWidgetItem* newGenre = new QListWidgetItem();
+        genreList->addItem(newGenre);
+        genreList->setItemWidget(newGenre, new RemovableItemWidget(genre, genreList));
     }
 }
 

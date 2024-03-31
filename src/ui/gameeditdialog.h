@@ -10,6 +10,7 @@
 #include <QFormLayout>
 #include <QComboBox>
 #include <QFileDialog>
+#include <QCompleter>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLabel>
@@ -86,9 +87,9 @@ public:
 
 private slots:
     void openFileDialog();
-private:
 
-    static void populateGenreList(QListWidget* genreList);
+    void addGenre();
+private:
 
     bool editingGame;
     Game editedGame;
@@ -109,6 +110,8 @@ private:
     QTextEdit* descTextEdit;
 
     QLabel* genreLabel;
+    QCompleter* genreCompleter;
+    QLineEdit* genreLineEdit;
     QListWidget* genreList;
 
     QLabel* statusLabel;

@@ -50,6 +50,8 @@ public:
 
     QStringList getGameGenres(Game game);
 
+    QStringList getAllGenres();
+
 
     /**
      * @brief Deletes a game from the library.
