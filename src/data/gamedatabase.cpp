@@ -166,7 +166,8 @@ QList<Game> GameDatabase::getGames()
         QString gameDesc = model.record(i).value("Description").toString();
         QStringList genres = model.record(i).value("Genres").toStringList();
 
-        Game game(gameId, gameName, gameDesc, genres);
+        Game game(gameId, gameName, gameDesc);
+        game.setGenres(genres);
         game.setIconName(gameIcon);
         game.setStatus(gameStatus);
         gameList.append(game);

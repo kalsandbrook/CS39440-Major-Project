@@ -60,7 +60,7 @@ int GameLibraryModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
     // This will be expanded to include other game properties soon
-    return 4;
+    return 9;
 }
 
 QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
@@ -85,9 +85,19 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
             case 1:
                 return game.desc();
             case 2:
-                return game.genres().join(", ");
-            case 3:
                 return game.status_str();
+            case 3:
+                return game.genres().join(", ");
+            case 4:
+                return game.releaseDate().toString();
+            case 5:
+                return game.userTags().join(", ");
+            case 6:
+                return game.developers().join(", ");
+            case 7:
+                return game.publishers().join(", ");
+            case 8:
+                return game.platforms().join(", ");
             default:
                 return {};
             }
@@ -162,9 +172,19 @@ QVariant GameLibraryModel::headerData(int section, Qt::Orientation orientation, 
                     case 1:
                         return "Description";
                     case 2:
-                        return "Genres";
-                    case 3:
                         return "Status";
+                    case 3:
+                        return "Genres";
+                    case 4:
+                        return "Release Date";
+                    case 5:
+                        return "Tags";
+                    case 6:
+                        return "Developers";
+                    case 7:
+                        return "Publishers";
+                    case 8:
+                        return "Platforms";
                 }
                 break;
         }

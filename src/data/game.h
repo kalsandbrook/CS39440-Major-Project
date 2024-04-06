@@ -9,6 +9,8 @@
 #include <QString>
 #include <QIcon>
 #include <QMap>
+#include <QDate>
+#include <qdatetime.h>
 
 /**
  * @brief A class representing a video game.
@@ -30,7 +32,7 @@ public:
      * @param desc The description of the game.
      * @param genres The genres(s) of the game.
      */
-    Game(int id, QString name, QString desc, QStringList genres);
+    Game(int id, QString name, QString desc);
     Game() = default;
 
     enum Status { // Possible expansion of this feature: allow users to set custom status?
@@ -96,6 +98,16 @@ public:
      */
     [[nodiscard]] QStringList genres() const;
 
+    QStringList developers() const;
+
+    QStringList publishers() const;
+
+    QStringList platforms() const;
+
+    QStringList userTags() const;
+
+    QDate releaseDate() const;
+
     QString iconName() const;
 
     Status status() const;
@@ -106,7 +118,13 @@ private:
     QString m_iconName;
     QString m_name;
     QString m_desc;
+    QDate m_releaseDate;
+
     QStringList m_genres;
+    QStringList m_developers;
+    QStringList m_publishers;
+    QStringList m_platforms;
+    QStringList m_user_tags;
 
     Status m_status;
 };

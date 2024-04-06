@@ -6,13 +6,18 @@
 
 #include <utility>
 
-Game::Game(int id, QString name, QString desc, QStringList genres)
+Game::Game(int id, QString name, QString desc)
     : m_id(id)
     , m_name(std::move(name))
     , m_desc(std::move(desc))
-    , m_genres(std::move(genres))
 {
     m_status = NONE;
+    m_genres = {};
+    m_developers = {};
+    m_publishers = {};
+    m_platforms = {};
+    m_releaseDate = {};
+    m_user_tags = {};
 }
 
 int Game::id() const { return m_id; }
@@ -61,3 +66,23 @@ QString Game::status_str() const
         return {};
     }
 }
+
+QStringList Game::developers() const{
+    return m_developers;
+};
+
+QStringList Game::publishers() const{
+    return m_publishers;
+};
+
+QStringList Game::platforms() const{
+    return m_platforms;
+};
+
+QStringList Game::userTags() const{
+    return m_user_tags;
+};
+
+QDate Game::releaseDate() const{
+    return m_releaseDate;
+};

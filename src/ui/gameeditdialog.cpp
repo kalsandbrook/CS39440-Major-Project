@@ -119,7 +119,8 @@ void GameEditDialog::accept()
         editedGame.setIconName(gameIconName);
         gameLibrary.updateGame(editedGame);
     } else {
-        Game newGame(0, getName(), getDesc(), getGenres());
+        Game newGame(0, getName(), getDesc());
+        newGame.setGenres(getGenres());
         newGame.setStatus(getStatus());
         newGame.setIconName(gameIconName);
         gameLibrary.addGame(newGame);
