@@ -3,6 +3,7 @@
 //
 
 #include "gamelibrary.h"
+#include "gameattributehelper.h"
 #include "gamehelper.h"
 #include "qlogging.h"
 #include <QSqlError>
@@ -49,7 +50,7 @@ void GameLibrary::addGame(Game& game)
 
 void GameLibrary::setGameGenres(int gameId, QStringList genres){
         for(const auto& genre : genres){
-            addGenre(genre);
+            addAttribute(Game::Attribute::GENRES, genre);
 
             QSqlQuery findGenreQuery(db.db());
             findGenreQuery.prepare("SELECT genreId FROM genres WHERE name = :genreName");
@@ -84,22 +85,43 @@ void GameLibrary::removeUnusedGenres(){
     )""");
 };
 
-void GameLibrary::addGenre(const QString& genreName){
+// void GameLibrary::addGenre(const QString& genreName){
+//     QSqlQuery checkQuery(db.db());
+//     checkQuery.prepare("SELECT genreId FROM genres WHERE name = :name");
+//     checkQuery.bindValue(":name",genreName);
+//     checkQuery.exec();
+//
+//     if(checkQuery.next()){
+//         qDebug() << "Genre already exists.";
+//         return;
+//     }
+//
+//     QSqlQuery insertQuery(db.db());
+//     insertQuery.prepare("INSERT INTO genres (name) VALUES (:name)");
+//     insertQuery.bindValue(":name", genreName);
+//
+//     insertQuery.exec() ? qDebug() << "Genre added." : qWarning() << "Failed to add genre:" << insertQuery.lastError().text();
+// }
+
+void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& name){
+    QString tableName = GameAttributeHelper::getDbTableName(attribute);
+    QString idField = GameAttributeHelper::getIdField(attribute);
     QSqlQuery checkQuery(db.db());
-    checkQuery.prepare("SELECT genreId FROM genres WHERE name = :name");
-    checkQuery.bindValue(":name",genreName);
+    checkQuery.prepare(QString("SELECT %1 FROM %2 WHERE name = :name").arg(idField, tableName));
+    checkQuery.bindValue(":name", name);
+
     checkQuery.exec();
 
     if(checkQuery.next()){
-        qDebug() << "Genre already exists.";
+        qDebug() << "Attribute" << "already exists.";
         return;
     }
 
     QSqlQuery insertQuery(db.db());
-    insertQuery.prepare("INSERT INTO genres (name) VALUES (:name)");
-    insertQuery.bindValue(":name", genreName);
+    insertQuery.prepare(QString("INSERT INTO %1 (name) VALUES (:name)").arg(tableName));
+    insertQuery.bindValue(":name", name);
 
-    insertQuery.exec() ? qDebug() << "Genre added." : qWarning() << "Failed to add genre:" << insertQuery.lastError().text();
+    insertQuery.exec() ? qDebug() << "added." : qWarning() << "Failed to add attribute:" << insertQuery.lastError().text();
 }
 
 QStringList GameLibrary::getGameGenres(Game game){
@@ -200,10 +222,8 @@ GameLibrary::GameLibrary()
         QString gameIcon = model.record(i).value("IconName").toString();
         QString gameName = model.record(i).value("Name").toString();
         QString gameDesc = model.record(i).value("Description").toString();
-        QStringList genres = model.record(i).value("Genres").toStringList();
 
         Game game(gameId, gameName, gameDesc);
-        game.setGenres(genres);
         game.setIconName(gameIcon);
         game.setStatus(gameStatus);
         game.setGenres(getGameGenres(game));

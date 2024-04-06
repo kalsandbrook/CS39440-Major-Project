@@ -44,7 +44,7 @@ public:
      */
     void addGame(Game& game);
 
-    void addGenre(const QString& genreName);
+    void addAttribute(const Game::Attribute attribute, const QString& name);
 
     void setGameGenres(int gameId, QStringList genres);
 
@@ -119,7 +119,7 @@ private:
     ~GameLibrary(); // Private destructor - no external deletion
     GameLibrary(const GameLibrary&) = delete;
     GameLibrary& operator=(const GameLibrary&) = delete;
-    // TODO: Investigate QMap<int, Game>
+
     QMap<int, Game> m_games;
     GameDatabase db = GameDatabase::instance();
 };

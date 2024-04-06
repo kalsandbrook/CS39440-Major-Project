@@ -51,6 +51,8 @@ add_executable(GamePile
         src/ui/removablelistwidgetitem.cpp
         src/data/gameiconcontroller.cpp
         src/data/gameiconcontroller.h
+        src/data/gameattributehelper.cpp
+        src/data/gameattributehelper.h
 )
 
 target_link_libraries(GamePile

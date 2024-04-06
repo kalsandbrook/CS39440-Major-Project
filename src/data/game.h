@@ -43,6 +43,14 @@ public:
         ABANDONED = 4
     };
 
+    enum Attribute{
+        GENRES,
+        DEVELOPERS,
+        PUBLISHERS,
+        PLATFORMS,
+        USERTAGS
+    };
+
     /**
      * @brief Sets the ID of the game.
      *

@@ -88,7 +88,7 @@ void GameDatabase::setup()
     query.exec(R"""(
     CREATE TABLE IF NOT EXISTS "platforms" (
 	"platformId"	INTEGER NOT NULL UNIQUE,
-	"platformName"	TEXT NOT NULL,
+	"name"	TEXT NOT NULL,
 	PRIMARY KEY("platformId" AUTOINCREMENT))
     )""");
 
