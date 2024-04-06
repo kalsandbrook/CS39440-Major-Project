@@ -46,13 +46,13 @@ public:
 
     void addAttribute(const Game::Attribute attribute, const QString& name);
 
-    void setGameGenres(int gameId, QStringList genres);
+    void setGameAttribute(int gameId, Game::Attribute attribute, QStringList attributeList);
 
-    void removeUnusedGenres();
+    void removeUnusedAttribute(Game::Attribute attribute);
 
-    QStringList getGameGenres(Game game);
+    QStringList getGameAttribute(Game game, Game::Attribute attribute);
 
-    QStringList getAllGenres();
+    QStringList getAllOfAttribute(Game::Attribute attribute);
 
 
     /**

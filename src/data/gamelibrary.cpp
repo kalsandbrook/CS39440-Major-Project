@@ -34,7 +34,7 @@ void GameLibrary::addGame(Game& game)
     if (query.exec()) {
         qint64 lastInsertedId = query.lastInsertId().toLongLong();
 
-        setGameGenres(lastInsertedId, game.genres());
+        setGameAttribute(lastInsertedId, Game::Attribute::GENRES, game.genres());
 
         game.setId(lastInsertedId);
 
@@ -48,60 +48,55 @@ void GameLibrary::addGame(Game& game)
     }
 }
 
-void GameLibrary::setGameGenres(int gameId, QStringList genres){
-        for(const auto& genre : genres){
-            addAttribute(Game::Attribute::GENRES, genre);
+void GameLibrary::setGameAttribute(int gameId, Game::Attribute attribute, QStringList attributeList){
+        for(const auto& attributeValue : attributeList){
+            addAttribute(attribute, attributeValue);
+            QStringList attributeDbInfo = GameAttributeHelper::getDbInfo(attribute);
+            // ID, Table, Relation Table
 
-            QSqlQuery findGenreQuery(db.db());
-            findGenreQuery.prepare("SELECT genreId FROM genres WHERE name = :genreName");
-            findGenreQuery.bindValue(":genreName", genre);
-            findGenreQuery.exec();
+            QSqlQuery findAttrbQuery(db.db());
+            findAttrbQuery.prepare(
+                QString(
+                "SELECT %1 FROM %2 WHERE name = :name"
+                ).arg(attributeDbInfo[0],attributeDbInfo[1])
+            );
+            findAttrbQuery.bindValue(":name", attributeValue);
+            findAttrbQuery.exec();
 
-            if (findGenreQuery.next()) {
-                int genreId = findGenreQuery.value(0).toInt();
+            if (findAttrbQuery.next()) {
+                int attrbId = findAttrbQuery.value(0).toInt();
                 QSqlQuery genreQuery(db.db());
                 genreQuery.prepare(
-                    "INSERT INTO game_genres (gameId, genreId) "
-                    "VALUES (:gameId, :genreId)"
+                    QString(
+                    "INSERT INTO %2 (gameId, %1) "
+                    "VALUES (:gameId, :attrbId)"
+                    ).arg(attributeDbInfo[0],attributeDbInfo[2])
                 );
                 genreQuery.bindValue(":gameId", gameId);
-                genreQuery.bindValue(":genreId", genreId);
+                genreQuery.bindValue(":attrbId", attrbId);
                 genreQuery.exec();
             }   else {
-            qWarning() << "Genre" << genre << "not found in the genres table.";
+            qWarning() << "Attribute" << attribute << "not found in the attributes table.";
             }
         }
 }
 
-void GameLibrary::removeUnusedGenres(){
-    QSqlQuery getGenresQuery(db.db());
-    getGenresQuery.exec(R"""(
-        DELETE FROM genres
+void GameLibrary::removeUnusedAttribute(Game::Attribute attribute){
+    QString tableName = GameAttributeHelper::getDbTableName(attribute);
+    QString relationTableName = GameAttributeHelper::getDbRelationTableName(attribute);
+    QString idField = GameAttributeHelper::getIdField(attribute);
+    QSqlQuery query(db.db());
+    query.exec(
+        QString(R"""(
+        DELETE FROM %1
         WHERE NOT EXISTS (
           SELECT 1
-          FROM game_genres
-          WHERE game_genres.genreId = genres.genreId
+          FROM %2
+          WHERE %2.%3 = %1.%3
         );
-    )""");
+        )""").arg(tableName, relationTableName, idField)
+    );
 };
-
-// void GameLibrary::addGenre(const QString& genreName){
-//     QSqlQuery checkQuery(db.db());
-//     checkQuery.prepare("SELECT genreId FROM genres WHERE name = :name");
-//     checkQuery.bindValue(":name",genreName);
-//     checkQuery.exec();
-//
-//     if(checkQuery.next()){
-//         qDebug() << "Genre already exists.";
-//         return;
-//     }
-//
-//     QSqlQuery insertQuery(db.db());
-//     insertQuery.prepare("INSERT INTO genres (name) VALUES (:name)");
-//     insertQuery.bindValue(":name", genreName);
-//
-//     insertQuery.exec() ? qDebug() << "Genre added." : qWarning() << "Failed to add genre:" << insertQuery.lastError().text();
-// }
 
 void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& name){
     QString tableName = GameAttributeHelper::getDbTableName(attribute);
@@ -121,41 +116,47 @@ void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& n
     insertQuery.prepare(QString("INSERT INTO %1 (name) VALUES (:name)").arg(tableName));
     insertQuery.bindValue(":name", name);
 
-    insertQuery.exec() ? qDebug() << "added." : qWarning() << "Failed to add attribute:" << insertQuery.lastError().text();
+    insertQuery.exec() ? qDebug() << "Attribute added." : qWarning() << "Failed to add attribute:" << insertQuery.lastError().text();
 }
 
-QStringList GameLibrary::getGameGenres(Game game){
-    QStringList genres;
+QStringList GameLibrary::getGameAttribute(Game game, Game::Attribute attribute){
+    QStringList attributeDbInfo = GameAttributeHelper::getDbInfo(attribute);
+    // ID, Table, Relation Table
+
+    QStringList result;
     QSqlQuery query(db.db());
 
-    query.prepare(R"""(
-        SELECT genres.name
-        FROM game_genres
-        JOIN genres ON game_genres.genreId = genres.genreId
-        WHERE game_genres.gameId = :gameId;
-    )""");
+    query.prepare(QString(R"""(
+        SELECT %2.name
+        FROM %3
+        JOIN %2 ON %3.%1 = %2.%1
+        WHERE %3.gameId = :gameId;
+    )""").arg(attributeDbInfo[0], attributeDbInfo[1], attributeDbInfo[2]));
     query.bindValue(":gameId", game.id());
 
     if(query.exec()){
         while(query.next()){
-            QString genreName = query.value(0).toString();
-            genres.append(genreName);
+            QString name = query.value(0).toString();
+            result.append(name);
         }
     }
 
-    return genres;
+    return result;
 };
 
-QStringList GameLibrary::getAllGenres(){
-    removeUnusedGenres();
-    QStringList genres;
+QStringList GameLibrary::getAllOfAttribute(Game::Attribute attribute){
+    removeUnusedAttribute(attribute);
+
+    QString tableName = GameAttributeHelper::getDbTableName(attribute);
+
+    QStringList result;
     QSqlQuery query(db.db());
 
-    query.exec("SELECT name FROM genres");
+    query.exec(QString("SELECT name FROM %1").arg(tableName));
     while(query.next()){
-        genres.append(query.value(0).toString());
+        result.append(query.value(0).toString());
     }
-    return genres;
+    return result;
 }
 
 void GameLibrary::deleteGame(int gameId)
@@ -196,7 +197,7 @@ void GameLibrary::updateGame(Game& game)
     deleteQuery.bindValue(":gameId", game.id());
     deleteQuery.exec();
 
-    setGameGenres(game.id(), game.genres());
+    setGameAttribute(game.id(), Game::Attribute::GENRES, game.genres());
 
     db.endTransaction();
 
@@ -226,7 +227,7 @@ GameLibrary::GameLibrary()
         Game game(gameId, gameName, gameDesc);
         game.setIconName(gameIcon);
         game.setStatus(gameStatus);
-        game.setGenres(getGameGenres(game));
+        game.setGenres(getGameAttribute(game, Game::Attribute::GENRES));
         initialGameList.append(game);
     }
 

@@ -10,4 +10,6 @@ namespace GameAttributeHelper{
 
     QString getIdField(Game::Attribute attribute);
 
+    QStringList getDbInfo(Game::Attribute attribute);
+
 };

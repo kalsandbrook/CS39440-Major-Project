@@ -53,3 +53,8 @@ QString GameAttributeHelper::getIdField(Game::Attribute attribute){
     }
 }
 
+QStringList GameAttributeHelper::getDbInfo(Game::Attribute attribute){
+    return {getIdField(attribute), getDbTableName(attribute), getDbRelationTableName(attribute)};
+}
+
+

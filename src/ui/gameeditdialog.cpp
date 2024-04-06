@@ -31,7 +31,7 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     descLabel = new QLabel(tr("Description:"));
     descTextEdit = new QTextEdit(this);
 
-    QStringList allGenres = GameLibrary::instance().getAllGenres();
+    QStringList allGenres = GameLibrary::instance().getAllOfAttribute(Game::Attribute::GENRES);
     QCompleter* genreCompleter = new QCompleter(allGenres, this);
     genreCompleter->setCompletionMode(QCompleter::InlineCompletion);
 
