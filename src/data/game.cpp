@@ -40,6 +40,26 @@ void Game::setDesc(QString desc) { m_desc = std::move(desc); }
 
 void Game::setGenres(QStringList genres) { m_genres = std::move(genres); }
 
+void Game::setReleaseDate(QDate releaseDate){
+    m_releaseDate = std::move(releaseDate);
+}
+
+void Game::setDevelopers(QStringList developers){
+    m_developers = std::move(developers);
+}
+
+void Game::setPublishers(QStringList publishers){
+    m_publishers = std::move(publishers);
+}
+
+void Game::setPlatforms(QStringList platforms){
+    m_platforms = std::move(platforms);
+}
+
+void Game::setUserTags(QStringList tags){
+    m_user_tags = std::move(tags);
+}
+
 void Game::setIconName(QString iconName) {
     m_iconName = std::move(iconName);
 }

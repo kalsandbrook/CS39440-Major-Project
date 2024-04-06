@@ -59,7 +59,7 @@ public:
      * @brief Deletes a game from the library.
      *
      * This method deletes the game with the given ID from the library.
-     *
+     *2
      * @param gameId The ID of the game to delete.
      */
     void deleteGame(int gameId);

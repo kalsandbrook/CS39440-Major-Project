@@ -76,6 +76,17 @@ public:
      */
     void setGenres(QStringList genres);
 
+    void setReleaseDate(QDate releaseDate);
+
+    void setDevelopers(QStringList developers);
+
+    void setPublishers(QStringList publishers);
+
+    void setPlatforms(QStringList platforms);
+
+    void setUserTags(QStringList tags);
+
+
     void setStatus(Status status);
 
     void setIconName(QString iconName);

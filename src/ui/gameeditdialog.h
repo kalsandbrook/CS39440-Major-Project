@@ -15,9 +15,11 @@
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QDateEdit>
 #include <QListWidget>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QHBoxLayout>
 
 /**
  * @brief A dialog for adding a game to the library.
@@ -77,19 +79,24 @@ public:
     QString getDesc() const;
 
     /**
-     * @brief Returns the genres of the game.
+     * @brief Returns the attribute of the game.
      *
-     * @return The genres of the game.
+     * @return The attributes of the game.
      */
-    QStringList getGenres() const;
+    QStringList getAttributeList(QListWidget* targetList) const;
+
+    QDate getReleaseDate() const;
 
     Game::Status getStatus() const;
 
+
+
 private slots:
     void openFileDialog();
-
-    void addGenre();
 private:
+
+    void createAttributeEdits();
+    void setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget, const QString& label);
 
     bool editingGame;
     Game editedGame;
@@ -109,10 +116,33 @@ private:
     QLabel* descLabel;
     QTextEdit* descTextEdit;
 
+    QLabel* releaseDateLabel;
+    QDateEdit* releaseDateEdit;
+
     QLabel* genreLabel;
     QCompleter* genreCompleter;
     QLineEdit* genreLineEdit;
     QListWidget* genreList;
+
+    QLabel* developerLabel;
+    QCompleter* developerCompleter;
+    QLineEdit* developerLineEdit;
+    QListWidget* developerList;
+
+    QLabel* publisherLabel;
+    QCompleter* publisherCompleter;
+    QLineEdit* publisherLineEdit;
+    QListWidget* publisherList;
+
+    QLabel* platformLabel;
+    QCompleter* platformCompleter;
+    QLineEdit* platformLineEdit;
+    QListWidget* platformList;
+
+    QLabel* usertagsLabel;
+    QCompleter* usertagsCompleter;
+    QLineEdit* usertagsLineEdit;
+    QListWidget* usertagsList;
 
     QLabel* statusLabel;
 
