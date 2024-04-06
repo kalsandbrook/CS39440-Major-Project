@@ -48,6 +48,8 @@ public:
 
     void setGameGenres(int gameId, QStringList genres);
 
+    void removeUnusedGenres();
+
     QStringList getGameGenres(Game game);
 
     QStringList getAllGenres();

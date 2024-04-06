@@ -3,6 +3,7 @@
 RemovableItemWidget::RemovableItemWidget(const QString &text, QListWidget *parentListWidget) : QWidget(parentListWidget), listWidget(parentListWidget) {
     QHBoxLayout *layout = new QHBoxLayout(this);
     label = new QLabel(text, this);
+    label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(label);
 
     QPushButton *removeButton = new QPushButton(this);
@@ -13,12 +14,15 @@ RemovableItemWidget::RemovableItemWidget(const QString &text, QListWidget *paren
 
     layout->addWidget(removeButton);
 
-    connect(removeButton, &QPushButton::clicked, [=]() {
-        QListWidgetItem *item = listWidget->itemAt(layout->geometry().topLeft());
-        if (item)
-            delete item;
-    });
+    connect(removeButton, &QPushButton::clicked, this, &RemovableItemWidget::deleteButtonClicked);
 }
+
+void RemovableItemWidget::deleteButtonClicked() {
+    emit deleteRequested(this);
+}
+
 QString RemovableItemWidget::getText() const {
     return label->text();
 }
+
+

@@ -12,6 +12,7 @@
 #include "gameeditdialog.h"
 #include "../data/gamehelper.h"
 #include "removableitemwidget.h"
+#include "removablelistwidgetitem.h"
 
 GameEditDialog::GameEditDialog(QWidget* parent)
     : QDialog(parent)
@@ -53,17 +54,29 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &GameEditDialog::verify);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &GameEditDialog::reject);
 
-    layout = new QFormLayout();
+    layout = new QGridLayout();
 
 
-    layout->addRow(pickIconLabel, pickIconButton);
-    layout->addRow(nameLabel,nameLineEdit);
-    layout->addRow(descLabel,descTextEdit);
-    layout->addRow(genreLabel,genreLineEdit);
-    layout->addRow(nullptr, genreList);
-    layout->addRow(statusLabel,statusBox);
+    layout->addWidget(pickIconLabel, 0, 0, 1, 1, Qt::AlignRight);
+    layout->addWidget(pickIconButton, 0, 1, 1, 2);
 
-    layout->addRow(buttonBox);
+    layout->addWidget(nameLabel, 1, 0, 1, 1, Qt::AlignRight);
+    layout->addWidget(nameLineEdit, 1, 1, 1, 2);
+
+    layout->addWidget(descLabel, 2, 0, 1, 1, Qt::AlignRight);
+    layout->addWidget(descTextEdit, 2, 1, 1, 2);
+
+    layout->addWidget(genreLabel, 3, 0, 1, 1, Qt::AlignRight);
+    layout->addWidget(genreLineEdit, 3, 1, 1, 2);
+
+    layout->addWidget(genreList, 4, 1, 1, 2);
+
+    layout->addWidget(statusLabel, 5, 0, 1, 1, Qt::AlignRight);
+    layout->addWidget(statusBox, 5, 1, 1, 2);
+
+    layout->addWidget(buttonBox, 6, 1, 1, 2);
+
+    layout->setColumnStretch(1, 20);
 
     resize({400,640});
     setLayout(layout);
@@ -137,9 +150,10 @@ QStringList GameEditDialog::getGenres() const
 
 void GameEditDialog::addGenre(){
     QString newGenreName = genreLineEdit->text();
-    QListWidgetItem* newGenre = new QListWidgetItem();
-    genreList->addItem(newGenre);
-    genreList->setItemWidget(newGenre, new RemovableItemWidget(newGenreName, genreList));
+    // QListWidgetItem* newGenre = new QListWidgetItem();
+    // genreList->addItem(newGenre);
+    // genreList->setItemWidget(newGenre, new RemovableItemWidget(newGenreName, genreList));
+    RemovableListWidgetItem* newGenre = new RemovableListWidgetItem(newGenreName, genreList);
     genreLineEdit->clear();
 }
 
@@ -168,9 +182,7 @@ void GameEditDialog::setGameToEdit(const Game& game)
 
     QStringList genres = game.genres();
     for(QString genre : genres){
-        QListWidgetItem* newGenre = new QListWidgetItem();
-        genreList->addItem(newGenre);
-        genreList->setItemWidget(newGenre, new RemovableItemWidget(genre, genreList));
+        RemovableListWidgetItem* newGenre = new RemovableListWidgetItem(genre, genreList);
     }
 }
 

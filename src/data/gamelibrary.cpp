@@ -72,6 +72,18 @@ void GameLibrary::setGameGenres(int gameId, QStringList genres){
         }
 }
 
+void GameLibrary::removeUnusedGenres(){
+    QSqlQuery getGenresQuery(db.db());
+    getGenresQuery.exec(R"""(
+        DELETE FROM genres
+        WHERE NOT EXISTS (
+          SELECT 1
+          FROM game_genres
+          WHERE game_genres.genreId = genres.genreId
+        );
+    )""");
+};
+
 void GameLibrary::addGenre(const QString& genreName){
     QSqlQuery checkQuery(db.db());
     checkQuery.prepare("SELECT genreId FROM genres WHERE name = :name");
@@ -113,6 +125,7 @@ QStringList GameLibrary::getGameGenres(Game game){
 };
 
 QStringList GameLibrary::getAllGenres(){
+    removeUnusedGenres();
     QStringList genres;
     QSqlQuery query(db.db());
 

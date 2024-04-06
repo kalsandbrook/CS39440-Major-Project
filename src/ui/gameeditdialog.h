@@ -94,7 +94,7 @@ private:
     bool editingGame;
     Game editedGame;
 
-    QFormLayout* layout;
+    QGridLayout* layout;
 
     QFileDialog* fileDialog;
 
