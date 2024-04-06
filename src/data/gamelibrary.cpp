@@ -3,6 +3,7 @@
 //
 
 #include "gamelibrary.h"
+#include "game.h"
 #include "gameattributehelper.h"
 #include "gamehelper.h"
 #include "qlogging.h"
@@ -35,6 +36,10 @@ void GameLibrary::addGame(Game& game)
         qint64 lastInsertedId = query.lastInsertId().toLongLong();
 
         setGameAttribute(lastInsertedId, Game::Attribute::GENRES, game.genres());
+        setGameAttribute(lastInsertedId, Game::Attribute::DEVELOPERS, game.developers());
+        setGameAttribute(lastInsertedId, Game::Attribute::PUBLISHERS, game.publishers());
+        setGameAttribute(lastInsertedId, Game::Attribute::PLATFORMS, game.platforms());
+        setGameAttribute(lastInsertedId, Game::Attribute::USERTAGS, game.userTags());
 
         game.setId(lastInsertedId);
 
@@ -191,13 +196,17 @@ void GameLibrary::updateGame(Game& game)
 
     query.exec();
 
-    // Handle genres
+    // Handle attributes
     QSqlQuery deleteQuery(db.db());
-    deleteQuery.prepare("DELETE FROM game_genres WHERE gameId = :gameId");
+    deleteQuery.prepare("DELETE FROM game_genres,game_developers,game_publishers,game_platforms,game_user_tags WHERE gameId = :gameId");
     deleteQuery.bindValue(":gameId", game.id());
     deleteQuery.exec();
 
     setGameAttribute(game.id(), Game::Attribute::GENRES, game.genres());
+    setGameAttribute(game.id(), Game::Attribute::DEVELOPERS, game.developers());
+    setGameAttribute(game.id(), Game::Attribute::PUBLISHERS, game.publishers());
+    setGameAttribute(game.id(), Game::Attribute::PLATFORMS, game.platforms());
+    setGameAttribute(game.id(), Game::Attribute::USERTAGS, game.userTags());
 
     db.endTransaction();
 
@@ -228,6 +237,10 @@ GameLibrary::GameLibrary()
         game.setIconName(gameIcon);
         game.setStatus(gameStatus);
         game.setGenres(getGameAttribute(game, Game::Attribute::GENRES));
+        game.setDevelopers(getGameAttribute(game, Game::Attribute::DEVELOPERS));
+        game.setPublishers(getGameAttribute(game, Game::Attribute::PUBLISHERS));
+        game.setPlatforms(getGameAttribute(game, Game::Attribute::PLATFORMS));
+        game.setUserTags(getGameAttribute(game, Game::Attribute::USERTAGS));
         initialGameList.append(game);
     }
 
@@ -240,7 +253,6 @@ GameLibrary::GameLibrary()
 
 const Game& GameLibrary::getGameById(int gameId) const
 {
-    // Uses QMap.find to avoid memory issues.
     auto it = m_games.find(gameId);
     if (it != m_games.end())
         return it.value();

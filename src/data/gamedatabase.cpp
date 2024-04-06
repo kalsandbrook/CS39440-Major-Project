@@ -3,7 +3,6 @@
 //
 
 #include "gamedatabase.h"
-#include "gamehelper.h"
 #include "qlogging.h"
 #include <QSqlQuery>
 #include <QDir>
@@ -151,28 +150,5 @@ void GameDatabase::endTransaction()
     m_db.commit();
 }
 
-QList<Game> GameDatabase::getGames()
-{
-    QSqlTableModel model;
-    model.setTable("games");
-    model.select();
-
-    QList<Game> gameList;
-    for (int i = 0; i < model.rowCount(); ++i) {
-        int gameId = model.record(i).value("GameId").toInt();
-        Game::Status gameStatus = GameHelper::stringToStatus(model.record(i).value("Status").toString());
-        QString gameIcon = model.record(i).value("IconName").toString();
-        QString gameName = model.record(i).value("Name").toString();
-        QString gameDesc = model.record(i).value("Description").toString();
-        QStringList genres = model.record(i).value("Genres").toStringList();
-
-        Game game(gameId, gameName, gameDesc);
-        game.setGenres(genres);
-        game.setIconName(gameIcon);
-        game.setStatus(gameStatus);
-        gameList.append(game);
-    }
-    return gameList;
-}
 
 GameDatabase::GameDatabase() = default;

@@ -1,7 +1,6 @@
 #ifndef GAMEDATABASE_H
 #define GAMEDATABASE_H
 
-#include "game.h"
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 
@@ -58,17 +57,6 @@ public:
      * This method sets up the database, creating the games table if it doesn't exist.
      */
     void setup();
-
-    /**
-     * @brief Returns a list of games from the database.
-     *
-     * This method returns a list of games from the database.
-     *
-     * @todo This functionality will be moved to the GameLibrary class in the future.
-     *
-     * @return A list of games from the database.
-     */
-    QList<Game> getGames();
 
 private:
     GameDatabase();
