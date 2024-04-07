@@ -24,13 +24,14 @@ void GameLibrary::addGame(Game& game)
     db.beginTransaction();
     QSqlQuery query(db.db());
 
-    query.prepare("INSERT INTO games (status, name, iconName, description)"
-                  "VALUES (:status, :name, :iconName, :description)");
+    query.prepare("INSERT INTO games (status, name, iconName, description, releaseDate)"
+                  "VALUES (:status, :name, :iconName, :description, :releasedate)");
 
     query.bindValue(":status", GameHelper::statusToString(game.status()));
     query.bindValue(":name", game.name());
     query.bindValue(":iconName", game.iconName());
     query.bindValue(":description", game.desc());
+    query.bindValue(":releasedate", game.releaseDate().toString("yyyy-MM-dd"));
 
     if (query.exec()) {
         qint64 lastInsertedId = query.lastInsertId().toLongLong();
@@ -190,7 +191,7 @@ void GameLibrary::updateGame(Game& game)
     QSqlQuery query(db.db());
 
     query.prepare("UPDATE games "
-                  "SET status = :status, name = :name, iconName = :iconName, description = :desc"
+                  "SET status = :status, name = :name, iconName = :iconName, description = :desc, releaseDate = :releasedate "
                   "WHERE gameId = :gameId");
 
     query.bindValue(":status", GameHelper::statusToString(game.status()));
@@ -198,6 +199,7 @@ void GameLibrary::updateGame(Game& game)
     query.bindValue(":iconName", game.iconName());
     query.bindValue(":desc", game.desc());
     query.bindValue(":gameId", game.id());
+    query.bindValue(":releasedate", game.releaseDate().toString("yyyy-MM-dd"));
 
     query.exec();
 
@@ -232,15 +234,17 @@ GameLibrary::GameLibrary()
 
     QList<Game> initialGameList;
     for (int i = 0; i < model.rowCount(); ++i) {
-        int gameId = model.record(i).value("GameId").toInt();
-        Game::Status gameStatus = GameHelper::stringToStatus(model.record(i).value("Status").toString());
-        QString gameIcon = model.record(i).value("IconName").toString();
-        QString gameName = model.record(i).value("Name").toString();
-        QString gameDesc = model.record(i).value("Description").toString();
+        int gameId = model.record(i).value("gameId").toInt();
+        Game::Status gameStatus = GameHelper::stringToStatus(model.record(i).value("status").toString());
+        QString gameIcon = model.record(i).value("iconName").toString();
+        QString gameName = model.record(i).value("name").toString();
+        QString gameDesc = model.record(i).value("description").toString();
+        QDate gameReleaseDate = model.record(i).value("releaseDate").toDate();
 
         Game game(gameId, gameName, gameDesc);
         game.setIconName(gameIcon);
         game.setStatus(gameStatus);
+        game.setReleaseDate(gameReleaseDate);
         game.setGenres(getGameAttribute(game, Game::Attribute::GENRES));
         game.setDevelopers(getGameAttribute(game, Game::Attribute::DEVELOPERS));
         game.setPublishers(getGameAttribute(game, Game::Attribute::PUBLISHERS));

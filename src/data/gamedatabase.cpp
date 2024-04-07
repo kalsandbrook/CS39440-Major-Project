@@ -58,6 +58,7 @@ void GameDatabase::setup()
 	"name"	TEXT NOT NULL,
 	"status"	TEXT NOT NULL DEFAULT 'NONE',
 	"description"	TEXT,
+    "releaseDate"   TEXT,
 	PRIMARY KEY("gameId" AUTOINCREMENT))
     )""");
 
