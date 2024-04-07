@@ -13,7 +13,6 @@ GameView::GameView(QWidget* parent)
     setContextMenuPolicy(Qt::ActionsContextMenu);
     setExpandsOnDoubleClick(false);
     setupContextMenu();
-
 }
 
 void GameView::setupContextMenu()

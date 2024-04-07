@@ -6,8 +6,8 @@
 #define GAMEPILE_GAMEHELPER_H
 
 #include "game.h"
-#include <QString>
 #include <QIcon>
+#include <QString>
 
 namespace GameHelper {
 QString statusToString(Game::Status status);

@@ -2,16 +2,16 @@
 // Created by Kal on 24/02/2024.
 //
 
+#include <QCompleter>
 #include <QMessageBox>
 #include <QStringList>
-#include <QCompleter>
 #include <QVBoxLayout>
 #include <qnamespace.h>
 
 #include "../data/game.h"
+#include "../data/gamehelper.h"
 #include "../data/gamelibrary.h"
 #include "gameeditdialog.h"
-#include "../data/gamehelper.h"
 #include "removableitemwidget.h"
 #include "removablelistwidgetitem.h"
 
@@ -22,7 +22,7 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     , fileDialog(new QFileDialog(this, "Choose Icon"))
 {
     pickIconLabel = new QLabel(tr("Icon:"));
-    pickIconButton = new QPushButton(QIcon::fromTheme("document-open"),tr("Choose file..."),this);
+    pickIconButton = new QPushButton(QIcon::fromTheme("document-open"), tr("Choose file..."), this);
 
     nameLabel = new QLabel(tr("Name:"));
     nameLineEdit = new QLineEdit(this);
@@ -67,49 +67,47 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     leftForm->addWidget(statusLabel, 6, 0, 1, 1, Qt::AlignRight);
     leftForm->addWidget(statusBox, 6, 1, 1, 2);
 
-
-    //leftForm->addWidget(buttonBox, 6, 1, 1, 2);
+    // leftForm->addWidget(buttonBox, 6, 1, 1, 2);
 
     leftForm->setColumnStretch(1, 20);
 
     QVBoxLayout* rightForm = new QVBoxLayout();
 
-
     // Refactor to a function that returns a QGridLayout*?
 
     QGridLayout* genreLayout = new QGridLayout();
-    genreLayout -> addWidget(genreLabel, 0, 0, 1, 1, Qt::AlignRight);
-    genreLayout -> addWidget(genreLineEdit, 0, 1);
-    genreLayout -> addWidget(genreList, 1, 1);
-    genreLayout -> setColumnMinimumWidth(0, 100);
+    genreLayout->addWidget(genreLabel, 0, 0, 1, 1, Qt::AlignRight);
+    genreLayout->addWidget(genreLineEdit, 0, 1);
+    genreLayout->addWidget(genreList, 1, 1);
+    genreLayout->setColumnMinimumWidth(0, 100);
     rightForm->addLayout(genreLayout);
 
     QGridLayout* developerLayout = new QGridLayout();
-    developerLayout -> addWidget(developerLabel, 0, 0, 1, 1, Qt::AlignRight);
-    developerLayout -> addWidget(developerLineEdit, 0, 1);
-    developerLayout -> addWidget(developerList, 1, 1);
-    developerLayout -> setColumnMinimumWidth(0, 100);
+    developerLayout->addWidget(developerLabel, 0, 0, 1, 1, Qt::AlignRight);
+    developerLayout->addWidget(developerLineEdit, 0, 1);
+    developerLayout->addWidget(developerList, 1, 1);
+    developerLayout->setColumnMinimumWidth(0, 100);
     rightForm->addLayout(developerLayout);
 
     QGridLayout* publisherLayout = new QGridLayout();
-    publisherLayout -> addWidget(publisherLabel, 0, 0, 1, 1, Qt::AlignRight);
-    publisherLayout -> addWidget(publisherLineEdit, 0, 1);
-    publisherLayout -> addWidget(publisherList, 1, 1);
-    publisherLayout -> setColumnMinimumWidth(0, 100);
+    publisherLayout->addWidget(publisherLabel, 0, 0, 1, 1, Qt::AlignRight);
+    publisherLayout->addWidget(publisherLineEdit, 0, 1);
+    publisherLayout->addWidget(publisherList, 1, 1);
+    publisherLayout->setColumnMinimumWidth(0, 100);
     rightForm->addLayout(publisherLayout);
 
     QGridLayout* platformLayout = new QGridLayout();
-    platformLayout -> addWidget(platformLabel, 0, 0, 1, 1, Qt::AlignRight);
-    platformLayout -> addWidget(platformLineEdit, 0, 1);
-    platformLayout -> addWidget(platformList, 1, 1);
-    platformLayout -> setColumnMinimumWidth(0, 100);
+    platformLayout->addWidget(platformLabel, 0, 0, 1, 1, Qt::AlignRight);
+    platformLayout->addWidget(platformLineEdit, 0, 1);
+    platformLayout->addWidget(platformList, 1, 1);
+    platformLayout->setColumnMinimumWidth(0, 100);
     rightForm->addLayout(platformLayout);
 
     QGridLayout* usertagsLayout = new QGridLayout();
-    usertagsLayout -> addWidget(usertagsLabel, 0, 0, 1, 1, Qt::AlignRight);
-    usertagsLayout -> addWidget(usertagsLineEdit, 0, 1);
-    usertagsLayout -> addWidget(usertagsList, 1, 1);
-    usertagsLayout -> setColumnMinimumWidth(0, 100);
+    usertagsLayout->addWidget(usertagsLabel, 0, 0, 1, 1, Qt::AlignRight);
+    usertagsLayout->addWidget(usertagsLineEdit, 0, 1);
+    usertagsLayout->addWidget(usertagsList, 1, 1);
+    usertagsLayout->setColumnMinimumWidth(0, 100);
     rightForm->addLayout(usertagsLayout);
 
     layout->addLayout(leftForm, 0, 0);
@@ -120,11 +118,12 @@ GameEditDialog::GameEditDialog(QWidget* parent)
 
     setLayout(layout);
 
-    resize({800,640});
+    resize({ 800, 640 });
     connect(pickIconButton, &QPushButton::clicked, this, &GameEditDialog::openFileDialog);
 }
 
-void GameEditDialog::createAttributeEdits(){
+void GameEditDialog::createAttributeEdits()
+{
     GameLibrary& gameLibrary = GameLibrary::instance();
 
     genreLabel = new QLabel("Genres:");
@@ -158,7 +157,8 @@ void GameEditDialog::createAttributeEdits(){
     setupAttributeEditField(usertagsLineEdit, allUsertags, usertagsList, tr("Tags:"));
 }
 
-void GameEditDialog::setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget, const QString& label) {
+void GameEditDialog::setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget, const QString& label)
+{
     QCompleter* completer = new QCompleter(itemList, this);
     completer->setCompletionMode(QCompleter::InlineCompletion);
     lineEdit->setCompleter(completer);
@@ -195,14 +195,13 @@ void GameEditDialog::accept()
 
     // TODO: This functionality should be moved to a helper class.
 
-    if(m_selectedIconFile->exists()){
+    if (m_selectedIconFile->exists()) {
         QFileInfo iconFileInfo(m_selectedIconFile->fileName());
         QString saveDir = iconController->getIconDirectory().path() + "/" + iconFileInfo.fileName();
         m_selectedIconFile->copy(saveDir) ? qDebug() << "Writing file" << m_selectedIconFile->fileName() << "to icons folder." : qDebug() << m_selectedIconFile->fileName() << "already exists.";
 
         gameIconName = iconFileInfo.fileName();
     }
-
 
     // TODO: This can be optimised!!
     if (editingGame) {
@@ -238,7 +237,8 @@ QString GameEditDialog::getName() const { return nameLineEdit->text(); }
 
 QString GameEditDialog::getDesc() const { return descTextEdit->toPlainText(); }
 
-QDate GameEditDialog::getReleaseDate() const{
+QDate GameEditDialog::getReleaseDate() const
+{
     return releaseDateEdit->date();
 }
 
@@ -247,11 +247,11 @@ QStringList GameEditDialog::getAttributeList(QListWidget* targetList) const
     QStringList attributes;
 
     for (int i = 0; i < targetList->count(); ++i) {
-            QListWidgetItem *item = targetList->item(i);
-            RemovableItemWidget *itemWidget = dynamic_cast<RemovableItemWidget*>(targetList->itemWidget(item));
-            if (itemWidget) {
-                attributes.append(itemWidget->getText());
-            }
+        QListWidgetItem* item = targetList->item(i);
+        RemovableItemWidget* itemWidget = dynamic_cast<RemovableItemWidget*>(targetList->itemWidget(item));
+        if (itemWidget) {
+            attributes.append(itemWidget->getText());
+        }
     }
 
     return attributes;
@@ -284,23 +284,23 @@ void GameEditDialog::setGameToEdit(const Game& game)
     releaseDateEdit->setDate(game.releaseDate());
 
     QStringList genres = game.genres();
-    for(QString genre : genres){
+    for (QString genre : genres) {
         RemovableListWidgetItem* newGenre = new RemovableListWidgetItem(genre, genreList);
     }
     QStringList developers = game.developers();
-    for(QString developer : developers){
+    for (QString developer : developers) {
         RemovableListWidgetItem* newDeveloper = new RemovableListWidgetItem(developer, developerList);
     }
     QStringList publishers = game.publishers();
-    for(QString publisher: publishers){
+    for (QString publisher : publishers) {
         RemovableListWidgetItem* newPublisher = new RemovableListWidgetItem(publisher, publisherList);
     }
     QStringList platforms = game.platforms();
-    for(QString platform : platforms){
+    for (QString platform : platforms) {
         RemovableListWidgetItem* newPlatform = new RemovableListWidgetItem(platform, platformList);
     }
     QStringList usertags = game.userTags();
-    for(QString usertag : usertags){
+    for (QString usertag : usertags) {
         RemovableListWidgetItem* newUserTag = new RemovableListWidgetItem(usertag, usertagsList);
     }
 }
@@ -318,11 +318,12 @@ int GameEditDialog::exec(int gameId)
     return QDialog::exec();
 }
 
-void GameEditDialog::openFileDialog() {
+void GameEditDialog::openFileDialog()
+{
     fileDialog->setFileMode(QFileDialog::ExistingFile);
     fileDialog->setNameFilter("Image Files (*.png *.jpg *.jpeg)");
 
-    if(fileDialog->exec()){
+    if (fileDialog->exec()) {
         m_selectedIconFile->setFileName(fileDialog->selectedFiles()[0]);
     }
 }

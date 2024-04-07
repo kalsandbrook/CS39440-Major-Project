@@ -9,8 +9,8 @@
 #include "qlogging.h"
 #include <QSqlError>
 #include <QSqlQuery>
-#include <QSqlTableModel>
 #include <QSqlRecord>
+#include <QSqlTableModel>
 
 GameLibrary& GameLibrary::instance()
 {
@@ -53,40 +53,40 @@ void GameLibrary::addGame(Game& game)
     }
 }
 
-void GameLibrary::setGameAttribute(int gameId, Game::Attribute attribute, QStringList attributeList){
-        for(const auto& attributeValue : attributeList){
-            addAttribute(attribute, attributeValue);
-            QStringList attributeDbInfo = GameAttributeHelper::getDbInfo(attribute);
-            // ID, Table, Relation Table
+void GameLibrary::setGameAttribute(int gameId, Game::Attribute attribute, QStringList attributeList)
+{
+    for (const auto& attributeValue : attributeList) {
+        addAttribute(attribute, attributeValue);
+        QStringList attributeDbInfo = GameAttributeHelper::getDbInfo(attribute);
+        // ID, Table, Relation Table
 
-            QSqlQuery findAttrbQuery(db.db());
-            findAttrbQuery.prepare(
+        QSqlQuery findAttrbQuery(db.db());
+        findAttrbQuery.prepare(
+            QString(
+                "SELECT %1 FROM %2 WHERE name = :name")
+                .arg(attributeDbInfo[0], attributeDbInfo[1]));
+        findAttrbQuery.bindValue(":name", attributeValue);
+        findAttrbQuery.exec();
+
+        if (findAttrbQuery.next()) {
+            int attrbId = findAttrbQuery.value(0).toInt();
+            QSqlQuery genreQuery(db.db());
+            genreQuery.prepare(
                 QString(
-                "SELECT %1 FROM %2 WHERE name = :name"
-                ).arg(attributeDbInfo[0],attributeDbInfo[1])
-            );
-            findAttrbQuery.bindValue(":name", attributeValue);
-            findAttrbQuery.exec();
-
-            if (findAttrbQuery.next()) {
-                int attrbId = findAttrbQuery.value(0).toInt();
-                QSqlQuery genreQuery(db.db());
-                genreQuery.prepare(
-                    QString(
                     "INSERT INTO %2 (gameId, %1) "
-                    "VALUES (:gameId, :attrbId)"
-                    ).arg(attributeDbInfo[0],attributeDbInfo[2])
-                );
-                genreQuery.bindValue(":gameId", gameId);
-                genreQuery.bindValue(":attrbId", attrbId);
-                genreQuery.exec();
-            }   else {
+                    "VALUES (:gameId, :attrbId)")
+                    .arg(attributeDbInfo[0], attributeDbInfo[2]));
+            genreQuery.bindValue(":gameId", gameId);
+            genreQuery.bindValue(":attrbId", attrbId);
+            genreQuery.exec();
+        } else {
             qWarning() << "Attribute" << attribute << "not found in the attributes table.";
-            }
         }
+    }
 }
 
-void GameLibrary::removeUnusedAttribute(Game::Attribute attribute){
+void GameLibrary::removeUnusedAttribute(Game::Attribute attribute)
+{
     QString tableName = GameAttributeHelper::getDbTableName(attribute);
     QString relationTableName = GameAttributeHelper::getDbRelationTableName(attribute);
     QString idField = GameAttributeHelper::getIdField(attribute);
@@ -99,11 +99,12 @@ void GameLibrary::removeUnusedAttribute(Game::Attribute attribute){
           FROM %2
           WHERE %2.%3 = %1.%3
         );
-        )""").arg(tableName, relationTableName, idField)
-    );
+        )""")
+            .arg(tableName, relationTableName, idField));
 };
 
-void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& name){
+void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& name)
+{
     QString tableName = GameAttributeHelper::getDbTableName(attribute);
     QString idField = GameAttributeHelper::getIdField(attribute);
     QSqlQuery checkQuery(db.db());
@@ -112,8 +113,9 @@ void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& n
 
     checkQuery.exec();
 
-    if(checkQuery.next()){
-        qDebug() << "Attribute" << "already exists.";
+    if (checkQuery.next()) {
+        qDebug() << "Attribute"
+                 << "already exists.";
         return;
     }
 
@@ -124,7 +126,8 @@ void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& n
     insertQuery.exec() ? qDebug() << "Attribute added." : qWarning() << "Failed to add attribute:" << insertQuery.lastError().text();
 }
 
-QStringList GameLibrary::getGameAttribute(Game game, Game::Attribute attribute){
+QStringList GameLibrary::getGameAttribute(Game game, Game::Attribute attribute)
+{
     QStringList attributeDbInfo = GameAttributeHelper::getDbInfo(attribute);
     // ID, Table, Relation Table
 
@@ -136,11 +139,12 @@ QStringList GameLibrary::getGameAttribute(Game game, Game::Attribute attribute){
         FROM %3
         JOIN %2 ON %3.%1 = %2.%1
         WHERE %3.gameId = :gameId;
-    )""").arg(attributeDbInfo[0], attributeDbInfo[1], attributeDbInfo[2]));
+    )""")
+                      .arg(attributeDbInfo[0], attributeDbInfo[1], attributeDbInfo[2]));
     query.bindValue(":gameId", game.id());
 
-    if(query.exec()){
-        while(query.next()){
+    if (query.exec()) {
+        while (query.next()) {
             QString name = query.value(0).toString();
             result.append(name);
         }
@@ -149,7 +153,8 @@ QStringList GameLibrary::getGameAttribute(Game game, Game::Attribute attribute){
     return result;
 };
 
-QStringList GameLibrary::getAllOfAttribute(Game::Attribute attribute){
+QStringList GameLibrary::getAllOfAttribute(Game::Attribute attribute)
+{
     removeUnusedAttribute(attribute);
 
     QString tableName = GameAttributeHelper::getDbTableName(attribute);
@@ -158,7 +163,7 @@ QStringList GameLibrary::getAllOfAttribute(Game::Attribute attribute){
     QSqlQuery query(db.db());
 
     query.exec(QString("SELECT name FROM %1").arg(tableName));
-    while(query.next()){
+    while (query.next()) {
         result.append(query.value(0).toString());
     }
     return result;

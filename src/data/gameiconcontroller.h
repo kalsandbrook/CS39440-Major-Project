@@ -17,11 +17,11 @@ public:
     static QDir getIconDirectory();
 
     QImage getIcon(const QString& fileName);
+
 private:
     QDir m_iconDirectory;
 
     void createIconDirectory();
 };
 
-
-#endif //GAMEPILE_GAMEICONCONTROLLER_H
+#endif // GAMEPILE_GAMEICONCONTROLLER_H

@@ -2,8 +2,7 @@
 
 #include <QListWidgetItem>
 
-
-class RemovableListWidgetItem : public QListWidgetItem{
+class RemovableListWidgetItem : public QListWidgetItem {
 public:
-    RemovableListWidgetItem(const QString &text, QListWidget *parentListWidget);
+    RemovableListWidgetItem(const QString& text, QListWidget* parentListWidget);
 };

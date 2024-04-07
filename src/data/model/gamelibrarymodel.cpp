@@ -71,36 +71,36 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
     const Game& game = m_games.at(index.row());
     QImage icon;
     switch (role) {
-        case Qt::DecorationRole:
-            icon = m_gameLibrary.iconController->getIcon(game.iconName());
-            if(!icon.isNull())
-                return icon;
-            else
-                return QIcon::fromTheme("input-gamepad-symbolic");
-            break;
-        case Qt::DisplayRole:
-            switch (index.column()) {
-            case 0:
-                return game.name();
-            case 1:
-                return game.desc();
-            case 2:
-                return game.status_str();
-            case 3:
-                return game.genres().join(", ");
-            case 4:
-                return game.releaseDate().toString();
-            case 5:
-                return game.userTags().join(", ");
-            case 6:
-                return game.developers().join(", ");
-            case 7:
-                return game.publishers().join(", ");
-            case 8:
-                return game.platforms().join(", ");
-            default:
-                return {};
-            }
+    case Qt::DecorationRole:
+        icon = m_gameLibrary.iconController->getIcon(game.iconName());
+        if (!icon.isNull())
+            return icon;
+        else
+            return QIcon::fromTheme("input-gamepad-symbolic");
+        break;
+    case Qt::DisplayRole:
+        switch (index.column()) {
+        case 0:
+            return game.name();
+        case 1:
+            return game.desc();
+        case 2:
+            return game.status_str();
+        case 3:
+            return game.genres().join(", ");
+        case 4:
+            return game.releaseDate().toString();
+        case 5:
+            return game.userTags().join(", ");
+        case 6:
+            return game.developers().join(", ");
+        case 7:
+            return game.publishers().join(", ");
+        case 8:
+            return game.platforms().join(", ");
+        default:
+            return {};
+        }
     case IdRole:
         return game.id();
     case NameRole:
@@ -164,29 +164,29 @@ void GameLibraryModel::onGameUpdated(const Game& game)
 QVariant GameLibraryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (section < columnCount() && orientation == Qt::Horizontal) {
-        switch(role){
-            case Qt::DisplayRole:
-                switch (section){
-                    case 0:
-                        return "Name";
-                    case 1:
-                        return "Description";
-                    case 2:
-                        return "Status";
-                    case 3:
-                        return "Genres";
-                    case 4:
-                        return "Release Date";
-                    case 5:
-                        return "Tags";
-                    case 6:
-                        return "Developers";
-                    case 7:
-                        return "Publishers";
-                    case 8:
-                        return "Platforms";
-                }
-                break;
+        switch (role) {
+        case Qt::DisplayRole:
+            switch (section) {
+            case 0:
+                return "Name";
+            case 1:
+                return "Description";
+            case 2:
+                return "Status";
+            case 3:
+                return "Genres";
+            case 4:
+                return "Release Date";
+            case 5:
+                return "Tags";
+            case 6:
+                return "Developers";
+            case 7:
+                return "Publishers";
+            case 8:
+                return "Platforms";
+            }
+            break;
         }
     }
     return QAbstractItemModel::headerData(section, orientation, role);

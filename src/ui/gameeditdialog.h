@@ -7,19 +7,19 @@
 
 #include "../data/game.h"
 
-#include <QFormLayout>
 #include <QComboBox>
-#include <QFileDialog>
 #include <QCompleter>
+#include <QDateEdit>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QFileDialog>
+#include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QDateEdit>
 #include <QListWidget>
 #include <QPushButton>
 #include <QTextEdit>
-#include <QHBoxLayout>
 
 /**
  * @brief A dialog for adding a game to the library.
@@ -89,12 +89,10 @@ public:
 
     Game::Status getStatus() const;
 
-
-
 private slots:
     void openFileDialog();
-private:
 
+private:
     void createAttributeEdits();
     void setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget, const QString& label);
 

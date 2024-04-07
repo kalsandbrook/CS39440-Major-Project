@@ -4,12 +4,12 @@
 
 #include "gamedatabase.h"
 #include "qlogging.h"
-#include <QSqlQuery>
 #include <QDir>
-#include <QSqlRecord>
 #include <QSqlError>
-#include <QStringList>
+#include <QSqlQuery>
+#include <QSqlRecord>
 #include <QStandardPaths>
+#include <QStringList>
 
 GameDatabase& GameDatabase::instance()
 {
@@ -30,7 +30,6 @@ bool GameDatabase::open()
     m_db.setPassword("bqbzKJY9RJ4=");
 
     return m_db.open();
-
 }
 
 QSqlDatabase GameDatabase::db() { return m_db; }
@@ -44,7 +43,6 @@ void GameDatabase::setup()
 {
     if (!m_db.isOpen())
         qFatal("Could not setup database.");
-
 
     QSqlQuery fkSetupQuery(m_db);
     fkSetupQuery.exec("PRAGMA foreign_keys = ON;");
@@ -149,6 +147,5 @@ void GameDatabase::endTransaction()
 {
     m_db.commit();
 }
-
 
 GameDatabase::GameDatabase() = default;

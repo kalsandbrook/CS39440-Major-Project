@@ -28,8 +28,7 @@ MainWindow::MainWindow()
     gameView->setSortingEnabled(true);
     gameView->setModel(gameLibraryProxyModel);
     gameView->setItemDelegate(new GameItemDelegate(this));
-    gameView->setColumnWidth(0,200);
-
+    gameView->setColumnWidth(0, 200);
 
     statusFilter = new StatusFilter(this);
 
@@ -38,9 +37,9 @@ MainWindow::MainWindow()
     QWidget* mainWidget = new QWidget(this);
     QHBoxLayout* layout = new QHBoxLayout(mainWidget);
 
-    layout->addWidget(statusFilter,1);
-    layout->addWidget(gameView,5);
-    layout->addWidget(gameDetailsWidget,1);
+    layout->addWidget(statusFilter, 1);
+    layout->addWidget(gameView, 5);
+    layout->addWidget(gameDetailsWidget, 1);
 
     setCentralWidget(mainWidget);
     mainWidget->setLayout(layout);
@@ -59,8 +58,8 @@ MainWindow::MainWindow()
 void MainWindow::createActions()
 {
     addGameAction = new QAction(QIcon::fromTheme("list-add"), "&Add Game", this);
-    aboutAction = new QAction(tr("About"),this);
-    aboutAction -> setShortcut(QKeySequence("F1"));
+    aboutAction = new QAction(tr("About"), this);
+    aboutAction->setShortcut(QKeySequence("F1"));
     helpMenu->addAction(aboutAction);
     aboutQtAction = helpMenu->addAction(tr("About &Qt"));
 }

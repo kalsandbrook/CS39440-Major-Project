@@ -6,19 +6,22 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPixmap>
 #include <QStyledItemDelegate>
 #include <QTextItem>
-#include <QPixmap>
 #include <QVBoxLayout>
 
 #include "gameitemdelegate.h"
 
-GameItemDelegate::GameItemDelegate(QObject *parent)
-        : QStyledItemDelegate(parent) {
+GameItemDelegate::GameItemDelegate(QObject* parent)
+    : QStyledItemDelegate(parent)
+{
 }
 
-void GameItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    if (!index.isValid()) return;
+void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    if (!index.isValid())
+        return;
 
     painter->save();
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
@@ -28,7 +31,7 @@ void GameItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->fillRect(option.rect, option.palette.highlight());
     }
 
-    QRect contentRect = option.rect.adjusted(2,0,-2,0);
+    QRect contentRect = option.rect.adjusted(2, 0, -2, 0);
 
     int lineHeight = QFontMetrics(option.font).height();
 
@@ -40,16 +43,15 @@ void GameItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
     if (index.column() == 0) {
 
-        iconRect = QRect(contentRect.topLeft(), iconSize).adjusted(0,2,0,0);
-            if (data.canConvert<QIcon>()) {
-                QIcon icon = data.value<QIcon>();
-                icon.paint(painter, iconRect);
-            }
-            else if (data.canConvert<QImage>()) {
-                    QImage image = data.value<QImage>();
-                    painter->drawImage(iconRect, image);
-            }
-        valueRect = QRect(iconRect.topRight(), QSize(contentRect.width() - lineHeight*3, lineHeight * 3)).adjusted(11,-2,0,0);
+        iconRect = QRect(contentRect.topLeft(), iconSize).adjusted(0, 2, 0, 0);
+        if (data.canConvert<QIcon>()) {
+            QIcon icon = data.value<QIcon>();
+            icon.paint(painter, iconRect);
+        } else if (data.canConvert<QImage>()) {
+            QImage image = data.value<QImage>();
+            painter->drawImage(iconRect, image);
+        }
+        valueRect = QRect(iconRect.topRight(), QSize(contentRect.width() - lineHeight * 3, lineHeight * 3)).adjusted(11, -2, 0, 0);
 
     } else {
         valueRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight * 3));
@@ -60,9 +62,10 @@ void GameItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     painter->restore();
 }
 
-QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    int height = QFontMetrics(option.font).height()*3;
+QSize GameItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    int height = QFontMetrics(option.font).height() * 3;
     height += 2;
 
-    return {200, height};
+    return { 200, height };
 }

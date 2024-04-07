@@ -4,11 +4,11 @@
 #include "../data/game.h"
 #include "../data/gamehelper.h"
 
+#include <QLabel>
 #include <QListWidgetItem>
 #include <QToolBar>
-#include <QWidget>
 #include <QVBoxLayout>
-#include <QLabel>
+#include <QWidget>
 
 class StatusFilter : public QWidget {
     Q_OBJECT

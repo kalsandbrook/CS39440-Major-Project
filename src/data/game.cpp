@@ -40,27 +40,33 @@ void Game::setDesc(QString desc) { m_desc = std::move(desc); }
 
 void Game::setGenres(QStringList genres) { m_genres = std::move(genres); }
 
-void Game::setReleaseDate(QDate releaseDate){
+void Game::setReleaseDate(QDate releaseDate)
+{
     m_releaseDate = std::move(releaseDate);
 }
 
-void Game::setDevelopers(QStringList developers){
+void Game::setDevelopers(QStringList developers)
+{
     m_developers = std::move(developers);
 }
 
-void Game::setPublishers(QStringList publishers){
+void Game::setPublishers(QStringList publishers)
+{
     m_publishers = std::move(publishers);
 }
 
-void Game::setPlatforms(QStringList platforms){
+void Game::setPlatforms(QStringList platforms)
+{
     m_platforms = std::move(platforms);
 }
 
-void Game::setUserTags(QStringList tags){
+void Game::setUserTags(QStringList tags)
+{
     m_user_tags = std::move(tags);
 }
 
-void Game::setIconName(QString iconName) {
+void Game::setIconName(QString iconName)
+{
     m_iconName = std::move(iconName);
 }
 
@@ -87,22 +93,27 @@ QString Game::status_str() const
     }
 }
 
-QStringList Game::developers() const{
+QStringList Game::developers() const
+{
     return m_developers;
 };
 
-QStringList Game::publishers() const{
+QStringList Game::publishers() const
+{
     return m_publishers;
 };
 
-QStringList Game::platforms() const{
+QStringList Game::platforms() const
+{
     return m_platforms;
 };
 
-QStringList Game::userTags() const{
+QStringList Game::userTags() const
+{
     return m_user_tags;
 };
 
-QDate Game::releaseDate() const{
+QDate Game::releaseDate() const
+{
     return m_releaseDate;
 };

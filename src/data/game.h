@@ -4,12 +4,12 @@
 
 #ifndef GAME_H
 #define GAME_H
+#include <QDate>
+#include <QIcon>
 #include <QList>
+#include <QMap>
 #include <QObject>
 #include <QString>
-#include <QIcon>
-#include <QMap>
-#include <QDate>
 #include <qdatetime.h>
 
 /**
@@ -43,7 +43,7 @@ public:
         ABANDONED = 4
     };
 
-    enum Attribute{
+    enum Attribute {
         GENRES,
         DEVELOPERS,
         PUBLISHERS,
@@ -85,7 +85,6 @@ public:
     void setPlatforms(QStringList platforms);
 
     void setUserTags(QStringList tags);
-
 
     void setStatus(Status status);
 
@@ -132,6 +131,7 @@ public:
     Status status() const;
 
     QString status_str() const;
+
 private:
     int m_id {};
     QString m_iconName;

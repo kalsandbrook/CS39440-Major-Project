@@ -23,7 +23,7 @@ GameDetailsWidget::GameDetailsWidget(QWidget* parent)
     layout->addWidget(gameDescriptionLabel);
     layout->addWidget(gameGenresLabel);
     layout->addWidget(gameStatusLabel);
-    layout->insertStretch( -1, 1 );
+    layout->insertStretch(-1, 1);
 
     setLayout(layout);
 };

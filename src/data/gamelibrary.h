@@ -54,7 +54,6 @@ public:
 
     QStringList getAllOfAttribute(Game::Attribute attribute);
 
-
     /**
      * @brief Deletes a game from the library.
      *

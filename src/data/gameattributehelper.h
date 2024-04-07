@@ -2,14 +2,14 @@
 
 #include "game.h"
 
-namespace GameAttributeHelper{
+namespace GameAttributeHelper {
 
-    QString getDbTableName(Game::Attribute attribute);
+QString getDbTableName(Game::Attribute attribute);
 
-    QString getDbRelationTableName(Game::Attribute attribute);
+QString getDbRelationTableName(Game::Attribute attribute);
 
-    QString getIdField(Game::Attribute attribute);
+QString getIdField(Game::Attribute attribute);
 
-    QStringList getDbInfo(Game::Attribute attribute);
+QStringList getDbInfo(Game::Attribute attribute);
 
 };

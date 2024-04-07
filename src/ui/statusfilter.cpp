@@ -33,12 +33,13 @@ void StatusFilter::onStatusFilterListActivated(QListWidgetItem* item)
     }
 }
 
-void StatusFilter::setIconsForStatuses() {
+void StatusFilter::setIconsForStatuses()
+{
     for (int i = 0; i < statusFilterList->count(); ++i) {
         auto item = statusFilterList->item(i);
 
         // Handles the "ANY" status in the list. This should not have an icon.
-        if(item->text() != "ANY")
+        if (item->text() != "ANY")
             item->setIcon(GameHelper::getStatusIcon(item->text()));
     }
 }
