@@ -1,4 +1,5 @@
 #include "statusfilter.h"
+#include "../data/gamehelper.h"
 #include <QLabel>
 #include <qboxlayout.h>
 #include <qlistwidget.h>
@@ -8,7 +9,7 @@ StatusFilter::StatusFilter(QWidget* parent)
 {
     layout = new QVBoxLayout(this);
     statusFiltersLabel = new QLabel(tr("Game Status"), this);
-    statusFilterList = new QListWidget();
+    statusFilterList = new QListWidget(this);
 
     // This should not be hard-coded.
     QStringList statusList = { "ANY", "NONE", "BACKLOG", "PLAYING", "COMPLETED", "ABANDONED" };
@@ -19,17 +20,16 @@ StatusFilter::StatusFilter(QWidget* parent)
     layout->addWidget(statusFiltersLabel);
     layout->addWidget(statusFilterList);
 
-    connect(statusFilterList, &QListWidget::itemActivated, this, &StatusFilter::onStatusFilterListActivated);
+    connect(statusFilterList, &QListWidget::itemClicked, this, &StatusFilter::onFilterListActivated);
 }
 
-void StatusFilter::onStatusFilterListActivated(QListWidgetItem* item)
+void StatusFilter::onFilterListActivated(QListWidgetItem* item)
 {
     QString selectedItem = item->data(Qt::DisplayRole).toString();
     if (selectedItem == "ANY") {
-        filterCleared();
+        emit filterCleared();
     } else {
-        Game::Status selectedStatus = GameHelper::stringToStatus(selectedItem);
-        emit filterChanged(selectedStatus);
+        emit filterChanged(selectedItem);
     }
 }
 
@@ -39,7 +39,13 @@ void StatusFilter::setIconsForStatuses()
         auto item = statusFilterList->item(i);
 
         // Handles the "ANY" status in the list. This should not have an icon.
-        if (item->text() != "ANY")
+        if (item->text() == "ANY")
+            item->setIcon(QIcon::fromTheme("object-rows"));
+        else
             item->setIcon(GameHelper::getStatusIcon(item->text()));
     }
+}
+
+void StatusFilter::clearSelection(){
+    statusFilterList->clearSelection();
 }

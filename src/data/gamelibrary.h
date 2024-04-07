@@ -113,6 +113,8 @@ signals:
      */
     void gameUpdated(const Game& game);
 
+    void gameChanged();
+
 private:
     GameLibrary(); // Private constructor - Singleton
     ~GameLibrary(); // Private destructor - no external deletion

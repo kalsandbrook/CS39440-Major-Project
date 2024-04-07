@@ -15,12 +15,14 @@
 #include <QToolButton>
 #include <QTreeView>
 
+
+#include "ui/gamelibraryproxymodel.h"
 #include "data/model/gamelibrarymodel.h"
 #include "ui/gamedetailswidget.h"
 #include "ui/gameeditdialog.h"
 #include "ui/gameview.h"
 #include "ui/searchbarwidget.h"
-#include "ui/statusfilter.h"
+#include "ui/filterswidget.h"
 
 /**
  * @brief The MainWindow class is the main window of the application.
@@ -61,10 +63,7 @@ public slots:
      */
     void onAboutQtAction();
 
-    void clearFilters();
-
     void onSearchUpdated(QString query);
-    void onStatusFilterUpdated(Game::Status statusFilter);
 
 private:
     QToolBar* mainToolBar;
@@ -73,7 +72,8 @@ private:
     SearchBarWidget* searchBar;
 
     QToolBar* filterToolBar;
-    StatusFilter* statusFilter;
+
+    FiltersWidget* filtersWidget;
 
     QToolBar* gameDetailsBar;
     GameDetailsWidget* gameDetailsWidget;
@@ -85,7 +85,7 @@ private:
 
     GameView* gameView;
     GameLibraryModel* gameLibraryModel;
-    QSortFilterProxyModel* gameLibraryProxyModel;
+    GameLibraryProxyModel* gameLibraryProxyModel;
     GameEditDialog* addGameDialog;
 
     void createToolBars();

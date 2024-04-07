@@ -4,9 +4,12 @@
 
 #include "mainwindow.h"
 
+//#include "data/gamelibrary.h"
+#include "ui/filterswidget.h"
 #include "ui/gamedetailswidget.h"
 #include "ui/gameitemdelegate.h"
 #include <QSizePolicy>
+#include <qboxlayout.h>
 #include <qnamespace.h>
 #include <qstyleoption.h>
 
@@ -22,37 +25,36 @@ MainWindow::MainWindow()
 
     gameView = new GameView(this);
     gameLibraryModel = new GameLibraryModel(this);
-    gameLibraryProxyModel = new QSortFilterProxyModel(this);
-    gameLibraryProxyModel->setSourceModel(gameLibraryModel);
+    gameLibraryProxyModel = new GameLibraryProxyModel(this, gameLibraryModel);
 
     gameView->setSortingEnabled(true);
     gameView->setModel(gameLibraryProxyModel);
     gameView->setItemDelegate(new GameItemDelegate(this));
     gameView->setColumnWidth(0, 200);
 
-    statusFilter = new StatusFilter(this);
-
     gameDetailsWidget = new GameDetailsWidget(this);
 
     QWidget* mainWidget = new QWidget(this);
-    QHBoxLayout* layout = new QHBoxLayout(mainWidget);
+    filtersWidget = new FiltersWidget(gameLibraryProxyModel, this);
 
-    layout->addWidget(statusFilter, 1);
+    QHBoxLayout* layout = new QHBoxLayout(mainWidget);
+    mainWidget->setLayout(layout);
+
+    layout->addWidget(filtersWidget, 1);
     layout->addWidget(gameView, 5);
     layout->addWidget(gameDetailsWidget, 1);
 
     setCentralWidget(mainWidget);
-    mainWidget->setLayout(layout);
 
     connect(gameView, &QAbstractItemView::clicked, gameDetailsWidget, &GameDetailsWidget::updateGame);
 
     connect(searchBar, &SearchBarWidget::searchUpdated, this, &MainWindow::onSearchUpdated);
-    connect(statusFilter, &StatusFilter::filterChanged, this, &MainWindow::onStatusFilterUpdated);
-    connect(statusFilter, &StatusFilter::filterCleared, this, &MainWindow::clearFilters);
 
     connect(addGameAction, &QAction::triggered, this, &MainWindow::onAddGameDialog);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::onAboutAction);
     connect(aboutQtAction, &QAction::triggered, this, &MainWindow::onAboutQtAction);
+
+    connect(&GameLibrary::instance(), &GameLibrary::gameChanged, filtersWidget, &FiltersWidget::updateAttributeFilters);
 }
 
 void MainWindow::createActions()
@@ -115,17 +117,4 @@ void MainWindow::onSearchUpdated(QString query)
     // TODO: Use Fuzzy Searching
     gameLibraryProxyModel->setFilterKeyColumn(0);
     gameLibraryProxyModel->setFilterRegularExpression(query);
-}
-
-void MainWindow::onStatusFilterUpdated(Game::Status statusFilter)
-{
-    // Filter by status - this will need to be changed as this only supports filtering by name OR status.
-    gameLibraryProxyModel->setFilterKeyColumn(3);
-    gameLibraryProxyModel->setFilterRegularExpression(GameHelper::statusToString(statusFilter));
-}
-
-void MainWindow::clearFilters()
-{
-    // Set filter to empty (match any pattern)
-    gameLibraryProxyModel->setFilterRegularExpression(".*");
 }

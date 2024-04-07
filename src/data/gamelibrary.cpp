@@ -48,6 +48,7 @@ void GameLibrary::addGame(Game& game)
         m_games[game.id()] = game;
 
         gameAdded(game);
+        gameChanged();
     } else {
         qFatal("Failed to add a game to the DB.");
         db.endTransaction();
@@ -183,6 +184,7 @@ void GameLibrary::deleteGame(int gameId)
     // Uses a predicate and deletes the game if the id matches.
     m_games.remove(gameId);
     gameDeleted(gameId);
+    gameChanged();
 }
 
 void GameLibrary::updateGame(Game& game)
@@ -224,6 +226,7 @@ void GameLibrary::updateGame(Game& game)
 
     m_games[game.id()] = game;
     gameUpdated(game);
+    gameChanged();
 }
 
 QMap<int, Game>& GameLibrary::games()

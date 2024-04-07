@@ -1,9 +1,6 @@
 
 #pragma once
 
-#include "../data/game.h"
-#include "../data/gamehelper.h"
-
 #include <QLabel>
 #include <QListWidgetItem>
 #include <QToolBar>
@@ -14,10 +11,11 @@ class StatusFilter : public QWidget {
     Q_OBJECT
 public:
     StatusFilter(QWidget* parent);
+    void clearSelection();
 private slots:
-    void onStatusFilterListActivated(QListWidgetItem* item);
+    void onFilterListActivated(QListWidgetItem* item);
 signals:
-    void filterChanged(Game::Status newStatusFilter);
+    void filterChanged(QString newFilter);
     void filterCleared();
 
 private:
