@@ -203,11 +203,16 @@ void GameLibrary::updateGame(Game& game)
 
     query.exec();
 
-    // Handle attributes
+    // Remove old attributes
     QSqlQuery deleteQuery(db.db());
-    deleteQuery.prepare("DELETE FROM game_genres,game_developers,game_publishers,game_platforms,game_user_tags WHERE gameId = :gameId");
-    deleteQuery.bindValue(":gameId", game.id());
-    deleteQuery.exec();
+    QStringList tables = {"game_genres", "game_developers", "game_publishers", "game_platforms", "game_user_tags"};
+
+    foreach(const QString &table, tables) {
+        QString deleteStatement = QString("DELETE FROM %1 WHERE gameId = :gameId").arg(table);
+        deleteQuery.prepare(deleteStatement);
+        deleteQuery.bindValue(":gameId", game.id());
+        deleteQuery.exec();
+    }
 
     setGameAttribute(game.id(), Game::Attribute::GENRES, game.genres());
     setGameAttribute(game.id(), Game::Attribute::DEVELOPERS, game.developers());
