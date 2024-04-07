@@ -9,7 +9,13 @@
 
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QLineEdit>
 #include <QWidget>
+
+class GameDetailsLine : public QLineEdit{
+public:
+    GameDetailsLine(QString content, QWidget* parent);
+};
 
 class GameDetailsWidget : public QWidget {
 public:
@@ -25,10 +31,26 @@ private:
     QLabel* titleLabel;
 
     QLabel* gameNameLabel;
+    GameDetailsLine* gameName;
     QLabel* gameDescriptionLabel;
-    QLabel* gameGenresLabel;
-    QLabel* gameIdLabel;
+    GameDetailsLine* gameDescription;
     QLabel* gameStatusLabel;
+    GameDetailsLine* gameStatus;
+
+    QLabel* gameGenresLabel;
+    GameDetailsLine* gameGenres;
+    QLabel* gameDevelopersLabel;
+    GameDetailsLine* gameDevelopers;
+    QLabel* gamePublishersLabel;
+    GameDetailsLine* gamePublishers;
+    QLabel* gamePlatformsLabel;
+    GameDetailsLine* gamePlatforms;
+    QLabel* gameTagsLabel;
+    GameDetailsLine* gameTags;
+
+    QLabel* gameIdLabel;
+    GameDetailsLine* gameId;
 };
+
 
 #endif // GAMEPILE_GAMEDETAILSWIDGET_H

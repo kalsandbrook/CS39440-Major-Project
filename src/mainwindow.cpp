@@ -46,7 +46,7 @@ MainWindow::MainWindow()
 
     setCentralWidget(mainWidget);
 
-    connect(gameView, &QAbstractItemView::clicked, gameDetailsWidget, &GameDetailsWidget::updateGame);
+    connect(gameView, &QAbstractItemView::pressed, gameDetailsWidget, &GameDetailsWidget::updateGame);
 
     connect(searchBar, &SearchBarWidget::searchUpdated, this, &MainWindow::onSearchUpdated);
 

@@ -38,9 +38,13 @@ public:
     enum GameRoles {
         NameRole = Qt::UserRole + 1,
         DescRole,
-        GenreRole,
         IdRole,
-        StatusRole
+        StatusRole,
+        GenreRole,
+        DeveloperRole,
+        PublisherRole,
+        PlatformRole,
+        TagsRole
     };
 
     /**

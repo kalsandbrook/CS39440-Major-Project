@@ -107,10 +107,18 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
         return game.name();
     case DescRole:
         return game.desc();
-    case GenreRole:
-        return game.genres().join(", ");
     case StatusRole:
         return game.status();
+    case GenreRole:
+        return game.genres().join(", ");
+    case DeveloperRole:
+        return game.developers().join(", ");
+    case PublisherRole:
+        return game.publishers().join(", ");
+    case PlatformRole:
+        return game.platforms().join(", ");
+    case TagsRole:
+        return game.userTags().join(", ");
     default:
         return {};
     }
@@ -121,9 +129,14 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
     QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
     roles[NameRole] = "name";
     roles[DescRole] = "desc";
-    roles[GenreRole] = "genres";
     roles[IdRole] = "id";
     roles[StatusRole] = "status";
+    roles[GenreRole] = "genres";
+    roles[DeveloperRole] = "developer";
+    roles[PublisherRole] = "publisher";
+    roles[PlatformRole] = "platform";
+    roles[TagsRole] = "tags";
+
     // Add other custom role names if needed
     return roles;
 }

@@ -4,6 +4,11 @@
 
 #include "gamedetailswidget.h"
 
+GameDetailsLine::GameDetailsLine(QString content, QWidget* parent): QLineEdit(){
+    setDisabled(true);
+    setText(content);
+}
+
 GameDetailsWidget::GameDetailsWidget(QWidget* parent)
     : QWidget(parent)
 {
@@ -11,18 +16,51 @@ GameDetailsWidget::GameDetailsWidget(QWidget* parent)
 
     titleLabel = new QLabel(tr("Game Details"));
 
-    gameIdLabel = new QLabel();
-    gameNameLabel = new QLabel();
-    gameDescriptionLabel = new QLabel();
-    gameGenresLabel = new QLabel();
-    gameStatusLabel = new QLabel();
+    gameNameLabel = new QLabel("Name:");
+    gameName = new GameDetailsLine("",this);
+    gameDescriptionLabel = new QLabel("Description:");
+    gameDescription = new GameDetailsLine("",this);
+    gameStatusLabel = new QLabel("Status:");
+    gameStatus = new GameDetailsLine("",this);
+
+    gameGenresLabel = new QLabel("Genres:");
+    gameGenres = new GameDetailsLine("",this);
+    gameDevelopersLabel = new QLabel("Developers:");
+    gameDevelopers = new GameDetailsLine("",this);
+    gamePublishersLabel = new QLabel("Publishers:");
+    gamePublishers = new GameDetailsLine("",this);
+    gamePlatformsLabel = new QLabel("Platforms:");
+    gamePlatforms = new GameDetailsLine("",this);
+    gameTagsLabel = new QLabel("Tags:");
+    gameTags = new GameDetailsLine("",this);
+
+
+    gameIdLabel = new QLabel("ID:");
+    gameId = new GameDetailsLine("",this);
 
     layout->addWidget(titleLabel);
-    layout->addWidget(gameIdLabel);
+
     layout->addWidget(gameNameLabel);
+    layout->addWidget(gameName);
     layout->addWidget(gameDescriptionLabel);
-    layout->addWidget(gameGenresLabel);
+    layout->addWidget(gameDescription);
     layout->addWidget(gameStatusLabel);
+    layout->addWidget(gameStatus);
+
+    layout->addWidget(gameGenresLabel);
+    layout->addWidget(gameGenres);
+    layout->addWidget(gameDevelopersLabel);
+    layout->addWidget(gameDevelopers);
+    layout->addWidget(gamePublishersLabel);
+    layout->addWidget(gamePublishers);
+    layout->addWidget(gamePlatformsLabel);
+    layout->addWidget(gamePlatforms);
+    layout->addWidget(gameTagsLabel);
+    layout->addWidget(gameTags);
+
+    layout->addWidget(gameIdLabel);
+    layout->addWidget(gameId);
+
     layout->insertStretch(-1, 1);
 
     setLayout(layout);
@@ -37,12 +75,20 @@ void GameDetailsWidget::updateGame(const QModelIndex& index)
     QString id = index.data(GameLibraryModel::GameRoles::IdRole).toString();
     QString name = index.data(GameLibraryModel::GameRoles::NameRole).toString();
     QString description = index.data(GameLibraryModel::GameRoles::DescRole).toString();
-    QString genres = index.data(GameLibraryModel::GameRoles::GenreRole).toString();
     QString status = index.siblingAtColumn(3).data().toString();
+    QString genres = index.data(GameLibraryModel::GameRoles::GenreRole).toString();
+    QString developers = index.data(GameLibraryModel::GameRoles::DeveloperRole).toString();
+    QString publishers = index.data(GameLibraryModel::GameRoles::PublisherRole).toString();
+    QString platforms = index.data(GameLibraryModel::GameRoles::PlatformRole).toString();
+    QString tags = index.data(GameLibraryModel::GameRoles::TagsRole).toString();
 
-    gameIdLabel->setText("Id:\n" + id);
-    gameNameLabel->setText("Name:\n" + name);
-    gameDescriptionLabel->setText("Description:\n" + description);
-    gameGenresLabel->setText("Genres:\n" + genres);
-    gameStatusLabel->setText("Status:\n" + status);
+    gameId -> setText(id);
+    gameName -> setText(name);
+    gameDescription -> setText(description);
+    gameStatus -> setText(status);
+    gameGenres -> setText(genres);
+    gameDevelopers -> setText(developers);
+    gamePublishers -> setText(publishers);
+    gamePlatforms -> setText(platforms);
+    gameTags -> setText(tags);
 }
