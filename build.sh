@@ -2,10 +2,13 @@
 
 clean_build=false
 run_after_build=false
+install_app=false
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --clean) clean_build=true;;
-        --run) run_after_build=true;;
+        --run) install_app=true run_after_build=true;;
+        --install) install_app=true;;
         *) echo "Unknown parameter passed: $1"; exit 1;;
     esac
     shift
@@ -33,7 +36,12 @@ cmake -G Ninja -S . -B ./build
 echo "Building project..."
 cmake --build ./build
 
+if [ "$install_app" = true ]; then
+    echo "Installing the application..."
+    sudo cmake --install ./build
+fi
+
 if [ "$run_after_build" = true ]; then
     echo "Running the application..."
-    ./build/GamePile
+    GamePile
 fi

@@ -1,3 +1,6 @@
 [submodule "doxygen-awesome-css"]
 	path = doxygen-awesome-css
 	url = https://github.com/jothepro/doxygen-awesome-css.git
+[submodule "CS39440-Game-Pile-API"]
+	path = CS39440-Game-Pile-API
+	url = git@github.com:kalsandbrook/CS39440-Game-Pile-API.git

@@ -9,7 +9,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-set(Qt6_DIR "C:/Qt/6.6.2/mingw_64/lib/cmake/Qt6")
+set(CLI_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
+set(QT_EXECUTABLE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
 
 find_package(Qt6 COMPONENTS
     Core
@@ -68,3 +69,25 @@ target_link_libraries(GamePile
         Qt::Sql
 )
 
+
+install(TARGETS GamePile
+        RUNTIME DESTINATION ${QT_EXECUTABLE_INSTALL_DIR}
+)
+
+set(DESKTOP_FILE_CONTENT "
+[Desktop Entry]
+Type=Application
+Name=GamePile
+Comment=A CS39440 Major Project, produced for Aberystwyth University by Kal Sandbrook (kas143).
+Exec=GamePile
+Terminal=false
+Categories=Utility;Game;
+")
+
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/GamePile.desktop "${DESKTOP_FILE_CONTENT}")
+
+install(CODE
+        "execute_process(
+        COMMAND desktop-file-install --dir=${CMAKE_INSTALL_PREFIX}/share/applications ${CMAKE_CURRENT_BINARY_DIR}/GamePile.desktop
+        )"
+)
