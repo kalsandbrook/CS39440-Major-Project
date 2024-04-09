@@ -43,25 +43,28 @@
 
   #page[
     #outline(indent: true)
-    #outline(title: [List of Figures],target: figure)
   ]
 ]
 
-= Background & Objectives
-== Background
+= Background, Analysis & Process
+== Background // 2,500 words
 
-== Analysis
+== Analysis // 2,500 words
 
-== Process
+== Process // 2,000 words
 
-= Design
+= Design // 2,500 words
 
-= Implementation
+= Implementation // 1,500 words
 
-= Testing
+= Testing // 1,500 words
 
-= Evaluation
+= Evaluation // 1,500 words
 
-#bibliography("bibliography.yml", style: "ieee", full: true)
+#bibliography("bibliography.yml", style: "ieee-notes.csl", full: true)
+
+#[ <appendices>
 
 #heading(numbering: none)[Appendices]
+
+]
