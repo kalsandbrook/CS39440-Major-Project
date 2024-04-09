@@ -12,6 +12,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CLI_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
 set(QT_EXECUTABLE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
 
+set(PYTHON_BUILD_SCRIPT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/build.sh")
+set(EXECUTABLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/dist/GamePile-API")
+
 find_package(Qt6 COMPONENTS
     Core
     Gui
@@ -69,17 +72,39 @@ target_link_libraries(GamePile
         Qt::Sql
 )
 
+# Building and packaging Python CLI File
+
+add_custom_command(
+    OUTPUT ${EXECUTABLE_PATH}
+    COMMAND ${SHELL_SCRIPT_PATH}
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API"
+    COMMENT "Running API Tool CLI - build.sh"
+    VERBATIM
+)
+
+add_custom_target(BuildCLI
+    DEPENDS ${EXECUTABLE_PATH}
+)
+
+add_dependencies(GamePile BuildCLI)
+
 add_custom_command(
     TARGET GamePile
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/dist/main/main ${CMAKE_CURRENT_BINARY_DIR}/cli_program
+    COMMAND ${CMAKE_COMMAND} -E copy ${EXECUTABLE_PATH} ${CMAKE_CURRENT_BINARY_DIR}/GamePile-API
 )
 
+install(PROGRAMS ${EXECUTABLE_PATH}
+    DESTINATION ${CLI_INSTALL_DIR}
+)
+
+# Install Main Program
 
 install(TARGETS GamePile
         RUNTIME DESTINATION ${QT_EXECUTABLE_INSTALL_DIR}
 )
+
+# Desktop File.
 
 set(DESKTOP_FILE_CONTENT "
 [Desktop Entry]
