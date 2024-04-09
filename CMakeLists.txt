@@ -69,6 +69,13 @@ target_link_libraries(GamePile
         Qt::Sql
 )
 
+add_custom_command(
+    TARGET GamePile
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/dist/main/main ${CMAKE_CURRENT_BINARY_DIR}/cli_program
+)
+
 
 install(TARGETS GamePile
         RUNTIME DESTINATION ${QT_EXECUTABLE_INSTALL_DIR}
