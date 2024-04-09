@@ -20,6 +20,7 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     , editingGame(false)
     , m_selectedIconFile(new QFile())
     , fileDialog(new QFileDialog(this, "Choose Icon"))
+    , m_api(new GamePileAPI(this))
 {
     pickIconLabel = new QLabel(tr("Icon:"));
     pickIconButton = new QPushButton(QIcon::fromTheme("document-open"), tr("Choose file..."), this);
@@ -124,6 +125,8 @@ GameEditDialog::GameEditDialog(QWidget* parent)
 
     resize({ 800, 640 });
     connect(pickIconButton, &QPushButton::clicked, this, &GameEditDialog::openFileDialog);
+    connect(apiFetchButton, &QPushButton::clicked, this, &GameEditDialog::apiButtonClicked);
+    connect(m_api, &GamePileAPI::lookupGameResult, this, &GameEditDialog::setFieldsFromAPI);
 }
 
 void GameEditDialog::createAttributeEdits()
@@ -329,5 +332,49 @@ void GameEditDialog::openFileDialog()
 
     if (fileDialog->exec()) {
         m_selectedIconFile->setFileName(fileDialog->selectedFiles()[0]);
+    }
+}
+
+void GameEditDialog::apiButtonClicked(){
+    if(nameLineEdit->text().isEmpty()){
+        return;
+    }
+    m_api->startLookupGame(nameLineEdit->text());
+
+}
+
+void GameEditDialog::setFieldsFromAPI(QMap<QString,QString> gameDetails){
+
+    qDebug() << gameDetails;
+
+    nameLineEdit->setText(gameDetails["name"]);
+
+    descTextEdit->setText(gameDetails["description"]);
+
+    QDate date = QDate::fromString(gameDetails["releaseDate"], "yyyy-MM-dd");
+    releaseDateEdit->setDate(date);
+
+    QStringList genres = gameDetails["genres"].split(", ");
+    genreList->clear();
+    for(QString genre : genres){
+        RemovableListWidgetItem* newGenre = new RemovableListWidgetItem(genre, genreList);
+    }
+
+    QStringList developers = gameDetails["developers"].split(", ");
+    developerList->clear();
+    for(QString developer : developers){
+        RemovableListWidgetItem* newDeveloper = new RemovableListWidgetItem(developer, developerList);
+    }
+
+    QStringList publishers = gameDetails["publishers"].split(", ");
+    publisherList->clear();
+    for(QString publisher : publishers){
+        RemovableListWidgetItem* newPublisher = new RemovableListWidgetItem(publisher, publisherList);
+    }
+
+    QStringList platforms = gameDetails["platforms"].split(", ");
+    platformList->clear();
+    for(QString platform : platforms){
+        RemovableListWidgetItem* newPlatform = new RemovableListWidgetItem(platform, platformList);
     }
 }

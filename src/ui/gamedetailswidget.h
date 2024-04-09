@@ -11,6 +11,7 @@
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <QWidget>
+#include <QTextEdit>
 
 class GameDetailsLine : public QLineEdit{
 public:
@@ -33,7 +34,7 @@ private:
     QLabel* gameNameLabel;
     GameDetailsLine* gameName;
     QLabel* gameDescriptionLabel;
-    GameDetailsLine* gameDescription;
+    QTextEdit* gameDescription;
     QLabel* gameStatusLabel;
     GameDetailsLine* gameStatus;
 

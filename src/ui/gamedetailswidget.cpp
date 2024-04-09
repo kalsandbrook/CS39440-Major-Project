@@ -4,8 +4,9 @@
 
 #include "gamedetailswidget.h"
 
+
 GameDetailsLine::GameDetailsLine(QString content, QWidget* parent): QLineEdit(){
-    setDisabled(true);
+    setReadOnly(true);
     setText(content);
 }
 
@@ -18,8 +19,11 @@ GameDetailsWidget::GameDetailsWidget(QWidget* parent)
 
     gameNameLabel = new QLabel("Name:");
     gameName = new GameDetailsLine("",this);
+
     gameDescriptionLabel = new QLabel("Description:");
-    gameDescription = new GameDetailsLine("",this);
+    gameDescription = new QTextEdit("",this);
+    gameDescription->setReadOnly(true);
+
     gameStatusLabel = new QLabel("Status:");
     gameStatus = new GameDetailsLine("",this);
 

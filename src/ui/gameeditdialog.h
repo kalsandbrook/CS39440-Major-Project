@@ -7,6 +7,8 @@
 
 #include "../data/game.h"
 
+#include "../data/gamepileapi.h"
+
 #include <QComboBox>
 #include <QCompleter>
 #include <QDateEdit>
@@ -91,8 +93,10 @@ public:
 
 private slots:
     void openFileDialog();
+    void apiButtonClicked();
 
 private:
+    void setFieldsFromAPI(QMap<QString,QString> gameDetails);
     void createAttributeEdits();
     void setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget, const QString& label);
 
@@ -102,6 +106,8 @@ private:
     QGridLayout* layout;
 
     QFileDialog* fileDialog;
+
+    GamePileAPI* m_api;
 
     QIcon* gameIcon;
 

@@ -63,6 +63,10 @@ add_executable(GamePile
         src/data/gameiconcontroller.h
         src/data/gameattributehelper.cpp
         src/data/gameattributehelper.h
+        src/data/gamepileapi.cpp
+        src/data/gamepileapi.h
+        src/data/gamepileapiworker.cpp
+        src/data/gamepileapiworker.h
 )
 
 target_link_libraries(GamePile
