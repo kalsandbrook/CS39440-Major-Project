@@ -105,6 +105,8 @@ private:
 
     QIcon* gameIcon;
 
+    QPushButton* apiFetchButton;
+
     QPushButton* pickIconButton;
     QLabel* pickIconLabel;
 

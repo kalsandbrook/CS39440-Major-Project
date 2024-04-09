@@ -27,6 +27,8 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     nameLabel = new QLabel(tr("Name:"));
     nameLineEdit = new QLineEdit(this);
 
+    apiFetchButton = new QPushButton(QIcon::fromTheme("download"),"", this);
+
     gameIcon = new QIcon();
 
     descLabel = new QLabel(tr("Description:"));
@@ -56,13 +58,15 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     leftForm->addWidget(pickIconButton, 0, 1, 1, 2);
 
     leftForm->addWidget(nameLabel, 1, 0, 1, 1, Qt::AlignRight);
-    leftForm->addWidget(nameLineEdit, 1, 1, 1, 2);
+    leftForm->addWidget(nameLineEdit, 1, 1, 1, 1);
+
+    leftForm->addWidget(apiFetchButton, 1,2,1,1);
 
     leftForm->addWidget(descLabel, 2, 0, 1, 1, Qt::AlignRight);
     leftForm->addWidget(descTextEdit, 2, 1, 1, 2);
 
     leftForm->addWidget(releaseDateLabel, 5, 0, 1, 1, Qt::AlignRight);
-    leftForm->addWidget(releaseDateEdit, 5, 1);
+    leftForm->addWidget(releaseDateEdit, 5, 1,1,2);
 
     leftForm->addWidget(statusLabel, 6, 0, 1, 1, Qt::AlignRight);
     leftForm->addWidget(statusBox, 6, 1, 1, 2);
