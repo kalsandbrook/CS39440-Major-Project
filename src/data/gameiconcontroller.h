@@ -9,10 +9,20 @@
 
 #include <QDir>
 #include <QImage>
+#include <QByteArray>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QEventLoop>
 
-class GameIconController {
+class GameIconController: public QObject {
+    Q_OBJECT
 public:
-    GameIconController();
+    GameIconController(QObject* parent = nullptr);
+
+    QString copyFileToIconsDir(QFile* file);
+
+    void downloadIcon(const QUrl& URLString, const QString& filePath);
 
     static QDir getIconDirectory();
 
@@ -20,7 +30,6 @@ public:
 
 private:
     QDir m_iconDirectory;
-
     void createIconDirectory();
 };
 

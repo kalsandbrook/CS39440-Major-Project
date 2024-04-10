@@ -21,7 +21,11 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     , m_selectedIconFile(new QFile())
     , fileDialog(new QFileDialog(this, "Choose Icon"))
     , m_api(new GamePileAPI(this))
+    , m_iconURL("")
 {
+    m_gameLibrary = &GameLibrary::instance();
+    m_iconController = m_gameLibrary->iconController;
+
     pickIconLabel = new QLabel(tr("Icon:"));
     pickIconButton = new QPushButton(QIcon::fromTheme("document-open"), tr("Choose file..."), this);
 
@@ -195,19 +199,17 @@ void GameEditDialog::verify()
 
 void GameEditDialog::accept()
 {
-    GameLibrary& gameLibrary = GameLibrary::instance();
-    GameIconController* iconController = gameLibrary.iconController;
+
 
     QString gameIconName = "";
 
     // TODO: This functionality should be moved to a helper class.
 
     if (m_selectedIconFile->exists()) {
-        QFileInfo iconFileInfo(m_selectedIconFile->fileName());
-        QString saveDir = iconController->getIconDirectory().path() + "/" + iconFileInfo.fileName();
-        m_selectedIconFile->copy(saveDir) ? qDebug() << "Writing file" << m_selectedIconFile->fileName() << "to icons folder." : qDebug() << m_selectedIconFile->fileName() << "already exists.";
-
-        gameIconName = iconFileInfo.fileName();
+        gameIconName = m_iconController->copyFileToIconsDir(m_selectedIconFile);
+    } if (m_iconURL != ""){
+        gameIconName = getName() + "_icon.jpg";
+        m_iconController->downloadIcon(m_iconURL, gameIconName);
     }
 
     // TODO: This can be optimised!!
@@ -222,7 +224,7 @@ void GameEditDialog::accept()
         editedGame.setUserTags(getAttributeList(usertagsList));
         editedGame.setStatus(getStatus());
         editedGame.setIconName(gameIconName);
-        gameLibrary.updateGame(editedGame);
+        m_gameLibrary->updateGame(editedGame);
     } else {
         Game newGame(0, getName(), getDesc());
         newGame.setGenres(getAttributeList(genreList));
@@ -233,7 +235,7 @@ void GameEditDialog::accept()
         newGame.setUserTags(getAttributeList(usertagsList));
         newGame.setStatus(getStatus());
         newGame.setIconName(gameIconName);
-        gameLibrary.addGame(newGame);
+        m_gameLibrary->addGame(newGame);
     }
     QDialog::accept();
 }
@@ -377,4 +379,6 @@ void GameEditDialog::setFieldsFromAPI(QMap<QString,QString> gameDetails){
     for(QString platform : platforms){
         RemovableListWidgetItem* newPlatform = new RemovableListWidgetItem(platform, platformList);
     }
+
+    m_iconURL = gameDetails["iconURL"];
 }

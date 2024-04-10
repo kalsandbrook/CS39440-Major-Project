@@ -20,6 +20,7 @@ find_package(Qt6 COMPONENTS
     Gui
     Widgets
     Sql
+    Network
     REQUIRED
 )
 
@@ -70,10 +71,11 @@ add_executable(GamePile
 )
 
 target_link_libraries(GamePile
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
-        Qt::Sql
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::Sql
+        Qt6::Network
 )
 
 # Building and packaging Python CLI File

@@ -9,6 +9,9 @@
 
 #include "../data/gamepileapi.h"
 
+#include "../data/gameiconcontroller.h"
+#include "../data/gamelibrary.h"
+
 #include <QComboBox>
 #include <QCompleter>
 #include <QDateEdit>
@@ -157,6 +160,10 @@ private:
     QDialogButtonBox* buttonBox;
 
     QFile* m_selectedIconFile;
+    QString m_iconURL;
+
+    GameLibrary* m_gameLibrary;
+    GameIconController* m_iconController;
 
     void setGameToEdit(const Game& game);
 };

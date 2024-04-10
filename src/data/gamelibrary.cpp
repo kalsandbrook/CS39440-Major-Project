@@ -265,7 +265,7 @@ GameLibrary::GameLibrary()
         m_games[game.id()] = game;
     }
 
-    iconController = new GameIconController();
+    iconController = new GameIconController(this);
 }
 
 const Game& GameLibrary::getGameById(int gameId) const
