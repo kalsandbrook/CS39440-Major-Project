@@ -231,20 +231,62 @@
 
 #week(
   weekCommencing: "11th March",
-  focus: "Mid-Project Demo"
-  // TODO: Include section on how the mid-project demo went.
+  focus: "Mid-Project Demo",
+  objectives:
+  [
+    This week will involve doing the mid-project demonstration and the preparation of some slides. I will also add icons to the games, as this is an important step to improve the presentation of the application.
+  ],
+  tasks:[
+    1. Produced slides for mid-project demonstration
+    2. Added icons to the application
+    3. Completed the mid-project demonstration
+      - Good feedback on description of project and the technical issues & technologies used.
+  ],
+  challenges:[
+    - Average amount of technical work completed in the time available so far - pace of development needs to increase.
+  ],
+  plans:[],
 )
 
 #week(
-  weekCommencing: "18th March"
+  weekCommencing: "18th March",
+  focus: "Continued development",
+  objectives:
+  [
+    The main objectives of this week are to continue development. This will involve the enhancement of the UI, the implementation of a proper database and looking into the API.
+  ],
+  tasks:
+  [
+    1. Cleaned up code, removing unused imports, functions and general refactoring where necessary. This significantly decreased the build time of the application.
+  ],
+  challenges:
+  [
+    I have discovered some issues with the performance of the program - notably the complete slowdown of UI when very high resolution icons are used. This will be investigated over Easter.
+  ],
+  plans:
+  [
+    The plans for Easter include further implementation of the Functional Requirements, including setting up a proper relational database, and implementing the API.
+  ]
 )
 
 #[
   #set heading(numbering: none)
   #heading(level: 1)[Easter Vacation: 23rd March - 15th April]
 
-  == Additional Notes
+  // Concurrency with API.
+  == Completed Tasks
+
+  1. Games now use a relational database to store attributes such as their Genres, Platforms, Developers and Publishers.
+    - This uses an "attribute" system, which uses the generic programming principle in order to promote reusable code and decrease repetition.
+  2. Improved performance for Game Icons by using the QImage class over the QIcon class, to scale the images down.
+  3. Improved the look of the Game Details pane, using Read-Only Line Edits instead of Labels.
+  4. Implemented the use of an API to automatically fetch game name, description and attributes. This uses the public Steam API which does not require any api keys.
+    - This API is written in python, which is compiled into an executable and then built alongside the main program. This also provides a command-line tool to interface with the API, which is used by the main program.
+  5. Began work on the Final Report.
+
+  == Plans for coming weeks
   
+  In the final three weeks of the project, I plan to implement CI Testing (some testing is already present in the program) and perform minor enhancements based on feedback from some testers. However, as the end of the project is quickly approaching, there will be a distinct focus on the production of the final report.
 ]
 #pagebreak(weak:true)
 
