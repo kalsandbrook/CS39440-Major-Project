@@ -1,0 +1,87 @@
+qt:
+  type: Web
+  title: Qt
+  url:
+    value: https://www.qt.io/
+    date: 2024-04-16
+  note: The development framework used for the application. This allows the creation of native applications across multiple platforms with ease.
+
+requests:
+  type: Web
+  title: Requests - HTTP for Humans
+  url:
+    value: https://docs.python-requests.org/en/master/
+    date: 2024-04-16
+  note: The python library that was used to make HTTP requests to the API.
+
+thefuzz:
+  type: Web
+  title: TheFuzz - Fuzzy String Matching in Python
+  url:
+    value: https://github.com/seatgeek/thefuzz
+    date: 2024-04-16
+  note: The python library that was used to perform fuzzy string matching.
+
+pyinstaller:
+  type: Web
+  title: PyInstaller
+  url:
+    value: https://pyinstaller.org/en/stable/
+    date: 2024-04-16
+  note: The tool used to package the application into a standalone executable.
+
+hltb:
+  type: Web
+  title: "How Long To Beat"
+  url:
+    value: https://howlongtobeat.com/
+    date: 2024-04-16
+  note: One of the investigated similar applications that inspired the creation of this application. HLTB is a website that provides information on how long it takes to beat a video game, along with providing functionality to track games and create a backlog.
+
+backloggery:
+  type: Web
+  title: The Backloggery
+  url:
+    value: https://backloggery.com/
+    date: 2024-04-16
+  note: Another similar application that was investigated. The Backloggery is a website that allows users to track their video game collection and progress.
+
+4cs:
+  type: Web
+  title: How the 4Cs of UX design benefit your software development
+  url:
+    value: https://www.qt.io/4cs-of-ux-design
+    date: 2024-04-16
+  note: An article that discusses the 4Cs of UX design and how they can benefit software development.
+
+kdehig:
+  type: Web
+  title: KDE Human Interface Guidelines
+  url:
+    value: https://develop.kde.org/hig/
+    date: 2024-04-16
+  note: The KDE Human Interface Guidelines, which provide guidance on designing user interfaces for KDE applications.
+
+lutris:
+  type: Web
+  title: Lutris - Open Gaming Platform
+  url:
+    value: https://lutris.net/
+    date: 2024-04-16
+  note: The Lutris website, which provides an open gaming platform for Linux. It was investigated as a similar application to the one being developed.
+
+gtk:
+  type: Web
+  title: The GTK Project - A free and open-source cross-platform widget toolkit
+  url:
+    value: https://www.gtk.org/
+    date: 2024-04-16
+  note: The GTK Project website, which provides information on the GTK toolkit used for developing graphical user interfaces. It was not used in the development of the application, but used by other applications that were investigated.
+
+igdbdocs:
+  type: Web
+  title: IGDB API Documentation
+  url:
+    value: https://api-docs.igdb.com/
+    date: 2024-02-07
+  note: One of the APIs considered for the application. It was not used in the final implementation, but was investigated during the planning phase.

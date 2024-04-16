@@ -1,4 +1,5 @@
 #import "@preview/nth:1.0.0": nth
+#import "@preview/wordometer:0.1.1": word-count, total-words
 
 #let smallcaps(content) = {
   text(font: "Century Supra C3")[
@@ -126,7 +127,6 @@
    
   show heading: it => {
     it
-    v(.5em)
   }
    
   show cite: super
@@ -148,4 +148,27 @@
   body
 }
 
+#let signatureblock() = {
+  grid(
+    columns: (1fr,1fr),
+    [
+      / Name: Kal Sandbrook
+      / Date: 9th April 2024
+    ],
+    [
+      #set align(right)
+      #image("assets/signature.png",height:2em)
+    ]
+  )
+}
 
+#let wordcountsec(content) = {
+  word-count(total => {
+
+  content
+  align(right)[
+  #smallcaps[#total.words words]
+  ]
+})
+
+}
