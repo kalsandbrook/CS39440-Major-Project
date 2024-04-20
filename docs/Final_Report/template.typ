@@ -1,6 +1,7 @@
 #import "@preview/nth:1.0.0": nth
 #import "@preview/wordometer:0.1.1": word-count, total-words
 
+
 #let smallcaps(content) = {
   text(font: "Century Supra C3")[
     #content

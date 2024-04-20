@@ -1,5 +1,6 @@
 #import "template.typ": *
 
+#set footnote(numbering: "*")
 
 #let smallcaps(content) = {
   text(font: "Century Supra C3")[
@@ -130,16 +131,77 @@ Two initial options were IGDB@igdbdocs (Internet Game Database) and the Steam We
 
 The Steam Web API does not require any authentication to access the data, and was found to be a good option for this project. The API does not support searching, but a list of games can be obtained and searched through locally. Steam Web API also provides information of a requisite level of detail for this project.
 ]
+
+#pagebreak(weak:true)
+
 == Analysis 
+// Having established the background, write about your analysis of the problem and what that meant for the work that needed to be done. What was the problem to be solved or researched? What did you do to identify and analyse the requirements for the work? Discuss how your analysis was used to decompose the problem into different units of work.
+// Think about any alternative approaches that you investigated. What that means will vary by the type of project you are working on. It will probably include an assessment of the relevant technologies but it is likely to be wider than that. Issues such as data representation, processing issues and communications protocols are examples of other things that might be relevant.
+// You are not explaining the solutions in this section because you will discuss that in later sections. Here, you are analysing and decomposing the problem.
+// Clearly identify the objectives of the work. For an engineering project this is typically as a set of requirements. For a research project this is a statement of the research questions and the requirements for the supporting software you will create. You will evaluate your outcomes against those objectives later in the report. See Requirements for some additional guidance.
+// In most cases, the agreed objectives or requirements will be the result of a compromise between what would ideally have been produced and what was determined to be possible in the time available. A discussion of the process of arriving at the final list is usually appropriate.
 
-=== Identification of Requirements
-=== Data Storage
-=== User Interface
-=== Performance
+#wordcountsec[
 
+Whilst this project may seem simple on the surface, there are a number of considerations to be made. Firstly, the scope of the project had to be defined. The project was split into two main components - the main application and the API module. The main application would be responsible for managing the users library and backlog, whilst the API module would be designed to fetch game data from the internet. If the social features and recommendation system were to be implemented, they would be a part of the main application - although likely in seperate modules.
+
+=== Identification of Requirements and Objectives
+
+The requirements for this project were identified through the research conducted in the background section. As a significant portion of the other tools investigated were web-based, there are considerations this project had to make which are not relevant for web-based apps. The key requirements for the project were as follows:
+
+- The application must allow users to add games to their library and mark them as part of their backlog, in progress or completed.
+- The application must allow users to search through their games and filter them based on various attributes.
+- The application must allow users to search for games to add to their library via the use of a Third-Party API.
+- The application must allow users to view detailed information about the games in their library, such as the aforementioned attributes.
+- The application must be visually appealing and user-friendly, following modern design principles.
+- The application must be performant, able to stand up even with a very large library of games.
+
+These Requirements are discussed in more detail in @Requirements.
+
+=== Choice of Technologies
+
+// Mention that choice of language was considered up until the beginning of development, along with some testing of each language to test suitability. 
+
+The choice of language for this project was a matter of consideration up until the beginning of development. The two main languages considered were C++ and Python, and were the two languages used in the development of this project. 
+
+C++ was chosen for the main application due to its unrivalled performance, high suitability for Object-Oriented problems and, via use of the Qt@qt platform, a native and robust UI framework. Python was chosen for the API module due to its excellent networking libraries and ease of use, along with its libraries for fuzzy string matching.
+
+The Qt Framework also boasts an extensive range of documentation and tutorials available online, making it an attractive choice for this project. It also has cross-platform capabilities, allowing the application to be shipped on the _Windows_, _MacOS_ and _Linux_ operating systems. #footnote[However, the project was developed with a focus on Linux compatibility, with support for other operating systems coming second.]
+
+Another advantage of using Python for the API module is that it allows for easy packaging of the module into an executable, which can be used standalone of the main program, allowing for easy testing and debugging of the module. This was achieved using the pyinstaller@pyinstaller library.
+
+Finally, the method of persistent data storage had to be considered. Due to the nature of the data being stored, a relational database was chosen as the method of storage, in particular an SQLite database, due to its lightweight nature and ease of use. In a bigger project, a more robust database system such as PostgreSQL could be considered.
+=== Alternative Approaches
+
+// Rust - no mature UI tooling - maybe a cursory mention to areweguiyet (as a footnote) - using Qt bindings wouldnt be worth it as it's essentially coding in C++ at that point.
+// Fully Python - Slow
+Many other languages were considered for this project, such as an entirely Python-based solution. However, Python does not have the same level of performance as C++, and would not fulfil the performance objectives of the project. Python also does not have an object-oriented system that is as robust as C++, which would make the project harder to maintain and increase the difficulty of debugging the application.
+
+Another language that was considered for this project was the increasingly popular Rust language. Rust is known for its performance and rigorous safety requirements, which would have made it a good choice for a project such as this. However, a significant caveat to using Rust for this project is the lack of a mature UI tooling ecosystem. Whilst there are bindings (bindings being a way to use a library from another language) for Qt in Rust, this would essentially involve doing the majority of the work in C++ regardless, which would defeat the purpose of using Rust in the first place.
+
+Java and C\# were also considered, but were ruled out - Java due to its performance and C\# due to the impracticality of using it on Linux systems. Java also has an absence of modern UI tooling, with Swing and JavaFX being the only real options, both of which are outdated and not visually appealing. QtJambi was briefly investigated as a potential solution, but there was found to be a lack of documentation and community support for the library.
+
+]
 == Process 
+// Describe the life cycle model or research method that you used. You do not need to write about all of the different process models that you are aware of. Focus on the process model that you have used and why you chose it. It is likely that you needed to adapt an existing process model to suit your project; clearly identify what you used and how you adapted it for your needs.
+#wordcountsec[
+When planning development, a Kanban framework was used to manage the project. The use of a Kanban Board is a common practice in software development, and one of the few practices that can be used for a solo project. 
 
-= Requirements
+The Kanban Board was used to manage the project by decomposing the project down into smaller tasks and assigning them to one of three (although there are four columns in total) columns on the board. The columns were "To Do", "In Progress" and "Done". The "To Do" column contained all tasks that needed to be completed, with cards sorted by priority; the "In Progress" column contained tasks that were currently being worked on; and the "Done" column contained tasks that had been completed. A WIP Limit was set so only three tasks could be deemed to be "In Progress" at any one time, to prevent jobs from being left unfinished.
+
+Using the "GitHub Projects" feature to host the Kanban Board, the project was able to be effectively managed. Using this feature allowed issues to be linked to cards on the board, which allowed for easy tracking of progress and completion of tasks. 
+
+When Functional Requirements were identified, they were added as issues to the GitHub repository and linked to cards on the Kanban board, serving as small milestones. Cards were also labelled with the type of task they were such as "Feature", "Bug" or "Documentation".
+
+Certain cards were linked to larger milestones, such as the Mid-Project Demonstration, clearly showing what features I wanted to have in place by that point. This allowed for a clear plan in regards to the timing of the project, and what features were to be implemented.
+
+#figure(
+  caption: "A screenshot of the GitHub Projects board used for this project."
+)[
+  #image("assets/kanbanboard.png", width: 100%)
+]
+]
+= Requirements <Requirements>
 
 // Use-Case Diagram
 
