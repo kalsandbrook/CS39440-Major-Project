@@ -119,6 +119,8 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
         return game.platforms().join(", ");
     case TagsRole:
         return game.userTags().join(", ");
+    case ExecRole:
+        return game.execPath();
     default:
         return {};
     }
@@ -136,8 +138,8 @@ QHash<int, QByteArray> GameLibraryModel::roleNames() const
     roles[PublisherRole] = "publisher";
     roles[PlatformRole] = "platform";
     roles[TagsRole] = "tags";
+    roles[ExecRole] = "exec";
 
-    // Add other custom role names if needed
     return roles;
 }
 

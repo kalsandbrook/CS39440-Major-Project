@@ -90,6 +90,8 @@ public:
 
     void setIconName(QString iconName);
 
+    void setExecPath(QString execPath);
+
     /**
      * @brief Returns the ID of the game.
      *
@@ -128,6 +130,8 @@ public:
 
     QString iconName() const;
 
+    QString execPath() const;
+
     Status status() const;
 
     QString status_str() const;
@@ -144,6 +148,8 @@ private:
     QStringList m_publishers;
     QStringList m_platforms;
     QStringList m_user_tags;
+
+    QString m_execPath;
 
     Status m_status;
 };

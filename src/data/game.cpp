@@ -18,6 +18,7 @@ Game::Game(int id, QString name, QString desc)
     m_platforms = {};
     m_releaseDate = {};
     m_user_tags = {};
+    m_execPath = {};
 }
 
 int Game::id() const { return m_id; }
@@ -75,6 +76,10 @@ void Game::setStatus(Status status)
     m_status = status;
 }
 
+void Game::setExecPath(QString execPath){
+    m_execPath = execPath;
+}
+
 QString Game::status_str() const
 {
     switch (m_status) {
@@ -117,3 +122,7 @@ QDate Game::releaseDate() const
 {
     return m_releaseDate;
 };
+
+QString Game::execPath() const {
+    return m_execPath;
+}

@@ -44,7 +44,8 @@ public:
         DeveloperRole,
         PublisherRole,
         PlatformRole,
-        TagsRole
+        TagsRole,
+        ExecRole
     };
 
     /**

@@ -12,6 +12,8 @@
 #include <QLineEdit>
 #include <QWidget>
 #include <QTextEdit>
+#include <QFileInfo>
+#include <QPushButton>
 
 class GameDetailsLine : public QLineEdit{
 public:
@@ -24,8 +26,12 @@ public:
 public slots:
     void updateGame(const QModelIndex& index);
 
+    void launchGame();
+
 private:
     GameLibraryModel* m_model;
+
+    QFileInfo* m_execPath;
 
     QVBoxLayout* layout;
 
@@ -51,6 +57,8 @@ private:
 
     QLabel* gameIdLabel;
     GameDetailsLine* gameId;
+
+    QPushButton* launchButton;
 };
 
 

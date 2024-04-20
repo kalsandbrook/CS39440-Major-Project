@@ -19,7 +19,8 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     : QDialog(parent)
     , editingGame(false)
     , m_selectedIconFile(new QFile())
-    , fileDialog(new QFileDialog(this, "Choose Icon"))
+    , iconFileDialog(new QFileDialog(this, "Choose Icon"))
+    , execPathDialog(new QFileDialog(this, "Choose Executable"))
     , m_api(new GamePileAPI(this))
     , m_iconURL("")
 {
@@ -31,6 +32,10 @@ GameEditDialog::GameEditDialog(QWidget* parent)
 
     nameLabel = new QLabel(tr("Name:"));
     nameLineEdit = new QLineEdit(this);
+
+    execPathLabel = new QLabel(tr("Executable:"));
+    execPathEdit = new QLineEdit(this);
+    execPathButton = new QPushButton(QIcon::fromTheme("document-open-data"),"",this);
 
     apiFetchButton = new QPushButton(QIcon::fromTheme("download"),"", this);
 
@@ -65,16 +70,20 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     leftForm->addWidget(nameLabel, 1, 0, 1, 1, Qt::AlignRight);
     leftForm->addWidget(nameLineEdit, 1, 1, 1, 1);
 
+    leftForm->addWidget(execPathLabel, 2, 0, 1, 1, Qt::AlignRight);
+    leftForm->addWidget(execPathEdit, 2, 1, 1, 1);
+    leftForm->addWidget(execPathButton, 2, 2, 1, 1);
+
     leftForm->addWidget(apiFetchButton, 1,2,1,1);
 
-    leftForm->addWidget(descLabel, 2, 0, 1, 1, Qt::AlignRight);
-    leftForm->addWidget(descTextEdit, 2, 1, 1, 2);
+    leftForm->addWidget(descLabel, 3, 0, 1, 1, Qt::AlignRight);
+    leftForm->addWidget(descTextEdit, 3, 1, 1, 2);
 
-    leftForm->addWidget(releaseDateLabel, 5, 0, 1, 1, Qt::AlignRight);
-    leftForm->addWidget(releaseDateEdit, 5, 1,1,2);
+    leftForm->addWidget(releaseDateLabel, 6, 0, 1, 1, Qt::AlignRight);
+    leftForm->addWidget(releaseDateEdit, 6, 1,1,2);
 
-    leftForm->addWidget(statusLabel, 6, 0, 1, 1, Qt::AlignRight);
-    leftForm->addWidget(statusBox, 6, 1, 1, 2);
+    leftForm->addWidget(statusLabel, 7, 0, 1, 1, Qt::AlignRight);
+    leftForm->addWidget(statusBox, 7, 1, 1, 2);
 
     // leftForm->addWidget(buttonBox, 6, 1, 1, 2);
 
@@ -128,7 +137,8 @@ GameEditDialog::GameEditDialog(QWidget* parent)
     setLayout(layout);
 
     resize({ 800, 640 });
-    connect(pickIconButton, &QPushButton::clicked, this, &GameEditDialog::openFileDialog);
+    connect(pickIconButton, &QPushButton::clicked, this, &GameEditDialog::openIconFileDialog);
+    connect(execPathButton, &QPushButton::clicked, this, &GameEditDialog::openExecFileDialog);
     connect(apiFetchButton, &QPushButton::clicked, this, &GameEditDialog::apiButtonClicked);
     connect(m_api, &GamePileAPI::lookupGameResult, this, &GameEditDialog::setFieldsFromAPI);
 }
@@ -216,6 +226,7 @@ void GameEditDialog::accept()
     if (editingGame) {
         editedGame.setName(getName());
         editedGame.setDesc(getDesc());
+        editedGame.setExecPath(getExecPath());
         editedGame.setReleaseDate(getReleaseDate());
         editedGame.setGenres(getAttributeList(genreList));
         editedGame.setDevelopers(getAttributeList(developerList));
@@ -228,6 +239,7 @@ void GameEditDialog::accept()
     } else {
         Game newGame(0, getName(), getDesc());
         newGame.setGenres(getAttributeList(genreList));
+        newGame.setExecPath(getExecPath());
         newGame.setReleaseDate(getReleaseDate());
         newGame.setDevelopers(getAttributeList(developerList));
         newGame.setPublishers(getAttributeList(publisherList));
@@ -266,6 +278,10 @@ QStringList GameEditDialog::getAttributeList(QListWidget* targetList) const
     return attributes;
 }
 
+QString GameEditDialog::getExecPath() const{
+    return execPathEdit->text();
+}
+
 int GameEditDialog::exec()
 {
     editingGame = false;
@@ -275,6 +291,7 @@ int GameEditDialog::exec()
     m_selectedIconFile = new QFile();
     nameLineEdit->clear();
     descTextEdit->clear();
+    execPathEdit->clear();
     releaseDateEdit->clear();
     genreList->clearSelection();
     statusBox->setCurrentIndex(0);
@@ -289,6 +306,7 @@ void GameEditDialog::setGameToEdit(const Game& game)
 
     nameLineEdit->setText(game.name());
     descTextEdit->setText(game.desc());
+    execPathEdit->setText(game.execPath());
 
     releaseDateEdit->setDate(game.releaseDate());
 
@@ -327,13 +345,20 @@ int GameEditDialog::exec(int gameId)
     return QDialog::exec();
 }
 
-void GameEditDialog::openFileDialog()
+void GameEditDialog::openIconFileDialog()
 {
-    fileDialog->setFileMode(QFileDialog::ExistingFile);
-    fileDialog->setNameFilter("Image Files (*.png *.jpg *.jpeg)");
+    iconFileDialog->setFileMode(QFileDialog::ExistingFile);
+    iconFileDialog->setNameFilter("Image Files (*.png *.jpg *.jpeg)");
 
-    if (fileDialog->exec()) {
-        m_selectedIconFile->setFileName(fileDialog->selectedFiles()[0]);
+    if (iconFileDialog->exec()) {
+        m_selectedIconFile->setFileName(iconFileDialog->selectedFiles()[0]);
+    }
+}
+
+void GameEditDialog::openExecFileDialog(){
+    iconFileDialog->setFileMode(QFileDialog::ExistingFile);
+    if(execPathDialog->exec()){
+        execPathEdit->setText(execPathDialog->selectedFiles()[0]);
     }
 }
 

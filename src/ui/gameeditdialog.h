@@ -90,12 +90,15 @@ public:
      */
     QStringList getAttributeList(QListWidget* targetList) const;
 
+    QString getExecPath() const;
+
     QDate getReleaseDate() const;
 
     Game::Status getStatus() const;
 
 private slots:
-    void openFileDialog();
+    void openIconFileDialog();
+    void openExecFileDialog();
     void apiButtonClicked();
 
 private:
@@ -108,7 +111,7 @@ private:
 
     QGridLayout* layout;
 
-    QFileDialog* fileDialog;
+    QFileDialog* iconFileDialog;
 
     GamePileAPI* m_api;
 
@@ -121,6 +124,11 @@ private:
 
     QLabel* nameLabel;
     QLineEdit* nameLineEdit;
+
+    QFileDialog* execPathDialog;
+    QLabel* execPathLabel;
+    QLineEdit* execPathEdit;
+    QPushButton* execPathButton;
 
     QLabel* descLabel;
     QTextEdit* descTextEdit;

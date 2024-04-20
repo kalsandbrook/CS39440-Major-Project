@@ -4,6 +4,7 @@
 
 #include "gamedetailswidget.h"
 
+#include <QProcess>
 
 GameDetailsLine::GameDetailsLine(QString content, QWidget* parent): QLineEdit(){
     setReadOnly(true);
@@ -13,6 +14,7 @@ GameDetailsLine::GameDetailsLine(QString content, QWidget* parent): QLineEdit(){
 GameDetailsWidget::GameDetailsWidget(QWidget* parent)
     : QWidget(parent)
 {
+    m_execPath = new QFileInfo();
     layout = new QVBoxLayout(this);
 
     titleLabel = new QLabel(tr("Game Details"));
@@ -38,9 +40,11 @@ GameDetailsWidget::GameDetailsWidget(QWidget* parent)
     gameTagsLabel = new QLabel("Tags:");
     gameTags = new GameDetailsLine("",this);
 
-
     gameIdLabel = new QLabel("ID:");
     gameId = new GameDetailsLine("",this);
+
+    launchButton = new QPushButton(QIcon::fromTheme("media-playback-start-symbolic"),"Launch",this);
+    launchButton->setEnabled(false);
 
     layout->addWidget(titleLabel);
 
@@ -65,9 +69,13 @@ GameDetailsWidget::GameDetailsWidget(QWidget* parent)
     layout->addWidget(gameIdLabel);
     layout->addWidget(gameId);
 
+    layout->addWidget(launchButton);
+
     layout->insertStretch(-1, 1);
 
     setLayout(layout);
+
+    connect(launchButton, &QPushButton::clicked, this, &GameDetailsWidget::launchGame);
 };
 
 void GameDetailsWidget::updateGame(const QModelIndex& index)
@@ -95,4 +103,23 @@ void GameDetailsWidget::updateGame(const QModelIndex& index)
     gamePublishers -> setText(publishers);
     gamePlatforms -> setText(platforms);
     gameTags -> setText(tags);
+
+
+    QString execPath = index.data(GameLibraryModel::GameRoles::ExecRole).toString();
+
+    m_execPath->setFile(execPath);
+
+    if(m_execPath->isExecutable()){
+        launchButton->setEnabled(true);
+    } else {
+        launchButton->setEnabled(false);
+    }
+}
+
+void GameDetailsWidget::launchGame(){
+    QProcess* gameProc = new QProcess(this);
+
+    gameProc->start(m_execPath->absoluteFilePath());
+
+    gameProc->setParent(nullptr);
 }
