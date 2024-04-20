@@ -30,7 +30,8 @@ MainWindow::MainWindow()
     gameView->setSortingEnabled(true);
     gameView->setModel(gameLibraryProxyModel);
     gameView->setItemDelegate(new GameItemDelegate(this));
-    gameView->setColumnWidth(0, 200);
+    gameView->setColumnWidth(0, 250);
+    gameView->setColumnHidden(1,true);
 
     gameDetailsWidget = new GameDetailsWidget(this);
 

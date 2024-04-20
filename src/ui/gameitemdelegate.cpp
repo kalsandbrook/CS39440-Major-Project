@@ -39,7 +39,7 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     QRect valueRect;
     // This is throwing an error, and I'm not sure why - update: it's just CLion being weird.
     QVariant data = index.data(Qt::DecorationRole);
-    QSize iconSize(lineHeight * 3, lineHeight * 3);
+    QSize iconSize(lineHeight * 6, lineHeight * 3);
 
     if (index.column() == 0) {
 
@@ -51,7 +51,7 @@ void GameItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
             QImage image = data.value<QImage>();
             painter->drawImage(iconRect, image);
         }
-        valueRect = QRect(iconRect.topRight(), QSize(contentRect.width() - lineHeight * 3, lineHeight * 3)).adjusted(11, -2, 0, 0);
+        valueRect = QRect(iconRect.topRight(), QSize(contentRect.width() - lineHeight * 6, lineHeight * 3)).adjusted(11, -2, 0, 0);
 
     } else {
         valueRect = QRect(contentRect.topLeft(), QSize(contentRect.width(), lineHeight * 3));
