@@ -11,6 +11,8 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlTableModel>
+#include <QStandardPaths>
+
 
 GameLibrary& GameLibrary::instance()
 {
@@ -21,8 +23,8 @@ GameLibrary& GameLibrary::instance()
 void GameLibrary::addGame(Game& game)
 {
     // Add game to GameDatabase
-    db.beginTransaction();
-    QSqlQuery query(db.db());
+    m_db.transaction();
+    QSqlQuery query(m_db);
 
     query.prepare("INSERT INTO games (status, name, iconName, description, releaseDate, execPath)"
                   "VALUES (:status, :name, :iconName, :description, :releasedate, :execpath)");
@@ -45,14 +47,14 @@ void GameLibrary::addGame(Game& game)
 
         game.setId(lastInsertedId);
 
-        db.endTransaction();
+        m_db.commit();
         m_games[game.id()] = game;
 
         gameAdded(game);
         gameChanged();
     } else {
-        qFatal("Failed to add a game to the DB.");
-        db.endTransaction();
+        qWarning("Failed to add a game to the DB.");
+        m_db.commit();
     }
 }
 
@@ -63,7 +65,7 @@ void GameLibrary::setGameAttribute(int gameId, Game::Attribute attribute, QStrin
         QStringList attributeDbInfo = GameAttributeHelper::getDbInfo(attribute);
         // ID, Table, Relation Table
 
-        QSqlQuery findAttrbQuery(db.db());
+        QSqlQuery findAttrbQuery(m_db);
         findAttrbQuery.prepare(
             QString(
                 "SELECT %1 FROM %2 WHERE name = :name")
@@ -73,7 +75,7 @@ void GameLibrary::setGameAttribute(int gameId, Game::Attribute attribute, QStrin
 
         if (findAttrbQuery.next()) {
             int attrbId = findAttrbQuery.value(0).toInt();
-            QSqlQuery genreQuery(db.db());
+            QSqlQuery genreQuery(m_db);
             genreQuery.prepare(
                 QString(
                     "INSERT INTO %2 (gameId, %1) "
@@ -93,7 +95,7 @@ void GameLibrary::removeUnusedAttribute(Game::Attribute attribute)
     QString tableName = GameAttributeHelper::getDbTableName(attribute);
     QString relationTableName = GameAttributeHelper::getDbRelationTableName(attribute);
     QString idField = GameAttributeHelper::getIdField(attribute);
-    QSqlQuery query(db.db());
+    QSqlQuery query(m_db);
     query.exec(
         QString(R"""(
         DELETE FROM %1
@@ -110,7 +112,7 @@ void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& n
 {
     QString tableName = GameAttributeHelper::getDbTableName(attribute);
     QString idField = GameAttributeHelper::getIdField(attribute);
-    QSqlQuery checkQuery(db.db());
+    QSqlQuery checkQuery(m_db);
     checkQuery.prepare(QString("SELECT %1 FROM %2 WHERE name = :name").arg(idField, tableName));
     checkQuery.bindValue(":name", name);
 
@@ -122,7 +124,7 @@ void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& n
         return;
     }
 
-    QSqlQuery insertQuery(db.db());
+    QSqlQuery insertQuery(m_db);
     insertQuery.prepare(QString("INSERT INTO %1 (name) VALUES (:name)").arg(tableName));
     insertQuery.bindValue(":name", name);
 
@@ -135,7 +137,7 @@ QStringList GameLibrary::getGameAttribute(Game game, Game::Attribute attribute)
     // ID, Table, Relation Table
 
     QStringList result;
-    QSqlQuery query(db.db());
+    QSqlQuery query(m_db);
 
     query.prepare(QString(R"""(
         SELECT %2.name
@@ -163,7 +165,7 @@ QStringList GameLibrary::getAllOfAttribute(Game::Attribute attribute)
     QString tableName = GameAttributeHelper::getDbTableName(attribute);
 
     QStringList result;
-    QSqlQuery query(db.db());
+    QSqlQuery query(m_db);
 
     query.exec(QString("SELECT name FROM %1").arg(tableName));
     while (query.next()) {
@@ -174,14 +176,14 @@ QStringList GameLibrary::getAllOfAttribute(Game::Attribute attribute)
 
 void GameLibrary::deleteGame(int gameId)
 {
-    db.beginTransaction();
-    QSqlQuery query(db.db());
+    m_db.transaction();
+    QSqlQuery query(m_db);
 
     query.prepare("DELETE FROM games WHERE GameId = :gameId");
     query.bindValue(0, gameId);
     query.exec();
 
-    db.endTransaction();
+    m_db.commit();
     // Uses a predicate and deletes the game if the id matches.
     m_games.remove(gameId);
     gameDeleted(gameId);
@@ -190,8 +192,8 @@ void GameLibrary::deleteGame(int gameId)
 
 void GameLibrary::updateGame(Game& game)
 {
-    db.beginTransaction();
-    QSqlQuery query(db.db());
+    m_db.transaction();
+    QSqlQuery query(m_db);
 
     query.prepare("UPDATE games "
                   "SET status = :status, name = :name, iconName = :iconName, description = :desc, releaseDate = :releasedate, execPath = :execpath "
@@ -208,7 +210,7 @@ void GameLibrary::updateGame(Game& game)
     query.exec();
 
     // Remove old attributes
-    QSqlQuery deleteQuery(db.db());
+    QSqlQuery deleteQuery(m_db);
     QStringList tables = {"game_genres", "game_developers", "game_publishers", "game_platforms", "game_user_tags"};
 
     foreach(const QString &table, tables) {
@@ -224,7 +226,7 @@ void GameLibrary::updateGame(Game& game)
     setGameAttribute(game.id(), Game::Attribute::PLATFORMS, game.platforms());
     setGameAttribute(game.id(), Game::Attribute::USERTAGS, game.userTags());
 
-    db.endTransaction();
+    m_db.commit();
 
     m_games[game.id()] = game;
     gameUpdated(game);
@@ -238,7 +240,9 @@ QMap<int, Game>& GameLibrary::games()
 
 GameLibrary::GameLibrary()
 {
-    QSqlTableModel model;
+    setupDb();
+
+    QSqlTableModel model(this, m_db);
     model.setTable("games");
     model.select();
 
@@ -282,3 +286,114 @@ const Game& GameLibrary::getGameById(int gameId) const
 }
 
 GameLibrary::~GameLibrary() = default;
+
+bool GameLibrary::setupDb(){
+    QString databaseDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+    m_db = QSqlDatabase::addDatabase("QSQLITE");
+    m_db.setHostName("local");
+    m_db.setDatabaseName(databaseDir + "/data.sqlite");
+    m_db.setUserName("app");
+    m_db.setPassword("bqbzKJY9RJ4=");
+
+    if(!m_db.open()){
+        return false;
+    };
+
+    QSqlQuery fkSetupQuery(m_db);
+    fkSetupQuery.exec("PRAGMA foreign_keys = ON;");
+
+    QSqlQuery query(m_db);
+    m_db.transaction();
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "games" (
+	"gameId"	INTEGER NOT NULL UNIQUE,
+	"iconName"	TEXT,
+	"name"	TEXT NOT NULL,
+	"status"	TEXT NOT NULL DEFAULT 'NONE',
+	"description"	TEXT,
+    "releaseDate"   TEXT,
+    "execPath"  TEXT,
+	PRIMARY KEY("gameId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "genres" (
+	"genreId"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("genreId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "developers" (
+	"developerId"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("developerId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "publishers" (
+	"publisherId"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("publisherId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "platforms" (
+	"platformId"	INTEGER NOT NULL UNIQUE,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("platformId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "user_tags" (
+	"userTagId"	INTEGER NOT NULL UNIQUE,
+	"name"	INTEGER NOT NULL,
+	PRIMARY KEY("userTagId" AUTOINCREMENT))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_genres" (
+	"gameId"	INTEGER NOT NULL,
+	"genreId"	INTEGER NOT NULL,
+	FOREIGN KEY("genreId") REFERENCES "genres"("genreId"),
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE)
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_developers" (
+	"gameId"	INTEGER NOT NULL,
+	"developerId"	INTEGER NOT NULL,
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE,
+	FOREIGN KEY("developerId") REFERENCES "developers"("developerId"))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_publishers" (
+	"gameId"	INTEGER NOT NULL,
+	"publisherId"	INTEGER NOT NULL,
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE,
+	FOREIGN KEY("publisherId") REFERENCES "publishers"("publisherId"))
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_platforms" (
+	"gameId"	INTEGER NOT NULL,
+	"platformId"	INTEGER NOT NULL,
+	FOREIGN KEY("platformId") REFERENCES "platforms"("platformId"),
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE)
+    )""");
+
+    query.exec(R"""(
+    CREATE TABLE IF NOT EXISTS "game_user_tags" (
+	"gameId"	INTEGER NOT NULL,
+	"userTagId"	INTEGER NOT NULL,
+	FOREIGN KEY("gameId") REFERENCES "games"("gameId") ON DELETE CASCADE,
+	FOREIGN KEY("userTagId") REFERENCES "user_tags"("userTagId"))
+    )""");
+
+    m_db.commit();
+
+    return true;
+}

@@ -6,6 +6,7 @@
 #define GAMELIBRARYMODEL_H
 
 #include <QAbstractItemModel>
+#include <QIcon>
 
 #include "../gamelibrary.h"
 

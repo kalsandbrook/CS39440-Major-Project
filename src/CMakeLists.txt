@@ -14,8 +14,6 @@ target_sources(GamePile PRIVATE
     data/gamehelper.cpp
     data/gameiconcontroller.cpp
 
-    data/gamedatabase.cpp
-
     data/gamelibrary.cpp
 
     data/gamepileapi.cpp
@@ -44,6 +42,7 @@ target_link_libraries(GamePile PRIVATE
     Qt::Widgets
     Qt::Sql
     Qt::Network
+    Qt::Gui
 )
 
 install(TARGETS GamePile)

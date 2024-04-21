@@ -5,11 +5,12 @@
 #ifndef GAMELIBRARY_H
 #define GAMELIBRARY_H
 #include "game.h"
-#include "gamedatabase.h"
 #include "gameiconcontroller.h"
 #include <QList>
 #include <QObject>
 #include <QSharedPointer>
+#include <QSqlDatabase>
+
 
 /**
  * @brief A class representing the library of games.
@@ -116,13 +117,17 @@ signals:
     void gameChanged();
 
 private:
+
     GameLibrary(); // Private constructor - Singleton
     ~GameLibrary(); // Private destructor - no external deletion
     GameLibrary(const GameLibrary&) = delete;
     GameLibrary& operator=(const GameLibrary&) = delete;
 
     QMap<int, Game> m_games;
-    GameDatabase db = GameDatabase::instance();
+    // GameDatabase db = GameDatabase::instance();
+
+    bool setupDb();
+    QSqlDatabase m_db;
 };
 
 #endif // GAMELIBRARY_H

@@ -5,7 +5,6 @@
 #ifndef GAME_H
 #define GAME_H
 #include <QDate>
-#include <QIcon>
 #include <QList>
 #include <QMap>
 #include <QObject>
