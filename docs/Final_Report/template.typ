@@ -78,7 +78,9 @@
       ]
       #v(1fr)
       #if (hasOutline) {
-        outline()
+        outline(
+          indent: 1em
+        )
         v(1fr)
       }
     ]
@@ -173,4 +175,20 @@
   ]
 })
 
+}
+
+#let appendixcount = counter("appendix")
+#let appendix(
+  title: [],
+  content
+) = {
+  appendixcount.step()
+  heading(offset: 1, depth: 1, numbering: none)[
+    #title
+  ]
+
+  [
+    #set heading(numbering: none, outlined: false)
+    #content
+  ]
 }

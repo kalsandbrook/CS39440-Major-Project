@@ -216,7 +216,6 @@ Certain cards were linked to larger milestones, such as the Mid-Project Demonstr
 A weekly log has been kept throughout the project to document progress and any issues that arose. Each week was broken up into the objectives for the week, the tasks completed, the challenges faced and the plans for the upcoming week. This log was used primarily as a starting point for the weekly meetings with the project supervisor, it also served as a good way to keep track of progress and the pace of development.
 
 // TODO: Should weekly logs be included in the appendices?
-
 = Requirements <Requirements>
 
 // Use-Case Diagram
@@ -240,11 +239,10 @@ A weekly log has been kept throughout the project to document progress and any i
 #pagebreak()
 
 
-  #heading[Appendices]
+#heading(numbering: "1")[Appendices]
+
 #[ <appendices>
-  #set heading(numbering: none)
-  == Appendix A --- Third-Party Code and Libraries
-  #[
+  #appendix(title: [Appendix A -- Third-Party Code and Libraries])[
   #set heading(outlined: false)
   === Qt @qt
 
@@ -264,6 +262,4 @@ A weekly log has been kept throughout the project to document progress and any i
   - _PyInstaller_ @pyinstaller
     - Used for packaging the API module into an executable.
   ]
-
-
 ]
