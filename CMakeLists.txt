@@ -1,84 +1,49 @@
 cmake_minimum_required(VERSION 3.27)
+
 project(GamePile)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
+option(BUILD_TESTS "Should tests be built?" OFF)
+option(BUILD_API_MODULE "Should the API Module be built?" ON)
+
+set(QT_MIN_VERSION "6.7.0")
+
+# Use C++20
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Lets Clangd (LSP Server) find includes
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+# For GCC compiler
+if (CMAKE_COMPILER_IS_GNUCC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wconversion -Wsign-conversion")
+endif()
 
-set(CLI_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
-set(QT_EXECUTABLE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
-
-set(PYTHON_BUILD_SCRIPT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/build.sh")
-set(EXECUTABLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/dist/GamePile-API")
-
-find_package(Qt6 COMPONENTS
+find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS
     Core
-    Gui
     Widgets
     Sql
     Network
-    REQUIRED
 )
 
-add_executable(GamePile
-        src/main.cpp
-        src/mainwindow.h
-        src/mainwindow.cpp
-        src/data/model/gamelibrarymodel.h
-        src/data/model/gamelibrarymodel.cpp
-        src/data/game.h
-        src/data/game.cpp
-        src/data/gamehelper.h
-        src/data/gamehelper.cpp
-        src/data/gamedatabase.h
-        src/data/gamedatabase.cpp
-        src/data/gamelibrary.h
-        src/data/gamelibrary.cpp
-        src/ui/gameitemdelegate.h
-        src/ui/gameitemdelegate.cpp
-        src/ui/gamedetailswidget.h
-        src/ui/gamedetailswidget.cpp
-        src/ui/gameeditdialog.h
-        src/ui/gameeditdialog.cpp
-        src/ui/gameview.h
-        src/ui/gameview.cpp
-        src/ui/searchbarwidget.h
-        src/ui/searchbarwidget.cpp
-        src/ui/statusfilter.cpp
-        src/ui/statusfilter.h
-        src/ui/attributefilter.cpp
-        src/ui/attributefilter.h
-        src/ui/removableitemwidget.h
-        src/ui/removableitemwidget.cpp
-        src/ui/removablelistwidgetitem.h
-        src/ui/removablelistwidgetitem.cpp
-        src/ui/gamelibraryproxymodel.cpp
-        src/ui/gamelibraryproxymodel.h
-        src/ui/filterswidget.cpp
-        src/ui/filterswidget.h
-        src/data/gameiconcontroller.cpp
-        src/data/gameiconcontroller.h
-        src/data/gameattributehelper.cpp
-        src/data/gameattributehelper.h
-        src/data/gamepileapi.cpp
-        src/data/gamepileapi.h
-        src/data/gamepileapiworker.cpp
-        src/data/gamepileapiworker.h
-)
+if (BUILD_TESTS)
+    find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Test)
+endif()
 
-target_link_libraries(GamePile
-        Qt6::Core
-        Qt6::Gui
-        Qt6::Widgets
-        Qt6::Sql
-        Qt6::Network
-)
+qt_standard_project_setup()
 
-# Building and packaging Python CLI File
+add_subdirectory(src)
+
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()
+
+
+if(BUILD_API_MODULE) # The code for building the python API module. This is a bit bodged.
+
+set(PYTHON_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin")
+set(PYTHON_BUILD_SCRIPT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/build.sh")
+set(PYTHON_EXECUTABLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/dist/GamePile-API")
 
 add_custom_command(
     OUTPUT ${EXECUTABLE_PATH}
@@ -88,11 +53,11 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(BuildCLI
+add_custom_target(GamePileAPI
     DEPENDS ${EXECUTABLE_PATH}
 )
 
-add_dependencies(GamePile BuildCLI)
+add_dependencies(GamePile GamePileAPI)
 
 add_custom_command(
     TARGET GamePile
@@ -104,28 +69,8 @@ install(PROGRAMS ${EXECUTABLE_PATH}
     DESTINATION ${CLI_INSTALL_DIR}
 )
 
-# Install Main Program
+endif()
 
-install(TARGETS GamePile
-        RUNTIME DESTINATION ${QT_EXECUTABLE_INSTALL_DIR}
-)
+install(FILES res/kas143.GamePile.desktop DESTINATION/share/applications)
 
-# Desktop File.
-
-set(DESKTOP_FILE_CONTENT "
-[Desktop Entry]
-Type=Application
-Name=GamePile
-Comment=A CS39440 Major Project, produced for Aberystwyth University by Kal Sandbrook (kas143).
-Exec=GamePile
-Terminal=false
-Categories=Utility;Game;
-")
-
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/GamePile.desktop "${DESKTOP_FILE_CONTENT}")
-
-install(CODE
-        "execute_process(
-        COMMAND desktop-file-install --dir=${CMAKE_INSTALL_PREFIX}/share/applications ${CMAKE_CURRENT_BINARY_DIR}/GamePile.desktop
-        )"
-)
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

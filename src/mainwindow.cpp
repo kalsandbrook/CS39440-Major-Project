@@ -15,8 +15,6 @@
 
 MainWindow::MainWindow()
 {
-    // TODO: Separate this constructor out into other functions to tidy it up. This is a mess.
-    this->setWindowIcon(QIcon(":/icon.png"));
 
     helpMenu = new QMenu(helpButton);
 
