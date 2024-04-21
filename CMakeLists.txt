@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.27)
 project(GamePile)
 
 option(BUILD_TESTS "Should tests be built?" OFF)
-option(BUILD_API_MODULE "Should the API Module be built?" ON)
+option(BUILD_API_MODULE "Should the API Module be built?" OFF)
 
 set(QT_MIN_VERSION "6.7.0")
 
@@ -46,7 +46,7 @@ set(PYTHON_BUILD_SCRIPT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/
 set(PYTHON_EXECUTABLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API/dist/GamePile-API")
 
 add_custom_command(
-    OUTPUT ${EXECUTABLE_PATH}
+    OUTPUT ${PYTHON_EXECUTABLE_PATH}
     COMMAND ${SHELL_SCRIPT_PATH}
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/CS39440-Game-Pile-API"
     COMMENT "Running API Tool CLI - build.sh"
@@ -54,7 +54,7 @@ add_custom_command(
 )
 
 add_custom_target(GamePileAPI
-    DEPENDS ${EXECUTABLE_PATH}
+    DEPENDS ${PYTHON_EXECUTABLE_PATH}
 )
 
 add_dependencies(GamePile GamePileAPI)
@@ -62,15 +62,16 @@ add_dependencies(GamePile GamePileAPI)
 add_custom_command(
     TARGET GamePile
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${EXECUTABLE_PATH} ${CMAKE_CURRENT_BINARY_DIR}/GamePile-API
+    COMMAND ${CMAKE_COMMAND} -E copy ${PYTHON_EXECUTABLE_PATH} ${CMAKE_CURRENT_BINARY_DIR}/GamePile-API
 )
 
-install(PROGRAMS ${EXECUTABLE_PATH}
-    DESTINATION ${CLI_INSTALL_DIR}
+install(PROGRAMS ${PYTHON_EXECUTABLE_PATH}
+    DESTINATION ${PYTHON_INSTALL_DIR}
 )
 
 endif()
 
-install(FILES res/kas143.GamePile.desktop DESTINATION/share/applications)
+install(FILES res/kas143.GamePile.desktop DESTINATION share/applications)
+install(FILES res/GamePile.svg DESTINATION share/icons/hicolor/scalable/apps)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

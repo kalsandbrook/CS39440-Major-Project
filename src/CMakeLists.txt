@@ -12,7 +12,7 @@ target_sources(GamePile PRIVATE
 
     data/gameattributehelper.cpp
     data/gamehelper.cpp
-    data/gameiconhelper.cpp
+    data/gameiconcontroller.cpp
 
     data/gamedatabase.cpp
 
@@ -25,12 +25,13 @@ target_sources(GamePile PRIVATE
     ui/filterswidget.cpp
     ui/statusfilter.cpp
 
+    ui/searchbarwidget.cpp
+
     ui/gamedetailswidget.cpp
 
     ui/gameeditdialog.cpp
-    ui/removablelistitemwidget.cpp
+    ui/removablelistwidgetitem.cpp
     ui/removableitemwidget.cpp
-
 
     ui/gameitemdelegate.cpp
     ui/gameview.cpp

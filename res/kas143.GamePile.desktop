@@ -4,4 +4,5 @@ Name=GamePile
 Comment=A CS39440 Major Project, produced for Aberystwyth University by Kal Sandbrook (kas143).
 Exec=GamePile
 Terminal=false
+Icon=GamePile.svg
 Categories=Utility;Game;

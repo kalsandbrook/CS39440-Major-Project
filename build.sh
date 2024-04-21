@@ -30,7 +30,7 @@ fi
 
 # Run CMake
 echo "Running CMake..."
-cmake -G Ninja -S . -B ./build
+cmake -S . -B ./build
 
 # Build the project
 echo "Building project..."
