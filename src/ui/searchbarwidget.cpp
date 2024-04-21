@@ -14,6 +14,8 @@ SearchBarWidget::SearchBarWidget(QWidget* parent)
 
     searchBox = new QLineEdit();
 
+    this->setMaximumWidth(300);
+
     layout->addWidget(searchLabel);
     layout->addWidget(searchBox);
 
