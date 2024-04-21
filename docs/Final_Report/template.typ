@@ -128,6 +128,7 @@
    
   show heading: it => {
     it
+    v(.25em)
   }
    
   show cite: super
@@ -153,8 +154,8 @@
   grid(
     columns: (1fr,1fr),
     [
-      / Name: Kal Sandbrook
-      / Date: 9th April 2024
+      / Name\:: Kal Sandbrook
+      / Date\:: 9th April 2024
     ],
     [
       #set align(right)

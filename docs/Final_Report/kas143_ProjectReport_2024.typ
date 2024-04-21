@@ -10,7 +10,7 @@
 
 #show: doc.with(
   status: "DRAFT",
-  version: "v0.1",
+  version: "v0.2",
   title: "CS39440 - GamePile",
   subtitle: "Major Project Report",
   authors: ((name: "Kal Sandbrook", email: "kas143@aber.ac.uk"),),
@@ -22,12 +22,13 @@
 #[ <preamble> 
   #set heading(outlined: false, numbering: none)
   #page[
+    #v(2fr)
     = Generative AI
 
     No Generative AI tools have been used for this work.
 
     #signatureblock()
-    
+    #v(1fr)
     = Declaration of originality
 
     I confirm that:
@@ -37,18 +38,28 @@
     - In submitting this work I understand and agree to abide by the University's regulations governing these issues.
 
     #signatureblock()
-
+    #v(1fr)
     = Consent to share this work
 
     By including my name below, I hereby agree to this project's report and technical work being made available to other students and academic staff of the Aberystwyth Computer Science Department.
 
     #signatureblock()
-
-    = Acknowledgements
+    #v(2fr)
   ]
 
   #page[
+    #set align(center)
+    #v(1fr)
+
+    = Acknowledgements
+    TODO: Add Acknowledgements - #lorem(50)
+
+    #v(1fr)
+
     = Abstract // 300 words
+    TODO: Write the Abstract - #lorem(295)
+
+    #v(1fr)
   ]
 
   #page[
@@ -184,7 +195,6 @@ Java and C\# were also considered, but were ruled out - Java due to its performa
 ]
 == Process 
 // Describe the life cycle model or research method that you used. You do not need to write about all of the different process models that you are aware of. Focus on the process model that you have used and why you chose it. It is likely that you needed to adapt an existing process model to suit your project; clearly identify what you used and how you adapted it for your needs.
-#wordcountsec[
 When planning development, a Kanban framework was used to manage the project. The use of a Kanban Board is a common practice in software development, and one of the few practices that can be used for a solo project. 
 
 The Kanban Board was used to manage the project by decomposing the project down into smaller tasks and assigning them to one of three (although there are four columns in total) columns on the board. The columns were "To Do", "In Progress" and "Done". The "To Do" column contained all tasks that needed to be completed, with cards sorted by priority; the "In Progress" column contained tasks that were currently being worked on; and the "Done" column contained tasks that had been completed. A WIP Limit was set so only three tasks could be deemed to be "In Progress" at any one time, to prevent jobs from being left unfinished.
@@ -200,7 +210,13 @@ Certain cards were linked to larger milestones, such as the Mid-Project Demonstr
 )[
   #image("assets/kanbanboard.png", width: 100%)
 ]
-]
+
+// Could expand on other methodologies considered and why they were not chosen.
+
+A weekly log has been kept throughout the project to document progress and any issues that arose. Each week was broken up into the objectives for the week, the tasks completed, the challenges faced and the plans for the upcoming week. This log was used primarily as a starting point for the weekly meetings with the project supervisor, it also served as a good way to keep track of progress and the pace of development.
+
+// TODO: Should weekly logs be included in the appendices?
+
 = Requirements <Requirements>
 
 // Use-Case Diagram
