@@ -37,7 +37,7 @@ void GameLibrary::addGame(Game& game)
     query.bindValue(":execpath", game.execPath());
 
     if (query.exec()) {
-        qint64 lastInsertedId = query.lastInsertId().toLongLong();
+        int lastInsertedId = query.lastInsertId().toInt();
 
         setGameAttribute(lastInsertedId, Game::Attribute::GENRES, game.genres());
         setGameAttribute(lastInsertedId, Game::Attribute::DEVELOPERS, game.developers());
