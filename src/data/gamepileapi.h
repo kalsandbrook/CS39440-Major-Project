@@ -1,11 +1,11 @@
 #pragma once
 
-#include <QProcess>
-#include <QObject>
-#include <QJsonObject>
-#include <QThread>
-#include <QJsonDocument>
 #include "gamepileapiworker.h"
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QObject>
+#include <QProcess>
+#include <QThread>
 
 class GamePileAPI : public QObject {
     Q_OBJECT

@@ -15,14 +15,13 @@
 #include <QToolButton>
 #include <QTreeView>
 
-
-#include "ui/gamelibraryproxymodel.h"
 #include "data/model/gamelibrarymodel.h"
+#include "ui/filterswidget.h"
 #include "ui/gamedetailswidget.h"
 #include "ui/gameeditdialog.h"
+#include "ui/gamelibraryproxymodel.h"
 #include "ui/gameview.h"
 #include "ui/searchbarwidget.h"
-#include "ui/filterswidget.h"
 
 /**
  * @brief The MainWindow class is the main window of the application.

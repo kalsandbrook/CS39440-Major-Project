@@ -102,7 +102,7 @@ private slots:
     void apiButtonClicked();
 
 private:
-    void setFieldsFromAPI(QMap<QString,QString> gameDetails);
+    void setFieldsFromAPI(QMap<QString, QString> gameDetails);
     void createAttributeEdits();
     void setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget, const QString& label);
 

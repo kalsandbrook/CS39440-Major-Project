@@ -1,7 +1,7 @@
 #include <QApplication>
 
-#include "data/gamedatabase.h"
 #include "mainwindow.h"
+#include "data/gamelibrary.h"
 
 /**
  * The main entry function. This initialises and sets up the application and databases, then shows the Main Window.

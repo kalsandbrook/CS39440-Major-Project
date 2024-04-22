@@ -1,9 +1,9 @@
 #pragma once
 
-#include <qsortfilterproxymodel.h>
 #include <qabstractitemmodel.h>
+#include <qsortfilterproxymodel.h>
 
-class GameLibraryProxyModel : public QSortFilterProxyModel{
+class GameLibraryProxyModel : public QSortFilterProxyModel {
 public:
     GameLibraryProxyModel(QObject* parent, QAbstractItemModel* sourceModel);
 

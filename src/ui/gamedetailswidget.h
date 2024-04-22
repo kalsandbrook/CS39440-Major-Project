@@ -7,15 +7,15 @@
 
 #include "../data/model/gamelibrarymodel.h"
 
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QLineEdit>
-#include <QWidget>
-#include <QTextEdit>
 #include <QFileInfo>
+#include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
+#include <QTextEdit>
+#include <QVBoxLayout>
+#include <QWidget>
 
-class GameDetailsLine : public QLineEdit{
+class GameDetailsLine : public QLineEdit {
 public:
     GameDetailsLine(QString content, QWidget* parent);
 };
@@ -60,6 +60,5 @@ private:
 
     QPushButton* launchButton;
 };
-
 
 #endif // GAMEPILE_GAMEDETAILSWIDGET_H

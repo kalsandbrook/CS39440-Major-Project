@@ -1,10 +1,10 @@
 #pragma once
-#include <QObject>
 #include <QDebug>
-#include <QProcess>
-#include <QJsonDocument>
 #include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
+#include <QObject>
+#include <QProcess>
 
 class GamePileApiWorker : public QObject {
     Q_OBJECT

@@ -7,15 +7,15 @@
 #ifndef GAMEPILE_GAMEICONCONTROLLER_H
 #define GAMEPILE_GAMEICONCONTROLLER_H
 
-#include <QDir>
-#include <QImage>
 #include <QByteArray>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QDir>
 #include <QEventLoop>
+#include <QImage>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
-class GameIconController: public QObject {
+class GameIconController : public QObject {
     Q_OBJECT
 public:
     GameIconController(QObject* parent = nullptr);

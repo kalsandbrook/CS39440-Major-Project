@@ -1,14 +1,13 @@
 #pragma once
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QList>
-#include <qsortfilterproxymodel.h>
+#include "attributefilter.h"
 #include "gamelibraryproxymodel.h"
 #include "statusfilter.h"
-#include "attributefilter.h"
+#include <QList>
+#include <QVBoxLayout>
+#include <QWidget>
+#include <qsortfilterproxymodel.h>
 
-
-class FiltersWidget: public QWidget{
+class FiltersWidget : public QWidget {
     Q_OBJECT
 public:
     FiltersWidget(GameLibraryProxyModel* filterModel, QWidget* parent);
@@ -20,6 +19,7 @@ public slots:
     void statusFilterChanged(QString filter);
 
     void updateAttributeFilters();
+
 private:
     GameLibraryProxyModel* m_filterModel;
     QVBoxLayout* layout;
