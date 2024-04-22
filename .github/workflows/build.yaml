@@ -8,6 +8,8 @@ on:
       - 'test/**'
       - 'CMakeLists.txt'
       - '.github/workflows/cmake.yaml'
+  workflow_dispatch:
+
 jobs:
   build-project:
     name: Build Project
