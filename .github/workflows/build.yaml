@@ -5,6 +5,7 @@ on:
       [master]
     paths:
       - 'src/**'
+      - 'test/**'
       - 'CMakeLists.txt'
       - '.github/workflows/cmake.yaml'
 jobs:
@@ -18,10 +19,12 @@ jobs:
           submodules: true
 
       - name: Configure CMake
-        run: cmake -S . -B cmake-build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=ninja
+        run: cmake -S . -B ./build
 
       - name: Build Project
-        run: cmake --build cmake-build
+        run: cmake --build build
 
-      # - name: Test Project
-      #   runs: ctest --test-dir build
+      - name: Test Project
+        runs: ctest --test-dir build --output-on-failure
+
+
