@@ -288,15 +288,21 @@ const Game& GameLibrary::getGameById(int gameId) const
 GameLibrary::~GameLibrary() = default;
 
 bool GameLibrary::setupDb(){
+
     QString databaseDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir dbDir;
+    dbDir.mkdir(databaseDir);
 
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setHostName("local");
+    qDebug() << "Using db name:" << databaseDir + "/data.sqlite";
     m_db.setDatabaseName(databaseDir + "/data.sqlite");
     m_db.setUserName("app");
     m_db.setPassword("bqbzKJY9RJ4=");
 
-    if(!m_db.open()){
+    m_db.open();
+
+    if(!m_db.isOpen()){
         return false;
     };
 
@@ -396,4 +402,13 @@ bool GameLibrary::setupDb(){
     m_db.commit();
 
     return true;
+}
+
+void GameLibrary::setDb(QString dbname){
+    if(!m_db.isOpen())
+        return;
+
+    qDebug() << "Setting database to:" << dbname;
+    m_db.setDatabaseName(dbname);
+
 }

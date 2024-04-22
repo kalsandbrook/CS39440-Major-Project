@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 3.27)
 
 project(GamePile)
 
-option(BUILD_TESTS "Should tests be built?" OFF)
+option(BUILD_TESTS "Should tests be built?" ON)
 option(BUILD_API_MODULE "Should the API Module be built?" OFF)
 
-set(QT_MIN_VERSION "6.7.0")
+set(QT_MIN_VERSION "6.6.0")
 
 # Use C++20
 set(CMAKE_CXX_STANDARD 20)

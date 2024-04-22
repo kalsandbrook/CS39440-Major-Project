@@ -11,7 +11,6 @@
 #include <QSharedPointer>
 #include <QSqlDatabase>
 
-
 /**
  * @brief A class representing the library of games.
  *
@@ -82,6 +81,8 @@ public:
      */
     QMap<int, Game>& games();
 
+    void setDb(QString dbname);
+
     GameIconController* iconController;
 signals:
 
@@ -117,7 +118,6 @@ signals:
     void gameChanged();
 
 private:
-
     GameLibrary(); // Private constructor - Singleton
     ~GameLibrary(); // Private destructor - no external deletion
     GameLibrary(const GameLibrary&) = delete;
@@ -128,6 +128,8 @@ private:
 
     bool setupDb();
     QSqlDatabase m_db;
+
+    QString customDbName = ""; // For testing ONLY.
 };
 
 #endif // GAMELIBRARY_H
