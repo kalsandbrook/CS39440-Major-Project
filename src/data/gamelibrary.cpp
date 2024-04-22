@@ -128,7 +128,9 @@ void GameLibrary::addAttribute(const Game::Attribute attribute, const QString& n
     insertQuery.prepare(QString("INSERT INTO %1 (name) VALUES (:name)").arg(tableName));
     insertQuery.bindValue(":name", name);
 
-    insertQuery.exec() ? qDebug() << "Attribute added." : qWarning() << "Failed to add attribute:" << insertQuery.lastError().text();
+    if(!insertQuery.exec()){
+        qWarning() << "Failed to add attribute:" << insertQuery.lastError().text();
+    }
 }
 
 QStringList GameLibrary::getGameAttribute(Game game, Game::Attribute attribute)
@@ -184,9 +186,11 @@ void GameLibrary::deleteGame(int gameId)
     query.exec();
 
     m_db.commit();
-    // Uses a predicate and deletes the game if the id matches.
+
     m_games.remove(gameId);
+
     gameDeleted(gameId);
+
     gameChanged();
 }
 
@@ -411,4 +415,10 @@ void GameLibrary::setDb(QString dbname){
     qDebug() << "Setting database to:" << dbname;
     m_db.setDatabaseName(dbname);
 
+}
+
+void GameLibrary::deleteAllGames(){
+    for(auto gameId : games().keys()){
+        deleteGame(gameId);
+    }
 }

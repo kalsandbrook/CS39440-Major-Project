@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.27)
 
 project(GamePile)
+include(CTest)
+
 
 option(BUILD_TESTS "Should tests be built?" ON)
 option(BUILD_API_MODULE "Should the API Module be built?" OFF)
@@ -36,6 +38,7 @@ qt_standard_project_setup()
 add_subdirectory(src)
 
 if(BUILD_TESTS)
+    enable_testing()
     add_subdirectory(test)
 endif()
 

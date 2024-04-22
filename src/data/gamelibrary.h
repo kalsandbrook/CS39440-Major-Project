@@ -50,6 +50,8 @@ public:
 
     void removeUnusedAttribute(Game::Attribute attribute);
 
+    void deleteAllGames();
+
     QStringList getGameAttribute(Game game, Game::Attribute attribute);
 
     QStringList getAllOfAttribute(Game::Attribute attribute);
@@ -84,6 +86,7 @@ public:
     void setDb(QString dbname);
 
     GameIconController* iconController;
+
 signals:
 
     /**
@@ -116,6 +119,8 @@ signals:
     void gameUpdated(const Game& game);
 
     void gameChanged();
+
+
 
 private:
     GameLibrary(); // Private constructor - Singleton

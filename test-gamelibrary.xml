@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite name="TestGameLibrary" timestamp="2024&#x002D;04&#x002D;22T21:51:25" hostname="MINISTRY" tests="6" failures="0" errors="0" skipped="0" time="0.095">
+  <properties>
+    <property name="QTestVersion" value="6.7.0"/>
+    <property name="QtVersion" value="6.7.0"/>
+    <property name="QtBuild" value="Qt 6.7.0 (x86_64&#x002D;little_endian&#x002D;lp64 shared (dynamic) release build; by GCC 13.2.1 20230801)"/>
+  </properties>
+  <testcase name="initTestCase" classname="TestGameLibrary" time="0.009">
+    <system-out>
+      <![CDATA[Using db name: "/home/kal/.local/share/GamePile-test-GameLibrary/data.sqlite"]]>
+      <![CDATA[Created icons path at:  "/home/kal/.local/share/GamePile-test-GameLibrary/icons"]]>
+    </system-out>
+  </testcase>
+  <testcase name="addFullGameTest" classname="TestGameLibrary" time="0.024"/>
+  <testcase name="addPartialGameTest" classname="TestGameLibrary" time="0.015"/>
+  <testcase name="updateGameTest" classname="TestGameLibrary" time="0.022"/>
+  <testcase name="deleteGameTest" classname="TestGameLibrary" time="0.025"/>
+  <testcase name="cleanupTestCase" classname="TestGameLibrary" time="0.000">
+    <system-out>
+      <![CDATA[Removed test data directory.]]>
+    </system-out>
+  </testcase>
+</testsuite>
