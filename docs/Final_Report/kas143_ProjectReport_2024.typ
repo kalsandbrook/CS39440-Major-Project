@@ -216,21 +216,21 @@ Certain cards were linked to larger milestones, such as the Mid-Project Demonstr
 A weekly log has been kept throughout the project to document progress and any issues that arose. Each week was broken up into the objectives for the week, the tasks completed, the challenges faced and the plans for the upcoming week. This log was used primarily as a starting point for the weekly meetings with the project supervisor, it also served as a good way to keep track of progress and the pace of development.
 
 // TODO: Should weekly logs be included in the appendices?
-= Requirements <Requirements>
+= Requirements <Requirements> // target: 2k words
 
 // Use-Case Diagram
 
-= Design 
+= Design <Design> // target: 3k words
 
-= Implementation
+= Implementation <Implementation> // target: 3k words
 
 == Class Diagram
 
 // Entity Relationship Diagram
 
-= Testing // 1,500 words
+= Testing <Testing> // 1,000 words 
 
-= Evaluation // 1,500 words
+= Evaluation <Evaluation> // 1,000 words
 
 #pagebreak()
 
