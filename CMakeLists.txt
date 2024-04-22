@@ -7,7 +7,7 @@ include(CTest)
 option(BUILD_TESTS "Should tests be built?" ON)
 option(BUILD_API_MODULE "Should the API Module be built?" OFF)
 
-set(QT_MIN_VERSION "6.6.0")
+set(QT_MIN_VERSION "6.4.0")
 
 # Use C++20
 set(CMAKE_CXX_STANDARD 20)
