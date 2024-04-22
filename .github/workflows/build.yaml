@@ -28,6 +28,7 @@ jobs:
 
 
   test-project:
+    needs: build-project
     runs-on: self-hosted
     steps:
       - name: Test Project
