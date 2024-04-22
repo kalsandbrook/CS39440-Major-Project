@@ -25,6 +25,10 @@ jobs:
         run: cmake --build build
 
       - name: Test Project
+<<<<<<< HEAD
         run: ctest --test-dir build --output-on-failure
+=======
+        runs: ctest --test-dir build --output-on-failure
+>>>>>>> cccef97e57fc6ba2789835b651d1c36c432123a5
 
 
