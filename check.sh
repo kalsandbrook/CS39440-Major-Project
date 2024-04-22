@@ -2,5 +2,5 @@
 
 # Run clang-format on all .h and .cpp files.
 
-find ./src/ -iname *.h -o -iname *.cpp | xargs clang-format -i
+find ./src/ -iname "*.h" -print0 -o -iname "*.cpp"  | xargs -0 clang-format -i
 
