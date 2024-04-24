@@ -23,12 +23,6 @@
   #set heading(outlined: false, numbering: none)
   #page[
     #v(2fr)
-    = Generative AI
-
-    No Generative AI tools have been used for this work.
-
-    #signatureblock()
-    #v(1fr)
     = Declaration of originality
 
     I confirm that:
@@ -42,6 +36,13 @@
     = Consent to share this work
 
     By including my name below, I hereby agree to this project's report and technical work being made available to other students and academic staff of the Aberystwyth Computer Science Department.
+
+    #signatureblock()
+    #v(1fr)
+
+    = Generative AI
+
+    No Generative AI tools have been used for this work.
 
     #signatureblock()
     #v(2fr)
@@ -217,6 +218,89 @@ A weekly log has been kept throughout the project to document progress and any i
 
 // TODO: Should weekly logs be included in the appendices?
 = Requirements <Requirements> // target: 2k words
+
+
+The requirements for this project, identified through research detailed in the background section, underpinned the majority of the development process, dictating the features to be implemented and key design decisions. Requirements were split into two main categories: Functional Requirements and Non-Functional Requirements. 
+
+Functional Requirements are the features that the application must have, and coinciding with the Kanban methodology, serve as small milestones for the project. Non-Functional Requirements are the critical aspects of the application that are not directly related to the features of the application, such as performance and usability, these were considered throughout development. This project also has a set of Optional Functional Requirements, which are features that could be implemented if time allowed.
+
+_Requirement IDs are used to reference requirements throughout the document, and are formatted as "FRXX" for Functional Requirements, "NFRXX" for Non-Functional Requirements and "OFRXX" for Optional Functional Requirements._
+
+#pagebreak(weak: true)
+
+== Functional Requirements
+
+#[
+  #set heading(numbering: none, outlined: false)
+  === FR01 - Game Management
+
+  Users will be able to perform CRUD operations on games in their library. This includes adding games to the library, removing games from the library, updating the details of a game and viewing the details of a game. Games will have attributes such as title, genre, platform, release date, completion status and a description.
+
+  === FR02 - Backlog Management
+
+  Users will be able to mark games in their library as part of their backlog. These games will be able to be displayed as part of a seperate list.
+
+  === FR03 - Progress Tracking
+
+  The application will allow for games to have their progress tracked, with statuses such as "In Progress", "Completed", "Not Started" and "Abandoned". This will allow users to easily see which games they have completed and which they have yet to start. 
+
+  === FR04 - Sorting and Filtering
+
+  Users will be able to sort and filter their games based on information about the game itself (such as name, release date or genre) or meta-information about the game, such as completion status or any user-defined tags. 
+
+  === FR05 - Manual Game Entry
+
+  The program will allow for users to add games to their library manually, specifying data themselves, rather then fetching it via an API, for games that are not in the API's database and in the event that an internet connection is not available. This will also aid in development and testing before the API module is complete.
+
+  === FR06 - API Integration
+
+  Users will be able to use a third-party API to automatically fetch game information based on a given name. This will aid usability by increasing the speed at which games can be added to the library, and will allow for more detailed information to be displayed about the game. Users will be potentially be able to pick from multiple third-party APIs, if available. 
+  
+  === FR07 - Desktop Application
+
+  The application will be a native desktop application, allowing for good performance and offline use. This will also allow for integration with the users system, such as being able to launch games directly from the application.
+
+  === OFR01 - Social Sharing (Graphical Library Export)
+
+  The application will allow users to export a graphical representation of their library, akin to an old-school forum signature. This will allow users to share the games they have completed over a period of time, and will be a unique feature of the application. A visual representation will allow for users to share their progress online, withut ties to any particular platform. This is an optional feature.
+
+  === OFR02 - Recommendation System
+
+  The application will be able to suggest games to add to the users library based on their existing library and completion status. This will allow users to easily find new games to play. The implementation of this feature is unlikely, due to the complexity of recommendation systems and the time constraints of the project. This is an optional feature.
+]
+
+== Non-Functional Requirements
+
+#[
+  #set heading(numbering: none, outlined: false)
+  === NFR01 - Usability
+
+  The application must have an intuitive, easy-to-use interface that is able to be navigated by users with limited technical knowledge. The application should also be visually appealing, following modern design principles, including the KDE Human Interface Guidelines@kdehig.
+
+  === NFR02 - Performance
+
+  The application will be performant, responding to user interaction promptly and being able to handle game data efficiently. This is an important need, especially the considering the very large volume of data the application could be dealing with. 
+
+  === NFR03 - Reliability
+
+  The application make sure to store data in a robust format, taking measures to tackle potential data loss or corruption. In the event of data loss, the application should be able to recover. It is also important that the application is able to handle errors gracefully, providing useful error messages to the user and avoiding crashes where possible.
+
+  === NFR04 - Compatibility
+
+  Whilst the application is being developed with the Linux Operating System in mind, it should be able to easily be made to run on Windows or potentially MacOS. In order to achieve this, the application should avoid using features specific to a particular operating system and use platform-agnostic code where possible.
+
+  === NFR05 - Maintainability
+
+  The codebase of the application should be well-documented and well-structured, to aid in future development and maintenance. Features should be designed in a modular manner, with the addition of new futures being kept in mind. Code should be kept in a state where somebody else could pick up the project and understand it.
+
+  === NFR06 - Interoperability
+
+  As the application is using and integrating with third-party APIs, it is important that the application is able to handle changes to the API gracefully. The application should be able to handle changes to the API without crashing, and should be able to provide useful error messages to the user in the event of an API failure. Relevant standards and protocols should be adhered to.
+
+  === NFR07 - Localization
+
+  Whilst the application will not be translated into multiple languages at this time, the application should be designed in a way where translation is possible in future. A theoretical translator should be able to easily translate the application into another language without a significant knowledge of programming.
+]
 
 // Use-Case Diagram
 
