@@ -77,9 +77,11 @@
         }
       ]
       #v(1fr)
+
       #if (hasOutline) {
+        
         outline(
-          indent: 1em
+          indent: auto
         )
         v(1fr)
       }
@@ -177,18 +179,22 @@
 
 }
 
-#let appendixcount = counter("appendix")
+#let appendixNumbering(..nums) = {
+  if (nums.pos().len() == 2){
+    return numbering("Appendix A -", nums.pos().at(1))
+  } else {
+    return numbering("1.1", ..nums.pos().slice(2))
+  }
+}
+
 #let appendix(
   title: [],
   content
-) = {
-  appendixcount.step()
-  heading(offset: 1, depth: 1, numbering: none)[
-    #title
-  ]
+) = [
+  #heading(level: 2, numbering: appendixNumbering, supplement: "Appendix")[#title] <appendix>
 
-  [
+  #[
     #set heading(numbering: none, outlined: false)
     #content
   ]
-}
+]

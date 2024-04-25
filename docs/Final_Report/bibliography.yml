@@ -85,3 +85,11 @@ igdbdocs:
     value: https://api-docs.igdb.com/
     date: 2024-02-07
   note: One of the APIs considered for the application. It was not used in the final implementation, but was investigated during the planning phase.
+
+xdg-dirs-spec:
+  type: Web
+  title: XDG Base Directory Specification
+  url:
+    value: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+    date: 2024-04-25
+  note: The XDG Base Directory Specification, which provides a set of common directories for storing user-specific data.

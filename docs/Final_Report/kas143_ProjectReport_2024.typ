@@ -10,7 +10,7 @@
 
 #show: doc.with(
   status: "DRAFT",
-  version: "v0.2",
+  version: "v0.3",
   title: "CS39440 - GamePile",
   subtitle: "Major Project Report",
   authors: ((name: "Kal Sandbrook", email: "kas143@aber.ac.uk"),),
@@ -64,7 +64,24 @@
   ]
 
   #page[
-    #outline(indent: true)
+    #show outline.entry.where(
+      level: 1
+    ): it => {
+    strong(it)
+    }
+
+    #[
+      // Exclude items with <appendix> tag - this is a total hack.
+      #show outline.entry: it => {
+      if it.element.at("label", default: none) == <appendix> {
+        v(-1.85em)
+      } else { it }
+      }
+      #outline(indent: auto)
+    ]
+    #v(-0.65em)
+    #outline(title: none, indent: 1.5em, target: (<appendix>))
+    
   ]
 ]
 
@@ -92,14 +109,14 @@ The research into these tools proved useful as it allowed for the mapping out of
   columns: (1fr,1fr),
   [
     #figure(
-      caption: "A screenshot of a profile on How Long To Beat."
+      caption: [A screenshot of a profile on How Long To Beat. @hltb]
     )[
       #image("assets/hltb.png")
     ]
   ],
   [
     #figure(
-      caption: "A screenshot of the front page of The Backloggery."
+      caption: [A screenshot of the front page of The Backloggery. @backloggery]
     )[
       #image("assets/backloggery.png")
     ]
@@ -109,7 +126,7 @@ The research into these tools proved useful as it allowed for the mapping out of
 Another technology that was investigated during development was the "Video Game Preservation Platform" Lutris@lutris - however, Lutris is more focused on game installation and management, as opposed to tracking completion and a backlog. This tool was useful for understanding how an application could be used to launch games, which could be a feature to implement in this project. The design of Lutris was also taken into account, as it contains a modern design running on a native ui framework (GTK@gtk).
 
 #figure(
-  caption: "A screenshot of the Lutris application."
+  caption: [A screenshot of the Lutris application. @lutris]
 )[
   #image("assets/lutris.jpg", height: 20%)
 ]
@@ -170,7 +187,7 @@ The requirements for this project were identified through the research conducted
 
 These Requirements are discussed in more detail in @Requirements.
 
-=== Choice of Technologies
+=== Choice of Technologies <analysis-technologies>
 
 // Mention that choice of language was considered up until the beginning of development, along with some testing of each language to test suitability. 
 
@@ -189,7 +206,7 @@ Finally, the method of persistent data storage had to be considered. Due to the 
 // Fully Python - Slow
 Many other languages were considered for this project, such as an entirely Python-based solution. However, Python does not have the same level of performance as C++, and would not fulfil the performance objectives of the project. Python also does not have an object-oriented system that is as robust as C++, which would make the project harder to maintain and increase the difficulty of debugging the application.
 
-Another language that was considered for this project was the increasingly popular Rust language. Rust is known for its performance and rigorous safety requirements, which would have made it a good choice for a project such as this. However, a significant caveat to using Rust for this project is the lack of a mature UI tooling ecosystem. Whilst there are bindings (bindings being a way to use a library from another language) for Qt in Rust, this would essentially involve doing the majority of the work in C++ regardless, which would defeat the purpose of using Rust in the first place.
+Another language that was considered for this project was the increasingly popular Rust language. Rust is known for its performance and rigorous safety requirements, which would have made it a good choice for a project such as this. However, a significant caveat to using Rust for this project is the lack of a mature UI tooling ecosystem. #footnote[See the website https://areweguiyet.com/ for a informal view on the state of GUI in Rust.] Whilst there are bindings (bindings being a way to use a library from another language) for Qt in Rust, this would essentially involve doing the majority of the work in C++ regardless, which would defeat the purpose of using Rust in the first place.
 
 Java and C\# were also considered, but were ruled out - Java due to its performance and C\# due to the impracticality of using it on Linux systems. Java also has an absence of modern UI tooling, with Swing and JavaFX being the only real options, both of which are outdated and not visually appealing. QtJambi was briefly investigated as a potential solution, but there was found to be a lack of documentation and community support for the library.
 
@@ -305,14 +322,145 @@ _Requirement IDs are used to reference requirements throughout the document, and
 // Use-Case Diagram
 
 = Design <Design> // target: 3k words
+#wordcountsec[
+  == Programming Language
+
+  The first design decision made for this project was the choice of programming language, and deciding on the specific environment to use. C++, using the Qt platform, and Python were both chosen for the project. These decisions were explored in @analysis-technologies.
+
+  Specifically, this design can be expected to make use of: the Qt Widgets module, to provide the basic tools to create a user interface; the Qt SQL module, to provide a framework to interact with a database; and the Qt Concurrent module, to allow for concurrent programming in the application. 
+
+  Python will be used for the API module, using its requests library to make HTTP requests to the chosen API. TheFuzz library will be used for fuzzy string matching, and PyInstaller will be used to package the API module into an executable, in order to interoperate with the main application.
+
+  == Architecture
+
+  #figure(
+    caption: [A diagram showing the architecture of the application.]
+  )[
+    #image("assets/diagrams/Architecture Diagram.svg")
+  ]
+
+  One of the key design decisions made at the beginning of development was deciding on the architecture of the application. 
+
+  The main application is primarily split into two main components - the backend and the frontend. The backend is responsible for managing the data and logic of the application, whilst the frontend is responsible for the display of and user interaction with the data. This seperation of responsibilities allows for easy maintenance and development of the application. This also aids in the proper testing if the application, as the backend logic can be tested independently of the frontend. 
+
+  Data is stored locally in an SQLite database, which is accessed by the backend of the application. More detail can be seen in @data-persistence.
+
+  The _"Translation Layer / API Helper"_ is a Python Command Line Interface (CLI) application, created as a part of the implementation, that accesses the third-party APIs based on a given name. This application returns game data to the backend of the application in a compatible format. 
+
+  #pagebreak(weak:true)
+
+  == Data Structures
+
+  The application has a number of data structures that are used to store data about games. The main data structure is the Game class, which stores information about a game such as the title, genre, platform, release date, completion status and a description. This class is used to represent games in the library of the user. This class will not involve any complex logic or methods, as it is primarily a data structure.
+
+  The Game data structure will also include an ID, which will be used internally to uniquely identify games. This will not be displayed to the user, and be protected from user modification.
+
+  Fields that can have multiple values, such as a games genres, developers or publishers will use a unique data structure (internally referred to as an "Attribute") to store these values. Available attributes for a game will be stored as an enum - this will allow for easy addition of new attributes in the future.
+
+  Attributes are stored in a seperate table in the database, to avoid many-to-many relationships. Filter Widgets are automatically generated based on the available attributes, allowing for easy filtering of games based on these attributes. The main motivation for this design decision is to reduce the repitition of code and maintain extendability of the application.
+
+  == Data Persistence <data-persistence>
+  #figure(
+    caption: [The database schema for the application.]
+  )[
+    #image("assets/diagrams/database_schema.svg")
+  ]
+  
+  This application requires the storage of data about games and their attributes. This data is stored in an SQLite database, which is a lightweight, file-based database system that is appropriate for use in this application due to its simplicity and ease of use. 
+
+  The main table is the `Games` table, which contains all the stored games. Each game has a unique ID, which functions as its primary key (`gameId`). The table also contains fields for the name, description, release date and completion status of the game. Complex attributes, such as genres, developers and publishers are stored in seperate tables. 
+
+  Each attribute has a table named after itself (i.e. `genres`), which contains a list of auto-generated IDs that serve as the primary key for the table. The name of each attribute is also stored in the table. Between the `games` and attribute table, there is a junction table (`game_genres`) that stores the relationship between games and their attributes. This is to ensure that the database is in the third normal form, and to avoid many-to-many relationships.
+
+  Storing data in the Third Normal Form, and as such removing transitive dependencies, is important for this project as it ensures efficient storage and retrieval of data, eliminating data duplication. As the application could be dealing with a very large volume of data, efficient storage is an important consideration.
+
+  This data will use the QStandardPaths class to determine an appropriate location to store the database file, differing based on the operating system the application is running on. For example, on Linux, the database file be stored in the `~/.local/share/GamePile` directory. Adherence to the XDG Base Directory Specification@xdg-dirs-spec is important for this project, as it ensures that the application is following best practices for data storage on Linux systems.
+
+  The file the database is stored in a file named `data.sqlite`, which uses a non-ambigious file extension to ensure that the file can be easily identified. Whenever the application is opened, a backup of the database is created, to ensure that data can be restored in the event of a crash. This backup is stored in the same directory as the main database file, with the filename `data.sqlite.bak`.
+
+  === Settings and Preferences
+
+  When storing settings or preferences, the application will have a few options:
+  
+  1. For simple settings that aren't particularly complex: 
+    - Key-value pairs stored in a `.ini` settings file. INI files are the standard for storing simple key-value pairs, and are easy to read and write. 
+  2. For more complex settings that involve defaults and nesting:
+    - A JSON file will be used. JSON is a widely-used object notation format that is easy to read and write, widely-used and well supported by various programming languages.
+
+  However, a likely candidate is to make use of the QSettings#footnote[https://doc.qt.io/qt-6/qsettings.html] class provided by the Qt Framework. 
+
+  The QSettings class acts as an abstraction around the platform-specific settings storage system (such as the Windows Registry or property lists on MacOS). This class allows for easy storage and retrieval of settings, and is cross-platform, making it an ideal choice for this project. This class also provides plenty of fallback systems, making the application more robust and resilient to errors. 
+
+  There is a potential for settings to not be entirely necessary for this project, as the application is relatively simple and does not require many settings to be stored. Although, it is good practice to plan for this eventuality.
+
+  == User Interface
+
+  === Model / View Programming
+
+  === Main Widgets
+
+  == Game Icons and Other Assets
+
+  == API Integration
+
+  The Python API Helper is used to fetch game data from the internet. This was done using the `requests` library, which is a popular library for making HTTP requests in Python. The API Helper is a Command Line Interface (CLI) application, which is used to fetch game data based on a given name. 
+
+  Based on this name, the Helper makes a request to the API, returning a JSON object containing information about the game with the most similar name to the given name. As the JSON formats returned by these APIs may vary, the job of the API Helper is to translate this data into a standard JSON format that contains only the information that the main application is interested in. 
+
+  The helper is designed to be easily extendable, with the ability to add new APIs with minimal changes to the code. The API can then be selected by passing an argument to the Helper, such as `--api steam`. The main program would be in charge of selecting the API to use, and passing this information to the Helper.
+
+  === API in the Main Application
+
+  In the main application, a push button in the edit game dialog is used to fetch game data from the API. This button will call a function from a helper class, which will start a background thread to fetch the data. When the data is returned in the form of a JSON object, it is parsed and the fields in the edit dialog are populated with the data.
+
+  Concurrency is an important consideration for this feature, as the application otherwise would freeze whilst waiting for the data to be fetched. In the event of a slow internet connection or API latency, this could cause the application to even time out and crash. The Qt Concurrency module will be used to handle this, allowing for the application to remain responsive whilst the data is being fetched.
+
+  == Algorithms
+
+  === Fuzzy Searching
+
+  == Class Diagram
+
+]
+
 
 = Implementation <Implementation> // target: 3k words
+#wordcountsec[
+== Development Environment
 
-== Class Diagram
+=== Version Control
 
-// Entity Relationship Diagram
+=== CMake and Build System
+
+=== Applications and Tools
+
+== Stage 1 <stage-1> // First few weeks
+
+// CMake, Qt & Environment setup
+
+== Stage 2 <stage-2> // Second few weeks
+
+== Stage 3 <stage-3> // Mid-Project Demonstration & Easter
+
+// Python API, .venvs, stuff like that
+
+== Stage 4 <stage-4> // Final few weeks
+
+// Include implementation class diagram here
+
+]
 
 = Testing <Testing> // 1,000 words 
+
+== Approach
+
+== Unit Testing <unit-testing> // CI testing
+
+== Manual Testing
+
+// Difficulties of testing front-end systems - possible but out of scope for this project.
+// Describe how front-end testing would be done if it were to be done.
+// Manual testing is appropriate for this project, due to its small size.
 
 = Evaluation <Evaluation> // 1,000 words
 
@@ -322,12 +470,11 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
 #pagebreak()
 
-
-#heading(numbering: "1")[Appendices]
-
 #[ <appendices>
-  #appendix(title: [Appendix A -- Third-Party Code and Libraries])[
-  #set heading(outlined: false)
+
+  #heading(numbering: none)[Appendices] <appendix>
+
+  #appendix(title: [Third-Party Code and Libraries])[
   === Qt @qt
 
   The Qt Framework (particularly Qt Widgets) was used for the majority of development for this project. It provides a wide variety of features - notably its Qt Widgets, Qt SQL & Qt Concurrent modules.
@@ -345,5 +492,9 @@ _Requirement IDs are used to reference requirements throughout the document, and
     - Used for fuzzy string matching, particularly using the jaro-winkler algorithm.
   - _PyInstaller_ @pyinstaller
     - Used for packaging the API module into an executable.
+  ]
+
+  #appendix(title: "Statement of Tools Used")[
+    TODO: Add a statement of tools used. This includes stuff like Typst, PlantUML, IDEs, etc.
   ]
 ]
