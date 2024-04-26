@@ -10,7 +10,7 @@
 
 #show: doc.with(
   status: "DRAFT",
-  version: "v0.3",
+  version: "v0.4",
   title: "CS39440 - GamePile",
   subtitle: "Major Project Report",
   authors: ((name: "Kal Sandbrook", email: "kas143@aber.ac.uk"),),
@@ -77,7 +77,9 @@
         v(-1.85em)
       } else { it }
       }
-      #outline(indent: auto)
+      #outline(
+        indent: auto
+      )
     ]
     #v(-0.65em)
     #outline(title: none, indent: 1.5em, target: (<appendix>))
@@ -393,13 +395,71 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   There is a potential for settings to not be entirely necessary for this project, as the application is relatively simple and does not require many settings to be stored. Although, it is good practice to plan for this eventuality.
 
+  === Icons and Other Assets
+
+  The application will make use of icons to represent various actions and objects in the application. These icons will be sourced from the Breeze Icon Theme@breeze-icons, which is the default icon theme for the KDE Plasma Desktop Environment. This icon theme is licensed under the LGPL, which allows for the use of the icons in this project. However, the use of breeze icons will introduce some dependencies on the KDE Frameworks, which introduces a dependency on the Linux operating system. In order to mitigate this, fallback icons should be provided in the event that the Breeze Icon Theme is not available.
+
+  When storing user-generated assets, such as game icons, the application will store these in a directory named `icons` in the same directory as the database file. This will allow for easy access to the icons, and will ensure that the application is following best practices for data storage on Linux systems. Game Icons will be named accordant to the format `{gameName}-{randomIdentifier}-icon.png`, to ensure that the icons are unique and easily identifiable.\
+
+  Game Icons that are no longer in use will be deleted from the directory, to ensure that the application is not storing unnecessary data. This will be done by checking the database for games that no longer exist, and deleting the corresponding icon file.
+
+  In order to achieve this functionality, a class will be created to handle the storage, retrieval and removal of icons. This class will be responsible for ensuring that the icons are stored in the correct location, and that the application is able to access them when required. This class will also be responsible for deleting icons that are no longer in use.
+
   == User Interface
+
+  #figure(
+    caption: [A screenshot of one of the iterations of the main window of the application.]
+  )[
+    #image("assets/app-main-window.png")
+  ]
+
+  The User Interface of this application was one of the key focuses of the design process. It had to be designed in a way where it can be changed in an atomic fashion, without affecting other components of the application. This was achieved by splitting the application into two main packages, `data` and `ui`. The `data` package contains the data structures and logic of the application, whilst the `ui` package contains the user interface components. Nothing inside of the `data` package includes any references to the `ui` package, ensuring a one-way dependency.
+
+  === Main Features
+
+  The UI primarily features a main window acting as the central hub of the application. This window contains a toolbar at the top, which contains the primary actions of the application - an "Add Game" button, a "Help" button (to show information about the program) and a search bar. Buttons for settings or other key actions would also be included in this toolbar.
+
+  The main body of the window features three panes, which can be resized by the user. The left pane contains a list of filter widgets, in order to filter through the games in the library. The middle pane contains a list of games in the library, with several columns containing information about the games. This list can also be sorted by clicking on the column headers. Further development of the application could include the ability to show the list of games in a grid view, rather than a list view.
+
+  The right pane shows detailed information on the selected game, such as the description, release date and completion status. This pane also contains a button to launch the game, which will be disabled if the game does not have an executable path set.
+  
+  === Game Edit Dialog
+
+  Another focus with designing the UI is the Edit Game dialog, which is used to add or edit games in the library. This dialog contains fields for all the information about a game. This dialog also features a button to fetch game data from the API, which will populate the fields in the dialog with the data. Users are also able to open a file dialog in order to select an icon or point at an executable for the game.
+
+  The dialog will have the ability to be initialized with a game object, which will populate the fields with the data from the game. If no game object is provided, a new game object will be created, and the fields will be empty. This will allow for easy creation of new games, and editing of existing games.
+
+  When the OK button is pressed, the data in the dialog will be validated, and if the data is valid, the dialog will close and the data will be saved to the library. If the data is invalid, an error message will be displayed to the user, and the dialog will remain open.
+
+  When the Cancel or Close Window button is pressed, the dialog will close without saving any data.
+
+  === Filters
+
+  The filters in the application are generated automatically based on the available attributes in the database. This allows for easy filtering of games based on these attributes. The filters are displayed in a list in the left pane of the main window, and can be toggled on and off by the user. Filters can be combined to create complex filters, allowing for fine-grained control over the games displayed in the library. // Describe bug and limitation in Implementation section.
+
+  === Game Details
+
+  The game details pane in the main window shows detailed information about the selected game. This information includes the description, release date, completion status and any other attributes the game has. This pane also contains a button to launch the game, which will be disabled if the game does not have an executable path set. This pane is designed to be easily readable and visually appealing, following modern design principles.
+
+  This pane has a method which takes a game object as an argument, and populates the fields in the pane with the data from the game. If no game object is provided, the fields will be empty. This allows for easy updating of the pane when a new game is selected.
 
   === Model / View Programming
 
-  === Main Widgets
+  The central widget of the main window implements a View, which is a part of the Qt's Model / View programming paradigm@qt-mvp, which is a design pattern used to manage relationships between data and the way that data is presented. 
 
-  == Game Icons and Other Assets
+  With this application, the Model communicates with a source of data (the database, in this case) in order to provide an interface for other parts of the application.
+
+  The view obtains data from the model in order to display it to the user, and can also send user input back to the model. Another class called a Delegate is used to render individual items in the view (akin to the cells of a table). This allows for custom rendering of items in the view, such as displaying a progress bar for the completion status of a game or showing an icon.
+
+  This application implements a custom model, view and delegate in order to suit the needs of the application. However, most of the interfacing logic is handled by a custom GameLibrary class, which acts as a single source of truth. This class is responsible for managing the data and logic of the application, and is used by the model, view and delegate to access and manipulate data. This is contrary to the traditional paradigm, where the model would be the single source of truth.
+
+  === Game Delegate
+
+  The Game Delegate is the class responsible for rendering individual items in the view. This class is used to render the cells in the list of games in the library, and is responsible for displaying the data in a visually appealing way. This class is also responsible for handling user input, such as double-clicking on a game to open the edit dialog. 
+
+  Game Delegates have two context menu actions - "Edit Game" and "Delete Game". These actions are displayed when the user right-clicks on a game in the list, and allow for easy editing and deletion of games. The "Edit Game" action will open the Edit Game dialog with the selected game, whilst the "Delete Game" action will delete the selected game from the library.
+
+  Further, the delegate is also responsible for rendering the icon of the game, if one is available. This is done by checking if the game object has an `m_iconName` variable set, and loading the icon from the `icons` folder if so.
 
   == API Integration
 
@@ -409,6 +469,8 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   The helper is designed to be easily extendable, with the ability to add new APIs with minimal changes to the code. The API can then be selected by passing an argument to the Helper, such as `--api steam`. The main program would be in charge of selecting the API to use, and passing this information to the Helper.
 
+  // Mention how only one API is available in implementation section.
+
   === API in the Main Application
 
   In the main application, a push button in the edit game dialog is used to fetch game data from the API. This button will call a function from a helper class, which will start a background thread to fetch the data. When the data is returned in the form of a JSON object, it is parsed and the fields in the edit dialog are populated with the data.
@@ -416,8 +478,16 @@ _Requirement IDs are used to reference requirements throughout the document, and
   Concurrency is an important consideration for this feature, as the application otherwise would freeze whilst waiting for the data to be fetched. In the event of a slow internet connection or API latency, this could cause the application to even time out and crash. The Qt Concurrency module will be used to handle this, allowing for the application to remain responsive whilst the data is being fetched.
 
   == Algorithms
+ 
+  The main application does not make use of many complex algorithms in its design. 
 
   === Fuzzy Searching
+
+  In the API Helper, a fuzzy search algorithm is used to find the game with the most similar name to the given name. As no known API provides a popularity ranking for games, the application can only sort based on the name. 
+
+  The algorithm used is the "Token Sort Ratio" algorithm, which is a part of the RapidFuzz@thefuzz library. This uses the Jaro-Winkler algorithm, which is a string metric which measures the edit distance between two strings, similar to the Levenshtein distance.
+
+  This variant of Jaro-Winkler is especially relevant for Games, as game names can often be misspelled or abbreviated, and the Token Sort Ratio is especially appropriate as it breaks the strings down into tokens and sorts them before comparing them. This is useful for finding games where people might search for a game using the subtitle, such as "Breath of the Wild" for the game "The Legend of Zelda: Breath of the Wild".
 
   == Class Diagram
 
@@ -434,11 +504,7 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
 === Applications and Tools
 
-== Stage 1 <stage-1> // First few weeks
-
-// CMake, Qt & Environment setup
-
-== Stage 2 <stage-2> // Second few weeks
+== Stage 2 <stage-2> // Second few weeks - GameLibrary, single source of truth - etc.
 
 == Stage 3 <stage-3> // Mid-Project Demonstration & Easter
 

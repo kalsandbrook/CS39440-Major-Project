@@ -93,3 +93,19 @@ xdg-dirs-spec:
     value: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
     date: 2024-04-25
   note: The XDG Base Directory Specification, which provides a set of common directories for storing user-specific data.
+
+breeze-icons:
+  type: Web
+  title: Breeze Icons
+  url:
+    value: https://invent.kde.org/frameworks/breeze-icons
+    date: 2024-04-25
+  note: The Breeze Icons project, which provides a set of icons for use in KDE applications.
+
+qt-mvp:
+  type: Web
+  title: Model/View Programming
+  url:
+    value: https://doc.qt.io/qt-5/model-view-programming.html
+    date: 2024-04-25
+  note: The Qt documentation on Model/View Programming, which was used in the development of the application.
