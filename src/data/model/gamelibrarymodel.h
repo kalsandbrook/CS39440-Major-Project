@@ -107,6 +107,7 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
+    Game getGame(QModelIndex index);
 public slots:
     /**
      * @brief Updates the model when a game is added to the library.
@@ -135,7 +136,6 @@ public slots:
      */
     void onGameUpdated(const Game& game);
 
-    Game getGame(QModelIndex index);
 
 protected:
     /**
