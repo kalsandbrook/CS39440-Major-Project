@@ -1,92 +1,257 @@
-@startuml
+@startuml class_diagram
+top to bottom direction
 
-package UI{
-    class MainWindow <<extends QMainWindow>>{
-    - gameListView : GameView*
-    - gameModel : GameModel*
-    - addGameDialog : AddGameDialog*
-    - addGameAction : QAction*
-    ..Slots..
-    + onAddGameDialog()
-    + onGameAdded(Game)
-    + onGameEdited(Game)
-    + onGameDeleted(Game)
-    }
-    class AddGameDialog <<extends QDialog>>{
-        + int id()
-        + QString name()
-        + QString desc()
-        + QList<QString> genre()
-    }
-    note right of MainWindow
-        This should be
-        seperated out into
-        the UI and a
-        Game Controller class.
-    end note
-}
+() "Python Executable" as pythonexe
 
-package "Model / View"{
-        class GameView <<extends QAbstractItemView>>{
-        - gameModel: GameModel
-        - gameItemDelegate : GameItemDelegate
-        }
-        class GameModel <<extends QAbstractItemModel>>{
-        - games : QList<Game>
-        + rowCount()
-        + data()
-        }
-        class GameItemDelegate <<extends QStyledItemDelegate>>{
-        + paint()
-        }
-'         GameItemDelegate -> MainWindow : "deleteGame, editGame"
-}
-package Data{
-    class GameLibrary << (S,#FFAA00) Singleton >>{
-        + addGame(Game)
-        + updateGame(Game)
-        + removeGame(int)
-        + removeGame(Game)
-        - m_games : QList<Game>
+package data{
+    enum Status{
+        NONE
+        BACKLOG
+        PLAYING
+        COMPLETED
+    }
+    enum Attribute{
+        GENRES
+        DEVELOPERS
+        PUBLISHERS
+        PLATFORMS
+        USERTAGS
     }
 
-    class GameDatabase{
-        - QSqlDatabase db
-        + open()
-        + close()
-        + QSqlDatabase database()
-        + executeQuery(QString query)
-        + beginTransaction()
-        + commitTransaction()
-        + rollbackTransaction()
-    }
+    Game --> Status : Declares
+    Game --> Attribute : Declares
 
-    class Game{
-        + int id()
-        + QString name()
-        + QString desc()
-        + QList<QString> genres()
+    class Game <<Data Class>>{
         - m_id : int
         - m_name : QString
         - m_desc : QString
-        - m_genres : QList<QString>
-
+        ...
+        - m_status : Status
+        +Game(int id, QString name, QString desc)
+        +Game()
+        +setId(int id)
+        +setName(QString name)
+        +setDesc(QString desc)
+        +setReleaseDate(QDate releaseDate)
+        +setGenres(QStringList genres)
+        +setDevelopers(QStringList developers)
+        +setPublishers(QStringList publishers)
+        +setPlatforms(QStringList platforms)
+        +setUsertags(QStringList usertags)
+        +setStatus(Status status)
+        +setIconName(QString iconName)
+        +setExecPath(QString execPath)
+        +getId() : int
+        +getName()
+        {method}...
+        +getStatus() : Status
+        +getStatusStr() : QString
+        +getIconName() : QString
+        +getExecPath() : QString
     }
-    note right of Game::genres
-        The genres member will change to
-        use a dictionary
-    end note
+
+    class GameLibrary << (S,#ed9547) Singleton >>{
+        + iconController : GameIconController*
+        - m_games : QMap<int, Game>
+        - m_db : QSqlDatabase    
+        --
+        + instance() : GameLibrary
+        + getGameById(int id) : Game&
+        + addGame(Game& game): void
+        + updateGame(Game& game) : void
+        + deleteGame(int gameId) : void
+        + deleteAllGames() : void
+        + getGames() : QMap<int, Game>& 
+        + setDbName(QString dbName) : void
+        + addAttribute(Attribute attribute, QString name) : void
+        + removeUnusedAttributes() : void
+        + getAllOfAtrribute(Attribute attribute) : QStringList
+        + getGameAttributes(Game game, Attribute type) : QStringList
+        + setGameAttributes(Game game, Attribute type, QStringList values) : void
+        - setupDb() : bool        
+        -- Signals --
+        gameAdded(Game& game)
+        gameDeleted(Game& game)
+        gameUpdated(Game& game)
+        gameChanged()
+    }
+
+    GameLibrary --> Game : Contains
+
+    GameLibrary --> GameIconController : Uses
+
+    class GamePileAPI{
+        + GamePileAPI(QObject* parent)
+        + startLookupGame(const QString& name) : void
+        --
+        - m_workerThread : QThread
+        - m_worker : GamePileAPIWorker        
+        -- Signals --
+        + executeLookupGame(const QString& name);
+        + lookupGameResult(const QMap<QString, QString>& gameData);
+        -- Slots --
+        - handleLookupGameFinished(const QMap<QString, QString>& result) : void
+    }
+
+    GamePileAPI --> GamePileAPIWorker : Operates
+
+    class GamePileAPIWorker{
+        + GamePileAPIWorker(QObject* parent)
+        -- Slots --
+        + lookupGame(const QString& name) : void
+        -- Signals --
+        + lookupGameFinished(const QMap<QString, QString>& result)
+    }
+
+    GamePileAPIWorker --> pythonexe : Operates
+
+    class GameIconController{
+        + GameIconController(QObject* parent)
+        + getIconDirectory() : QDir
+        + getIcon(QString iconName) : QImage
+        + clearUnusedIcons() : void
+        + copyFileToIconsDir(QFile* file) : QString
+        + downloadIcon(QUrl& url, QString& filePath) : void
+
+        - m_iconDir : QDir
+        - createIconDir() : void
+    }
+    
+    package model{
+        class GameLibraryModel <<QAbstractItemModel>>{
+            + GameLibraryModel(QObject* parent)
+            + index(int row, int column, const QModelIndex& parent) : QModelIndex
+            + rowCount(const QModelIndex& parent) : int
+            + columnCount(const QModelIndex& parent) : int
+            + data(const QModelIndex& index, int role) : QVariant
+            + headerData(int section, Qt::Orientation orientation, int role) : QVariant
+            --
+            - m_gameLibrary : GameLibrary&
+            - m_games : QList<Game>
+            -- Slots --
+            onGameAdded(Game& game)
+            onGameDeleted(Game& game)
+            onGameUpdated(Game& game)
+        }
+
+        GameLibraryModel --> GameLibrary : Listens to
+    }
+
+}
+package ui{
+    class GameView <<QTreeView>>{
+        + GameView(QWidget* parent)
+        # setupContextMenu()
+        -- Slots --
+        - handleEdit() : void
+        - handleDelete() : void
+    }
+    () GameLibraryModel
+
+    GameView -left-> GameLibraryModel : Uses
+    GameView --> GameItemDelegate : Shows
+    class GameItemDelegate{
+        + GameItemDelegate(QObject* parent)
+        + paint(painter, option,index) : void
+        + sizeHint(option,index) : QSize
+    }
+
+    class AttributeFilter{
+        - m_attribute : Game::Attribute
+        - m_filterList : QListWidget*
+        - m_layout : QVBoxLayout*
+        - m_label : QLabel*
+        --
+        + AttributeFilter(Game::Attribute attribute, QWidget* parent)
+        + clearSelection() : void
+        - setupFilterList() : void
+        -- Signals --
+        + filterChanged(Game::Atrribute attribute, QString filter)
+        + filterCleared()
+        -- Slots --
+        + onFilterListActivated(QListWidgetItem* item) : void
+        + onGameUpdated(): void
+    }
+
+    AttributeFilter --|> StatusFilter : Subclass
+
+    class StatusFilter{
+        + StatusFilter(QWidget* parent)
+        - setIconsForStatuses()
+        -- Signals --
+        + filterChanged(QString newFilter)
+    }
+
+    class GameEditDialog{
+        - m_api : GamePileAPI*
+        - m_editedGame : Game
+        - [ UI elements ]
+        - m_iconURL : QString
+        - m_selectedIconFile : QFile*
+        - m_gameLibrary : GameLibrary
+        - m_iconController : GameIconController
+        --
+        - setGameToEdit(Game& game): void
+        - setFieldsFromAPI(QMap<QString,QString> gameData): void
+        - setupAttributeEditors(...): void
+        + GameEditDialog(QWidget* parent)
+        -- Slots --
+        + exec() : void
+        + exec(int gameId): void
+        + verify() : void
+        + accept() : void
+        - openIconFileDialog(): void
+        - openExecFileDialog(): void
+        - apiButtonClicked(): void
+    }
+
+
+   
+    class GameLibraryProxyModel <<QSortFilterProxyModel>>{
+        + GameLibraryProxyModel(QObject* parent, QAbstractItemModel* sourceModel)
+        -- Slots --
+        + onSearchUpdated();
+        + setFilter(int column, QString filter);
+        + clearFilter(int column);
+        + clearAllFilters();
+    }
+
+    GameLibraryProxyModel -> GameLibraryModel : Uses
+    GameDetailsWidget --> GameLibraryProxyModel : Uses
+    FiltersWidget --> GameLibraryProxyModel : Informs
+    SearchBarWidget --> GameLibraryProxyModel : Informs
+
+    class GameDetailsWidget{
+        + GameDetailsWidget(QWidget* parent)
+        - [ UI elements ]
+        - m_model : GameLibraryProxyModel*
+        --
+        + setGame(Game& game) : void
+        -- Slots --
+        + onGameUpdated() : void
+        + launchGame() : void
+    }
+    class FiltersWidget{
+        + FiltersWidget(GameLibraryProxyModel* filterModel,QWidget* parent)
+        -- Slots --
+        + filterChanged(Game::Attribute attribute, QString filter) : void
+        + filterChanged(QString filter) : void
+        + filterCleared() : void
+        --
+        - QList<AttributeFilter*> m_filters
+    }
+    class SearchBarWidget{
+        + SearchBarWidget(QWidget* parent)
+        -- Signals --
+        + search(QString query)
+        -- Slots --
+        - onSearchBoxChanged() : void
+    }
+
+    GameDetailsWidget -down[hidden]-> AttributeFilter
+    GameLibraryProxyModel -down[hidden]-> GameEditDialog
+
 }
 
 
-MainWindow *-- AddGameDialog
-
-MainWindow *-- GameView
-
-GameView *-- GameModel
-GameModel *-- GameItemDelegate
-
-GameLibrary o-- Game
-
-GameDatabase --> GameLibrary : Uses
 @enduml
