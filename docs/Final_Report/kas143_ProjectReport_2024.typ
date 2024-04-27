@@ -215,6 +215,8 @@ Java and C\# were also considered, but were ruled out - Java due to its performa
 ]
 == Process 
 // Describe the life cycle model or research method that you used. You do not need to write about all of the different process models that you are aware of. Focus on the process model that you have used and why you chose it. It is likely that you needed to adapt an existing process model to suit your project; clearly identify what you used and how you adapted it for your needs.
+
+#wordcountsec[
 When planning development, a Kanban framework was used to manage the project. The use of a Kanban Board is a common practice in software development, and one of the few practices that can be used for a solo project. 
 
 The Kanban Board was used to manage the project by decomposing the project down into smaller tasks and assigning them to one of three (although there are four columns in total) columns on the board. The columns were "To Do", "In Progress" and "Done". The "To Do" column contained all tasks that needed to be completed, with cards sorted by priority; the "In Progress" column contained tasks that were currently being worked on; and the "Done" column contained tasks that had been completed. A WIP Limit was set so only three tasks could be deemed to be "In Progress" at any one time, to prevent jobs from being left unfinished.
@@ -235,9 +237,12 @@ Certain cards were linked to larger milestones, such as the Mid-Project Demonstr
 
 A weekly log has been kept throughout the project to document progress and any issues that arose. Each week was broken up into the objectives for the week, the tasks completed, the challenges faced and the plans for the upcoming week. This log was used primarily as a starting point for the weekly meetings with the project supervisor, it also served as a good way to keep track of progress and the pace of development.
 
+]
+
 // TODO: Should weekly logs be included in the appendices?
 = Requirements <Requirements> // target: 2k words
 
+#wordcountsec[
 
 The requirements for this project, identified through research detailed in the background section, underpinned the majority of the development process, dictating the features to be implemented and key design decisions. Requirements were split into two main categories: Functional Requirements and Non-Functional Requirements. 
 
@@ -320,7 +325,7 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   Whilst the application will not be translated into multiple languages at this time, the application should be designed in a way where translation is possible in future. A theoretical translator should be able to easily translate the application into another language without a significant knowledge of programming.
 ]
-
+]
 // Use-Case Diagram
 
 = Design <Design> // target: 3k words
@@ -489,12 +494,24 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   This variant of Jaro-Winkler is especially relevant for Games, as game names can often be misspelled or abbreviated, and the Token Sort Ratio is especially appropriate as it breaks the strings down into tokens and sorts them before comparing them. This is useful for finding games where people might search for a game using the subtitle, such as "Breath of the Wild" for the game "The Legend of Zelda: Breath of the Wild".
 
-  == Class Diagram
+  #pagebreak(weak:true)
 
+  == Class Diagram
+  #figure(
+    caption: [
+      A class diagram showing the relationships between the classes in the application.
+
+      A landscape version of this diagram can be found in the appendices.
+    ]
+  )[
+    #image("assets/diagrams/class_diagram.svg")
+  ]
+
+  The python aspect of the application is not included in this diagram, as the object-oriented paradigms of Python were not used in any meaningful way.
 ]
 
 
-= Implementation <Implementation> // target: 3k words
+= Implementation <Implementation> // target: 3k words - that's gonna be a stretch.
 #wordcountsec[
 == Development Environment
 
@@ -562,5 +579,11 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   #appendix(title: "Statement of Tools Used")[
     TODO: Add a statement of tools used. This includes stuff like Typst, PlantUML, IDEs, etc.
+  ]
+
+  #page(flipped: true)[
+    #appendix(title: "Class Diagram")[
+      #image("assets/diagrams/class_diagram.svg", height:95%)
+    ]
   ]
 ]
