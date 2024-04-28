@@ -24,6 +24,7 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QPushButton>
+#include <QInputDialog>
 #include <QTextEdit>
 
 /**
@@ -102,9 +103,9 @@ private slots:
     void apiButtonClicked();
 
 private:
-    void setFieldsFromAPI(QMap<QString, QString> gameDetails);
+    void setFieldsFromAPI(QList<QMap<QString, QString>> gameDetails);
     void createAttributeEdits();
-    void setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget, const QString& label);
+    void setupAttributeEditField(QLineEdit* lineEdit, const QStringList& itemList, QListWidget* listWidget);
 
     bool editingGame;
     Game editedGame;

@@ -15,5 +15,5 @@ public slots:
     void lookupGame(const QString& gameName);
 
 signals:
-    void lookupGameFinished(const QMap<QString, QString>& result);
+    void lookupGameFinished(const QList<QMap<QString, QString>>& result);
 };

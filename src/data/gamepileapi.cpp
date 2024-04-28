@@ -21,6 +21,6 @@ void GamePileAPI::startLookupGame(const QString& gameName) {
     emit executeLookupGame(gameName);
 }
 
-void GamePileAPI::handleLookupGameFinished(const QMap<QString, QString>& result) {
+void GamePileAPI::handleLookupGameFinished(const QList<QMap<QString, QString>>& result) {
     emit lookupGameResult(result);
 }

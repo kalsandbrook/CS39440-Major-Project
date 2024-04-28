@@ -97,11 +97,12 @@
 #wordcountsec[
 
 === Aims
-The aim of this project was to create a native desktop application that helps users to manage their backlogs (lists of games they want to play) and libraries (games they own). The application allows users to add games to the library and mark them as part of their backlog, in progress or completed. The application will also allow users to search through their games and filter them based on various attributes such as genre, platform or completion status.
+The aim of this project was to create a native desktop application that helps users to manage their backlogs (lists of games they want to play) and libraries (games they own). This allows users to add games to the library and mark them as part of their backlog, in progress or completed. GamePile will also allow users to search through their games and filter them based on various attributes such as genre, platform or completion status.
 
-Further to this, the application will also allow users to search for games to add to their library via the use of a Third-Party API. This will use a fuzzy search algorithm to allow users to search for games even if they are unsure of the exact name. The application will also allow users to view detailed information about the games in their library, such as the aforementioned attributes.
+Further to this, users will also be allowed to search for games to add to their library via the use of a Third-Party API. This will use a fuzzy search algorithm to allow users to search for games even if they are unsure of the exact name. The application will also allow users to view detailed information about the games in their library, such as the aforementioned attributes.
 
 Some optional features that could be implemented include the ability to export a users game library graphically akin to an old-school forum signature, to facilitate sharing of game completion progress on forums and social media platforms and a recommendation system that suggests games to add to the users library based on their existing library and completion status.
+
 === Research into Similar Tools
 Initial research for this project involved investigation into similar tools that already exist. These tools were found by searching online for "game backlog manager" and "game library manager". The most popular and recommended tools were found to be websites called "How Long To Beat"@hltb and "Backloggery"@backloggery. These websites allow users to track their game completion progress and backlog, but they are web-based and do not offer a native desktop application, they are also limited to the library of games that they have in their database, not allowing for users to easily add their own games.
 
@@ -137,7 +138,7 @@ Another technology that was investigated during development was the "Video Game 
 // Base on research into similar tools, explain advantages of project over existing tools.
 // Also explain interest in use of this application.
 
-The motivation to undertake this project comes from a personal interest in the topic, as efficient tracking of game libraries and backlogs is not something readily available in the market, at least, not in a native desktop application. As existing tools are mainly web-based, they do not offer the same level of performance and integration that a native application could offer, such as being able to launch games directly from the application or being able to use the application offline.
+The motivation to undertake this project comes from a personal interest in the topic, as efficient tracking of game libraries and backlogs is not something readily available in the market, at least, not in a native desktop setting. As existing tools are mainly web-based, they do not offer the same level of performance and integration that a native application could offer, such as being able to launch games directly from the application or being able to use the application offline.
 
 This laid out some of the priorities for the project, such as performance improvements over existing tools, a modern and visually appealing design and the ability to be able to use the application without an internet connection. To this end, investigation into what technologies could be used to achieve these goals was undertaken.
 
@@ -212,11 +213,10 @@ Another language that was considered for this project was the increasingly popul
 
 Java and C\# were also considered, but were ruled out - Java due to its performance and C\# due to the impracticality of using it on Linux systems. Java also has an absence of modern UI tooling, with Swing and JavaFX being the only real options, both of which are outdated and not visually appealing. QtJambi was briefly investigated as a potential solution, but there was found to be a lack of documentation and community support for the library.
 
-]
+
 == Process 
 // Describe the life cycle model or research method that you used. You do not need to write about all of the different process models that you are aware of. Focus on the process model that you have used and why you chose it. It is likely that you needed to adapt an existing process model to suit your project; clearly identify what you used and how you adapted it for your needs.
 
-#wordcountsec[
 When planning development, a Kanban framework was used to manage the project. The use of a Kanban Board is a common practice in software development, and one of the few practices that can be used for a solo project. 
 
 The Kanban Board was used to manage the project by decomposing the project down into smaller tasks and assigning them to one of three (although there are four columns in total) columns on the board. The columns were "To Do", "In Progress" and "Done". The "To Do" column contained all tasks that needed to be completed, with cards sorted by priority; the "In Progress" column contained tasks that were currently being worked on; and the "Done" column contained tasks that had been completed. A WIP Limit was set so only three tasks could be deemed to be "In Progress" at any one time, to prevent jobs from being left unfinished.
@@ -246,7 +246,7 @@ A weekly log has been kept throughout the project to document progress and any i
 
 The requirements for this project, identified through research detailed in the background section, underpinned the majority of the development process, dictating the features to be implemented and key design decisions. Requirements were split into two main categories: Functional Requirements and Non-Functional Requirements. 
 
-Functional Requirements are the features that the application must have, and coinciding with the Kanban methodology, serve as small milestones for the project. Non-Functional Requirements are the critical aspects of the application that are not directly related to the features of the application, such as performance and usability, these were considered throughout development. This project also has a set of Optional Functional Requirements, which are features that could be implemented if time allowed.
+Functional Requirements are the features that the application must have, and coinciding with the Kanban methodology, serve as small milestones for the project. Non-Functional Requirements are the critical aspects that are not directly related to the features of the application, such as performance and usability, these were considered throughout development. This project also has a set of Optional Functional Requirements, which are features that could be implemented if time allowed.
 
 _Requirement IDs are used to reference requirements throughout the document, and are formatted as "FRXX" for Functional Requirements, "NFRXX" for Non-Functional Requirements and "OFRXX" for Optional Functional Requirements._
 
@@ -334,7 +334,7 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   The first design decision made for this project was the choice of programming language, and deciding on the specific environment to use. C++, using the Qt platform, and Python were both chosen for the project. These decisions were explored in @analysis-technologies.
 
-  Specifically, this design can be expected to make use of: the Qt Widgets module, to provide the basic tools to create a user interface; the Qt SQL module, to provide a framework to interact with a database; and the Qt Concurrent module, to allow for concurrent programming in the application. 
+  Specifically, this design can be expected to make use of: the Qt Widgets module, to provide the basic tools to create a user interface; the Qt SQL module, to provide a framework to interact with a database; and the Qt Concurrent module, to allow for concurrent programming. 
 
   Python will be used for the API module, using its requests library to make HTTP requests to the chosen API. TheFuzz library will be used for fuzzy string matching, and PyInstaller will be used to package the API module into an executable, in order to interoperate with the main application.
 
@@ -346,13 +346,13 @@ _Requirement IDs are used to reference requirements throughout the document, and
     #image("assets/diagrams/Architecture Diagram.svg")
   ]
 
-  One of the key design decisions made at the beginning of development was deciding on the architecture of the application. 
+  One of the key design decisions made at the beginning of development was deciding on a sensible and robust architecture. 
 
-  The main application is primarily split into two main components - the backend and the frontend. The backend is responsible for managing the data and logic of the application, whilst the frontend is responsible for the display of and user interaction with the data. This seperation of responsibilities allows for easy maintenance and development of the application. This also aids in the proper testing if the application, as the backend logic can be tested independently of the frontend. 
+  The main application is primarily split into two main components - the backend and the frontend. The backend is responsible for managing the data and logic of the application, whilst the frontend is responsible for the display of and user interaction with the data. This seperation of responsibilities allows for easy maintenance and shorter build times. This also aids in the proper testing of the application, as the backend logic can be tested independently of the frontend. 
 
-  Data is stored locally in an SQLite database, which is accessed by the backend of the application. More detail can be seen in @data-persistence.
+  Data is stored locally in an SQLite database, which is accessed by the data backend. More detail can be seen in @data-persistence.
 
-  The _"Translation Layer / API Helper"_ is a Python Command Line Interface (CLI) application, created as a part of the implementation, that accesses the third-party APIs based on a given name. This application returns game data to the backend of the application in a compatible format. 
+  The _"Translation Layer / API Helper"_ is a Python Command Line Interface (CLI) application, created as a part of the implementation, that accesses the third-party APIs based on a given name. This application returns game data to the main data backend in a compatible format. 
 
   #pagebreak(weak:true)
 
@@ -373,15 +373,15 @@ _Requirement IDs are used to reference requirements throughout the document, and
     #image("assets/diagrams/database_schema.svg")
   ]
   
-  This application requires the storage of data about games and their attributes. This data is stored in an SQLite database, which is a lightweight, file-based database system that is appropriate for use in this application due to its simplicity and ease of use. 
+  GamePile requires the storage of data about games and their attributes. This data is stored in an SQLite database, which is a lightweight, file-based database system that is appropriate for use here due to its simplicity and ease of use. 
 
   The main table is the `Games` table, which contains all the stored games. Each game has a unique ID, which functions as its primary key (`gameId`). The table also contains fields for the name, description, release date and completion status of the game. Complex attributes, such as genres, developers and publishers are stored in seperate tables. 
 
   Each attribute has a table named after itself (i.e. `genres`), which contains a list of auto-generated IDs that serve as the primary key for the table. The name of each attribute is also stored in the table. Between the `games` and attribute table, there is a junction table (`game_genres`) that stores the relationship between games and their attributes. This is to ensure that the database is in the third normal form, and to avoid many-to-many relationships.
 
-  Storing data in the Third Normal Form, and as such removing transitive dependencies, is important for this project as it ensures efficient storage and retrieval of data, eliminating data duplication. As the application could be dealing with a very large volume of data, efficient storage is an important consideration.
+  Storing data in the Third Normal Form, and as such removing transitive dependencies, is important for this project as it ensures efficient storage and retrieval of data, eliminating data duplication. As large volumes of data are likely to be encountered when storing a collection containing a high level of entries, efficient storage is an important consideration.
 
-  This data will use the QStandardPaths class to determine an appropriate location to store the database file, differing based on the operating system the application is running on. For example, on Linux, the database file be stored in the `~/.local/share/GamePile` directory. Adherence to the XDG Base Directory Specification@xdg-dirs-spec is important for this project, as it ensures that the application is following best practices for data storage on Linux systems.
+  This data will use the QStandardPaths class to determine an appropriate location to store the database file, differing based on the operating system the application is running on. For example, on Linux, the database file be stored in the `~/.local/share/GamePile` directory - whereas on windows, a typical location would be in the `%localappdata%/GamePile` directory. Adherence to the XDG Base Directory Specification@xdg-dirs-spec is important for this project, as it ensures that best practices are being followed in regards to data storage on Linux systems.
 
   The file the database is stored in a file named `data.sqlite`, which uses a non-ambigious file extension to ensure that the file can be easily identified. Whenever the application is opened, a backup of the database is created, to ensure that data can be restored in the event of a crash. This backup is stored in the same directory as the main database file, with the filename `data.sqlite.bak`.
 
@@ -396,19 +396,19 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   However, a likely candidate is to make use of the QSettings#footnote[https://doc.qt.io/qt-6/qsettings.html] class provided by the Qt Framework. 
 
-  The QSettings class acts as an abstraction around the platform-specific settings storage system (such as the Windows Registry or property lists on MacOS). This class allows for easy storage and retrieval of settings, and is cross-platform, making it an ideal choice for this project. This class also provides plenty of fallback systems, making the application more robust and resilient to errors. 
+  The QSettings class acts as an abstraction around the platform-specific settings storage system (such as the Windows Registry or property lists on MacOS). This class allows for easy storage and retrieval of settings, and is cross-platform, making it an ideal choice for this project. This class also provides plenty of fallback systems, increasing robustness and resilience to failure.
 
-  There is a potential for settings to not be entirely necessary for this project, as the application is relatively simple and does not require many settings to be stored. Although, it is good practice to plan for this eventuality.
+  There is a potential for settings to not be entirely necessary for this project, as the  scope is relatively simple and does not require many settings to be stored. Although, it would be in the interest of future development to plan for this eventuality.
 
   === Icons and Other Assets
 
-  The application will make use of icons to represent various actions and objects in the application. These icons will be sourced from the Breeze Icon Theme@breeze-icons, which is the default icon theme for the KDE Plasma Desktop Environment. This icon theme is licensed under the LGPL, which allows for the use of the icons in this project. However, the use of breeze icons will introduce some dependencies on the KDE Frameworks, which introduces a dependency on the Linux operating system. In order to mitigate this, fallback icons should be provided in the event that the Breeze Icon Theme is not available.
+  As a part of the UI, icons will be used to represent various actions and objects in the application. These icons will be sourced from the Breeze Icon Theme@breeze-icons, which is the default icon theme for the KDE Plasma Desktop Environment. This icon theme is licensed under the LGPL, which allows for the use of the icons in this project. However, the use of breeze icons will introduce some dependencies on the KDE Frameworks, which introduces a dependency on the Linux operating system. In order to mitigate this, fallback icons should be provided in the event that the Breeze Icon Theme is not available.
 
-  When storing user-generated assets, such as game icons, the application will store these in a directory named `icons` in the same directory as the database file. This will allow for easy access to the icons, and will ensure that the application is following best practices for data storage on Linux systems. Game Icons will be named accordant to the format `{gameName}-{randomIdentifier}-icon.png`, to ensure that the icons are unique and easily identifiable.\
+  When storing user-generated assets, such as game icons, these are stored in a directory named `icons` in the same directory as the database file. This will allow for easy access to the icons, and will ensure that app data is mostly located inside of a single directory. Game Icons will be named accordant to the format `{gameName}-{randomIdentifier}-icon.png`, to ensure that the icons are unique and easily identifiable.\
 
-  Game Icons that are no longer in use will be deleted from the directory, to ensure that the application is not storing unnecessary data. This will be done by checking the database for games that no longer exist, and deleting the corresponding icon file.
+  Game Icons that are no longer in use will be deleted from the directory, to ensure that unnecessary data is not being stored. This will be done by checking the database for games that no longer exist, and deleting the corresponding icon file. This check will occur whenever a game is deleted from the library, and upon startup.
 
-  In order to achieve this functionality, a class will be created to handle the storage, retrieval and removal of icons. This class will be responsible for ensuring that the icons are stored in the correct location, and that the application is able to access them when required. This class will also be responsible for deleting icons that are no longer in use.
+  In order to achieve this functionality, a class (`GameIconController`) will be created to handle the storage, retrieval and removal of icons. This class will be responsible for ensuring that the icons are stored in the correct location, and that the relevant permissions are present in order to access them when required. This class will also be responsible for deleting icons that are no longer in use.
 
   == User Interface
 
@@ -418,7 +418,7 @@ _Requirement IDs are used to reference requirements throughout the document, and
     #image("assets/app-main-window.png")
   ]
 
-  The User Interface of this application was one of the key focuses of the design process. It had to be designed in a way where it can be changed in an atomic fashion, without affecting other components of the application. This was achieved by splitting the application into two main packages, `data` and `ui`. The `data` package contains the data structures and logic of the application, whilst the `ui` package contains the user interface components. Nothing inside of the `data` package includes any references to the `ui` package, ensuring a one-way dependency.
+  The User Interface was one of the key focuses of the design process. It had to be designed in a way where it can be changed in an atomic fashion, without affecting other components. This was achieved by splitting code into two main packages, `data` and `ui`. The `data` package contains the data structures and logic of the application, whilst the `ui` package contains the user interface components. Nothing inside of the `data` package includes any references to the `ui` package, ensuring a one-way dependency.
 
   === Main Features
 
@@ -456,7 +456,7 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   The view obtains data from the model in order to display it to the user, and can also send user input back to the model. Another class called a Delegate is used to render individual items in the view (akin to the cells of a table). This allows for custom rendering of items in the view, such as displaying a progress bar for the completion status of a game or showing an icon.
 
-  This application implements a custom model, view and delegate in order to suit the needs of the application. However, most of the interfacing logic is handled by a custom GameLibrary class, which acts as a single source of truth. This class is responsible for managing the data and logic of the application, and is used by the model, view and delegate to access and manipulate data. This is contrary to the traditional paradigm, where the model would be the single source of truth.
+  This application implements a custom model, view and delegate in order to facilitate efficient and appropriate presentation. However, most of the interfacing logic is handled by a custom GameLibrary class, which acts as a single source of truth. This class is responsible for managing all the games in the library, and is used by the model, view and delegate to access and manipulate data. This is contrary to the traditional paradigm, where the model would be the single source of truth.
 
   === Game Delegate
 
@@ -480,7 +480,7 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   In the main application, a push button in the edit game dialog is used to fetch game data from the API. This button will call a function from a helper class, which will start a background thread to fetch the data. When the data is returned in the form of a JSON object, it is parsed and the fields in the edit dialog are populated with the data.
 
-  Concurrency is an important consideration for this feature, as the application otherwise would freeze whilst waiting for the data to be fetched. In the event of a slow internet connection or API latency, this could cause the application to even time out and crash. The Qt Concurrency module will be used to handle this, allowing for the application to remain responsive whilst the data is being fetched.
+  Concurrency is an important consideration for this feature, as otherwise the UI would freeze whilst waiting for the data to be fetched. In the event of a slow internet connection or API latency, this could even cause the application to time out and potentially crash. The Qt Concurrency module will be used to handle this, allowing for the application to remain responsive whilst the data is being fetched.
 
   == Algorithms
  
@@ -578,7 +578,31 @@ _Requirement IDs are used to reference requirements throughout the document, and
   ]
 
   #appendix(title: "Statement of Tools Used")[
-    TODO: Add a statement of tools used. This includes stuff like Typst, PlantUML, IDEs, etc.
+    // TODO: Add a statement of tools used. This includes stuff like Typst, PlantUML, IDEs, etc.
+
+    A list of key tools used in the development of this project can be found below:
+
+    #figure(
+      caption: [A table showing the tools used in the development of this project.]
+    )[
+      #set align(center+horizon)
+      #show table.cell: it => {
+        if(it.y == 0){
+          strong(it)
+        } else { it }
+      }
+      #table(
+        columns: (1fr,2fr,1fr,1.5fr),
+        table.header(
+        [Software Name],[URL],[Function],[Notes]
+        ),
+        [Kate],[#link("https://apps.kde.org/en-gb/kate/")],[Text Editor],[Used for majority of #box[C++] development.],
+        [CLion],[#link("https://www.jetbrains.com/clion/")],[IDE],[Used for debugging #box[C++] code.],
+        [Typst],[#link("https://typst.app/")],[Typesetting Tool],[Used for documents, LaTeX alternative.],
+        [PlantUML],[#link("https://plantuml.com/")],[Diagramming Tool],[Used for creating Class Diagram and Database Schema.],
+        [Draw.IO],[#link("https://app.diagrams.net/")],[Diagramming Tool],[Used for creating Architecture Diagram.]
+      )
+    ]
   ]
 
   #page(flipped: true)[

@@ -17,10 +17,10 @@ public:
 
 signals:
     void executeLookupGame(const QString& gameName);
-    void lookupGameResult(const QMap<QString, QString>& result);
+    void lookupGameResult(const QList<QMap<QString, QString>>& result);
 
 private slots:
-    void handleLookupGameFinished(const QMap<QString, QString>& result);
+    void handleLookupGameFinished(const QList<QMap<QString, QString>>& result);
 
 private:
     QThread* m_workerThread;
