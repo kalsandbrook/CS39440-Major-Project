@@ -138,7 +138,7 @@
   show cite: super
    
   set list(marker: ([•], [⁃]))
-   
+
   titlepage(
     title: title,
     subtitle: subtitle,
@@ -168,16 +168,7 @@
   )
 }
 
-#let wordcountsec(content) = {
-  word-count(total => {
 
-  content
-  align(right)[
-  #smallcaps[#total.words words]
-  ]
-})
-
-}
 
 #let appendixNumbering(..nums) = {
   if (nums.pos().len() == 2){
@@ -198,3 +189,12 @@
     #content
   ]
 ]
+
+#let wordcountsec(content) = {
+      word-count(total => {
+      content
+      align(right)[
+      #smallcaps[#total.words words]
+      ]
+    })
+  }

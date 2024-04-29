@@ -109,3 +109,19 @@ qt-mvp:
     value: https://doc.qt.io/qt-5/model-view-programming.html
     date: 2024-04-25
   note: The Qt documentation on Model/View Programming, which was used in the development of the application.
+
+rawg-api:
+  type: Web
+  title: RAWG Video Games Database API
+  url:
+    value: https://rawg.io/apidocs
+    date: 2024-04-26
+  note: One of the API candidates for the application. It was not used in the final implementation.
+
+steam-api:
+  type: Web
+  title: Steam Web API
+  url:
+    value: https://developer.valvesoftware.com/wiki/Steam_Web_API
+    date: 2024-04-26
+  note: The Steam Web API, which provides the ability to access Steam's data and services. It was used in the final implementation of the application to import game data from the web.

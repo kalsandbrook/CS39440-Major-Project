@@ -50,6 +50,7 @@
 
   #page[
     #set align(center)
+    #set par(justify: true)
     #v(1fr)
 
     = Acknowledgements
@@ -474,6 +475,8 @@ _Requirement IDs are used to reference requirements throughout the document, and
 
   The helper is designed to be easily extendable, with the ability to add new APIs with minimal changes to the code. The API can then be selected by passing an argument to the Helper, such as `--api steam`. The main program would be in charge of selecting the API to use, and passing this information to the Helper.
 
+  The API Helper also takes an `--index` argument, which allows for the selection of a specific game from the list of games returned by the API, alongside a `--number` argument, which allows for the selection of the number of games to return. This is useful for the main application, as it allows for the presentation of multiple games to the user, rather than just the top result.
+
   // Mention how only one API is available in implementation section.
 
   === API in the Main Application
@@ -510,31 +513,82 @@ _Requirement IDs are used to reference requirements throughout the document, and
   The python aspect of the application is not included in this diagram, as the object-oriented paradigms of Python were not used in any meaningful way.
 ]
 
+#pagebreak(weak:true)
 
-= Implementation <Implementation> // target: 3k words - that's gonna be a stretch.
+
+= Implementation <Implementation> // target: 3k words - that's gonna be a stretch..
 #wordcountsec[
+
+This section will discuss the implementation of the project, including specifics on how development was carried out, the tools used, and the challenges faced. 
+
 == Development Environment
+
+The first step of the project was to set up a development environment. For C++ Development, this typically includes: a text editor, a compiler, a build system and a version control system. For the sakes of project management, a Kanban board was also set up. 
+
+Python development also necessitates a virtual environment, some build scripts, and a seperate repository. 
 
 === Version Control
 
+The project was versioned using Git. Git is a widely-used version control system that allows for tracking of changes and features such as branching and merging. Whilst most of Git's feature set is not applicable to a solo project, it is still a useful tool for tracking changes and ensuring that the project is backed up. Alternatives such as Mercurial or SVN were considered, but Git was chosen due to its ubiquity in the wider industry. 
+
+Two platforms were considered for hosting the repository: GitHub and Aberystwyth Universities GitLab#footnote[The GitLab instance hosted by AU was not chosen as, at the inception of this project, the GitLab instance required use of a VPN. This has since changed, but development was already underway on GitHub by this point.] instance. GitHub was chosen due to the new GitHub Projects feature, which provided the Kanban board used to manage the project. 
+
+GitHub also provides a feature called "Actions", which allows for Continuous Integration (CI) testing to be set up. This was used to run unit tests on the project, ensuring that the code was functioning as expected. More detail on testing can be found in @unit-testing.
+
+When developing the application, commits were made frequently, with each commit containing a small, atomic change. This allowed for easy tracking of changes and easy debugging in the event of an issue. For larger features that required significant changes to the codebase, a feature branch (e.g. `work/api`) was created, and changes were merged back into the `master` branch once the feature was complete. This ensures that, even in the middle of large changes, there is always a working version of the software available. 
+
+For events such as the Mid-Project Demonstration, a tag was created on the `master` branch, which is an immutable pointer to a specific commit. This creates a snapshot of the project at a specific point in time, which can be useful for observing the pace of development and the state of the project.
+
 === CMake and Build System
+
+In the C++ Community, CMake is the de-facto tool for build systems. CMake is a cross-platform build system that generates build files for a project. However, it is not a build system itself, but rather a build system generator. CMake generates build files for a specific build system, such as Make, Ninja or Visual Studio. This allows for easy cross-platform development, as the same CMakeLists.txt file can be used to generate build files for different platforms.
+
+Setup of CMake was fairly complex, as it had to include building unit tests, building the main application and building the API Helper, which is not a C++ application. The main codebase and tests were managed by using the `add_subdirectory` command, which allows for the inclusion of other CMake projects in the main project. This meant that tests could be excluded from the main build, and the API Helper could be built as a seperate executable.
+
+To aid in the building of the project, a `build.sh` script was produced, which accepts various arguments to run the application after building, run the tests, or install the application to the system. This script was used to automate the build process, and to ensure that the project could be built and run easily.
+
+On the Linux Operating System, a `.desktop` file is used to create a shortcut to the application in the system menu. This file contains information about the application, such as the name, icon and executable path. This file is placed in the `~/.local/share/applications` directory, which is the standard location for `.desktop` files on Linux systems. This file is also used to set the icon of the application in the system menu.
 
 === Applications and Tools
 
-== Stage 2 <stage-2> // Second few weeks - GameLibrary, single source of truth - etc.
+The main applications used in the development of this project were the Kate text editor and the CLion IDE. Kate was used for the majority of development, as it is a lightweight text editor that has good syntax highlighting for C++. CLion was used for debugging the C++ code, as it has a powerful debugger that integrates well with CMake. More details on the tools used can be found in the appendices.
 
-== Stage 3 <stage-3> // Mid-Project Demonstration & Easter
+== Early Development <early-dev>
+
+With the development environment set up, development began on the project. The first step was to create the main window of the application, acting as the central hub. This window was created using the Qt Widgets module, which provides a wide range of tools for creating user interfaces. The initial version of the main window contained a button to add a game, and a list of games in the library.
+
+After some exposure to how the Qt Widgets module works, the design was expanded to include details on some of the smaller UI components that would need to be created. Individual classes for the filter widgets, the game list, the game details and the search bar were created, each inheriting from a base class in Qt, typically `QWidget`.
+
+It was at this stage where a database was introduced to the project and the first version of the database schema was created. However, the database was stored relative to the working directory of the application, which caused issues when the application was run from a different directory. This was resolved by using the `QStandardPaths` class to determine an appropriate location to store the database file, differing based on the operating system the application is running on.
+
+The need for a singular source of truth was identified as extremely important during this stage, as the application was beginning to grow. To this end, the `GameLibrary` class was created, which acts as a single source of truth for the games in the library, whilst writing to and reading from the database. This class follows the singleton pattern, ensuring that only one instance of the class can be created. It is used to create, read, update and delete games in the library, and signals the model to update the view when changes are made.
+
+Automatic code documentation via _Doxygen_ was explored at this stage, but it was decided that this sort of documentation was overly technical and not particularly useful for the project at its current scope and that standard commenting practices would be sufficient. 
+
+== Issues Encountered <issues>
+
+=== Filters
+
+=== Availability of APIs
+
+When looking for candidate APIs to use for the project, it was found that there were very few free APIs available that provided the data required for the project. The IGDB API@igdbdocs requires the user to login using a twitch account in order to obtain an API key, and whilst setting up an OAuth flow within the application was considered, it was decided that this was outside the scope of the project. The RAWG API@rawg-api was also considered, but it has significant limits on its free tier. As such, the decision was made to use the Steam API@steam-api, which is free to use and does not require an API key.
+
+The only limitation of the Steam API is that it only provides Games that are available on the Steam platform, which may limit the number of games that can be added to the library. However, as the Steam platform is one of the largest digital distribution platforms for games, it is likely that most games will be available on the platform.
+
+== Review against Requirements <review-requirements>
+
+// == Stage 2 <stage-2> // Second few weeks - GameLibrary, single source of truth - etc.
 
 // Python API, .venvs, stuff like that
-
-== Stage 4 <stage-4> // Final few weeks
 
 // Include implementation class diagram here
 
 ]
 
-= Testing <Testing> // 1,000 words 
+#pagebreak(weak:true)
 
+= Testing <Testing> // 1,000 words 
+#wordcountsec[
 == Approach
 
 == Unit Testing <unit-testing> // CI testing
@@ -544,8 +598,12 @@ _Requirement IDs are used to reference requirements throughout the document, and
 // Difficulties of testing front-end systems - possible but out of scope for this project.
 // Describe how front-end testing would be done if it were to be done.
 // Manual testing is appropriate for this project, due to its small size.
+]
 
 = Evaluation <Evaluation> // 1,000 words
+#wordcountsec[
+
+]
 
 #pagebreak()
 
