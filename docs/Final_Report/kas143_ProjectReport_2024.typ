@@ -1,6 +1,5 @@
 #import "template.typ": *
 
-#set footnote(numbering: "*")
 
 #let smallcaps(content) = {
   text(font: "Century Supra C3")[
@@ -10,7 +9,7 @@
 
 #show: doc.with(
   status: "DRAFT",
-  version: "v0.4",
+  version: "v0.5",
   title: "CS39440 - GamePile",
   subtitle: "Major Project Report",
   authors: ((name: "Kal Sandbrook", email: "kas143@aber.ac.uk"),),
@@ -68,7 +67,8 @@
     #show outline.entry.where(
       level: 1
     ): it => {
-    strong(it)
+      v(1pt)
+      strong(it)
     }
 
     #[
@@ -79,10 +79,11 @@
       } else { it }
       }
       #outline(
+        //depth: 2,
         indent: auto
       )
     ]
-    #v(-0.65em)
+    #v(-0.2em)
     #outline(title: none, indent: 1.5em, target: (<appendix>))
     
   ]
@@ -199,11 +200,14 @@ The choice of language for this project was a matter of consideration up until t
 
 C++ was chosen for the main application due to its unrivalled performance, high suitability for Object-Oriented problems and, via use of the Qt@qt platform, a native and robust UI framework. Python was chosen for the API module due to its excellent networking libraries and ease of use, along with its libraries for fuzzy string matching.
 
-The Qt Framework also boasts an extensive range of documentation and tutorials available online, making it an attractive choice for this project. It also has cross-platform capabilities, allowing the application to be shipped on the _Windows_, _MacOS_ and _Linux_ operating systems. #footnote[However, the project was developed with a focus on Linux compatibility, with support for other operating systems coming second.]
+// The Qt Framework also boasts an extensive range of documentation and tutorials available online, making it an attractive choice for this project. It also has cross-platform capabilities, allowing the application to be shipped on the _Windows_, _MacOS_ and _Linux_ operating systems. #footnote[However, the project was developed with a focus on Linux compatibility, with support for other operating systems coming second.]
+
+The Qt Framework has two main approaches for GUI development. Qt Widgets, which is more representative of a traditional desktop application, and Qt Quick, which is a more modern approach using the QML language. Qt Quick is well suited for rapid development, as QML is a declarative language that integrates with JavaScript-like syntax. However, Qt Quick also poses two problems for this project - the first being that it is not as performant as Qt Widgets, and the second being that it introduces a level of separation between the UI and the backend that would require more work to integrate with the C++ backend. For these reasons, Qt Widgets was chosen as the more suitable option for this project.
 
 Another advantage of using Python for the API module is that it allows for easy packaging of the module into an executable, which can be used standalone of the main program, allowing for easy testing and debugging of the module. This was achieved using the pyinstaller@pyinstaller library.
 
 Finally, the method of persistent data storage had to be considered. Due to the nature of the data being stored, a relational database was chosen as the method of storage, in particular an SQLite database, due to its lightweight nature and ease of use. In a bigger project, a more robust database system such as PostgreSQL could be considered.
+
 === Alternative Approaches
 
 // Rust - no mature UI tooling - maybe a cursory mention to areweguiyet (as a footnote) - using Qt bindings wouldnt be worth it as it's essentially coding in C++ at that point.
@@ -213,6 +217,9 @@ Many other languages were considered for this project, such as an entirely Pytho
 Another language that was considered for this project was the increasingly popular Rust language. Rust is known for its performance and rigorous safety requirements, which would have made it a good choice for a project such as this. However, a significant caveat to using Rust for this project is the lack of a mature UI tooling ecosystem. #footnote[See the website https://areweguiyet.com/ for a informal view on the state of GUI in Rust.] Whilst there are bindings (bindings being a way to use a library from another language) for Qt in Rust, this would essentially involve doing the majority of the work in C++ regardless, which would defeat the purpose of using Rust in the first place.
 
 Java and C\# were also considered, but were ruled out - Java due to its performance and C\# due to the impracticality of using it on Linux systems. Java also has an absence of modern UI tooling, with Swing and JavaFX being the only real options, both of which are outdated and not visually appealing. QtJambi was briefly investigated as a potential solution, but there was found to be a lack of documentation and community support for the library.
+
+Mentioned earlier as the UI framework used for Lutris, GTK@gtk was also considered as a potential UI framework for this project. However, GTK is not built for development in C++, and has to be used similarly to programming in C. GTK is also exclusive to the Linux Operating System, and whilst experimental Windows support is available, this would significantly increase any work required to make this application cross-platform.
+
 
 
 == Process 
@@ -251,7 +258,7 @@ Functional Requirements are the features that the application must have, and coi
 
 _Requirement IDs are used to reference requirements throughout the document, and are formatted as "FRXX" for Functional Requirements, "NFRXX" for Non-Functional Requirements and "OFRXX" for Optional Functional Requirements._
 
-#pagebreak(weak: true)
+//#pagebreak(weak: true)
 
 == Functional Requirements
 
@@ -327,7 +334,8 @@ _Requirement IDs are used to reference requirements throughout the document, and
   Whilst the application will not be translated into multiple languages at this time, the application should be designed in a way where translation is possible in future. A theoretical translator should be able to easily translate the application into another language without a significant knowledge of programming.
 ]
 ]
-// Use-Case Diagram
+
+#pagebreak(weak:true)
 
 = Design <Design> // target: 3k words
 #wordcountsec[
@@ -565,9 +573,27 @@ The need for a singular source of truth was identified as extremely important du
 
 Automatic code documentation via _Doxygen_ was explored at this stage, but it was decided that this sort of documentation was overly technical and not particularly useful for the project at its current scope and that standard commenting practices would be sufficient. 
 
+== Later Development
+
+During later development, the focus was on expanding the functionality of the application. The main features that were added during this stage were the ability to fetch game data from the API, the ability to filter games based on attributes, and the ability to sort games based on information about the game.
+
+When developing the API, a Python CLI application was created to fetch game data. Using the python `requests` library, the application was able to make HTTP requests to the API and return a JSON object containing information about the game. This data was then parsed and returned to the main application in a standard format. The python application makes use of a Git submodule to include a seperate repository containing the API Helper, which allows for easy updating of the API Helper without affecting the main application. This submodule is included in the main repository, and is updated whenever changes are made to the API Helper.
+
+This module is also available as a standalone executable, allowing for users to make use of the API helper outside of the context of the main application. This is useful for debugging and testing the API helper, as it allows for easy testing of the API without having to run the main application.
+
+A key discovery during this stage was making use of the Virtual Environment system in Python. This allows for the isolation of dependencies for a project, ensuring that the project can be run on any system without conflicts. This means that the API Helper can be built on any system that has Python installed, without having to worry about conflicting dependencies.
+
 == Issues Encountered <issues>
 
+=== Performance
+
+During development, an issue was encountered where if a high number of games were added to the library, the application would become slow and unresponsive. This issue was specifically related to high resolution images being used as game icons. The application was loading the full-size image into memory, which was causing the application to run out of memory and become slow. In order to solve this, game icons were changed to use the `QImage` class in place of the `QIcon` class, and a scaled-down version of the image was used. This reduced the memory usage of the application and improved performance significantly. 
+
 === Filters
+
+In the current version of the program, there is a bug with how the filtering system is implemented. Filters do not work as expected, and the application only applies the latest selected filter. This is due to the way that the filters are applied to the model, and the way that the model is updated when a filter is selected. This is a critical issue, as it prevents the user from using multiple filters at the same time, which is a key feature of the application. 
+
+Solving this issue would require a considerable rework of the `QSortFilterProxyModel`, which is used to display the games in the library. This would involve creating a custom proxy model that can handle multiple filters at the same time, and updating the model when a filter is selected.
 
 === Availability of APIs
 
@@ -575,7 +601,47 @@ When looking for candidate APIs to use for the project, it was found that there 
 
 The only limitation of the Steam API is that it only provides Games that are available on the Steam platform, which may limit the number of games that can be added to the library. However, as the Steam platform is one of the largest digital distribution platforms for games, it is likely that most games will be available on the platform.
 
+#pagebreak()
+
 == Review against Requirements <review-requirements>
+
+The project was reviewed against the functional and non-functional requirements set out at the beginning of the project. A detailed breakdown of this review follows.
+
+=== Review of Functional Requirements
+#[
+  #show grid.cell: it => {
+    if(it.x == 0){
+      smallcaps[#it]
+      h(1em)
+    } else if (it.x == 1){
+      it
+    }
+    else { it }
+  }
+  #grid(
+    stroke: (x, y) => if x == 0 {
+      (right: (
+        paint: luma(180),
+        thickness: 1.5pt,
+      ))
+    },
+    gutter: 1em,
+    columns: (2.5fr,5fr),
+    [FR01 -- Game Management],[The application satisfies this requirement, allowing for the addition, deletion and editing of games in the library. Games have a variety of attributes.],
+    [FR02 -- Backlog Management],[Users are able to mark a game as part of their backlog, and the application can be filtered to only show games in the backlog.],
+    [FR03 -- Progress Tracking],[Games are able to marked with several completion statuses. These include "None", "Playing", "Completed" and "Abandoned".],
+    [FR04 -- Sorting and Filtering],[Games are able to be sorted based on any attribute, and filtered based on any attribute. However, there is a bug with the filtering system that prevents multiple filters from being applied at the same time.],
+    [FR05 -- Manual Game Entry],[Games are able to be added manually to the library, with the user entering the information about the game.],
+    [FR06 -- API Integration],[Information about games is able to be imported from an API, with the user being able to choose from five games with similar names to import.],
+    [FR07 -- Desktop Application],[The application is a desktop application, with a main window acting as the central hub. Games are able to be launched from the application, given an executable path is set.],
+    [OFR01, OFR02 --],[Due to time constraints, neither of the Optional Features were implemented.],
+  )
+]
+=== Review of Non-Functional Requirements
+
+Whilst Non-Functional Requirements cannot be objectively measured against in the same way as Functional Requirements, the application follows the principles set out in the requirements. GamePile performs well, doesn't crash, and is designed in a way to maximise maintainability and extendability.
+
+Work to port the program to other operating systems and to translate the program into other languages will not require significant changes to the codebase, and would be relatively simple to achieve. The Qt translation tools `lupdate` can be used to extract strings from the application, and `lrelease` can be used to compile the translations into translation source files. This file can then be loaded by the application to provide translations.
 
 // == Stage 2 <stage-2> // Second few weeks - GameLibrary, single source of truth - etc.
 
@@ -591,16 +657,50 @@ The only limitation of the Steam API is that it only provides Games that are ava
 #wordcountsec[
 == Approach
 
-== Unit Testing <unit-testing> // CI testing
+The testing of the application was done in two main ways: Unit Testing and Manual Testing. Unit Testing was done using the CTest and Qt Test framework, which is a part of CMake and the Qt Framework respectively. CTest is used to run tests alongside the build process, and to ensure that the tests are run whenever the application is built. Qt Test is used to write the tests themselves, and to provide the testing framework for the application.
+
+Manual testing was done by running the application and using it as a user would. This involved adding games to the library, editing games, deleting games, filtering games and sorting games. This was done to ensure that the application was functioning as expected, and to identify any issues that may have been missed during development. A set of test cases was created to ensure that all aspects of the application were tested, and that the application was functioning as expected.
+
+
+== Continuous Integration and Unit Testing <unit-testing> // CI testing
+
+#figure(
+  caption: [A screenshot showing the results of CI testing in GitHub Actions.]
+)[
+  #image("assets/ci-test.png")
+]
+
+With the project using GitHub as a version control system, it was decided to make use of the GitHub Actions feature to provide Continuous Integration (CI) testing. This feature allows for the running of tests whenever the application is built, ensuring that the code is functioning as expected. This is done by creating a `.github/workflows` directory in the repository, and creating a YAML file that contains the configuration for the CI testing.
+
+The project makes use of Continuous Integration to ensure that the application builds when changes are made to the master branch, and to run and report on the results of the unit tests. These unit tests ensure that the `GameLibrary` class is functioning as expected, and that the database is being read and written to correctly. The tests are run using the `ctest` command, which is a part of CMake, and the results are output to the console, which are logged by GitHub Actions. Tests also exist to ensure that the API Helper is functioning as expected, and that the API is returning the correct data.
+
+When tests fail, the build is marked as failed, and an email is sent regarding the failure. This ensures that any issues with the code are caught early, and that the code is always in a working state. This is especially important when working on a project alone, as there is no one else to catch issues with the code.
 
 == Manual Testing
 
 // Difficulties of testing front-end systems - possible but out of scope for this project.
 // Describe how front-end testing would be done if it were to be done.
 // Manual testing is appropriate for this project, due to its small size.
+
+Manual testing was undertaken to ensure that the application was functioning as expected. In an ideal world, automated testing would be used more extensively to test the front-end of the application. Qt Test has the necessary capabilities to simulate testing the front-end of applications, but this was not used in this project due to the sheer complexity of writing such tests. If development was to be taken further and the application was to be expanded, automated testing for these systems would be one of the first things to be added.
+
+If front-end testing was to be done, it would involve simulating user input and checking that the application responds as expected. This would involve simulating mouse clicks, key presses and other user interactions, and checking that the application responds correctly. Test Cases would be divided based on use-case and individual components of the UI, and would be integrated with the Continuous Integration system to ensure that the tests are run whenever the application is changed.
+
+A testing table describing the manual tests that were carried out can be found as a part of the appendices.
 ]
 
+#pagebreak()
+
 = Evaluation <Evaluation> // 1,000 words
+
+// Did you achieve the aims? Were the aims realistic?
+// Process or method followed - how useful was it? Maybe an iterative approach would have been better.
+// Choice of tools & dev env.
+// Should have used technology that was familiar to me, in place of something new.
+// Time Management
+// What would I do differently next time?
+// What would I do if I had more time?
+
 #wordcountsec[
 
 ]
@@ -668,4 +768,139 @@ The only limitation of the Steam API is that it only provides Games that are ava
       #image("assets/diagrams/class_diagram.svg", height:95%)
     ]
   ]
+
+  #page(flipped:true)[
+    #appendix(title:"Manual Testing Table")[ 
+  #show figure: set block(breakable: true)
+  #figure( 
+    caption: [Test Table]
+  )[
+    #set align(center+horizon)
+    #show table.cell: it=>{
+      if(it.y == 0){
+        smallcaps(it)
+      } else { it }
+    }
+    #table(
+      columns: (1fr,1fr,1.5fr,2fr,2fr,2fr,1.5fr),
+      table.header(
+        [ID],[Ref.],[Desc.],[Steps],[Inputs],[Expected],[PASS / FAIL]
+      ),
+      [TC1],[FR01],[Adding a game.],[
+        1. Open add game dialog.
+        2. Enter values for all fields.
+        3. Press OK.
+      ],[Information about the game Minecraft.],[The game is added, and shows up on the main list. The filters along the side are also populated with the relevant entries.],[PASS],
+      [TC2],[FR01],[Deleting a game.],[
+        1. Right click on a games entry.
+        2. Press delete.
+      ],[N/A],[The game is removed from the library, and the filters are updated.],[PASS],
+      [TC3],[FR01],[Editing a game.],[
+        1. Right click on a games entry.
+        2. Press edit.
+        3. Change the name of the game.
+        4. Press OK.
+      ],[N/A],[The game is updated with the new name, and the filters are updated.],[PASS],
+      [TC4],[FR02],[Adding a game to the backlog.],[
+        1. Right click on a games entry.
+        2. Open the context menu.
+        3. Press edit.
+        4. Set the games status to "Backlog".
+        5. Press OK.
+      ],[N/A],[The game is added to the backlog.],[PASS],
+      [TC5],[FR02],[Removing a game from the backlog.],[
+        1. Right click on a games entry.
+        2. Open the context menu.
+        3. Press edit.
+        4. Set the games status to "None".
+        5. Press OK.
+      ],[N/A],[The game is removed from the backlog.],[PASS],
+      [TC6],[FR03],[Setting a game to "Playing".],[
+        1. Right click on a games entry.
+        2. Open the context menu.
+        3. Press edit.
+        4. Set the games status to "Playing".
+        5. Press OK.
+      ],[N/A],[The game is set to "Playing".],[PASS],
+      [TC7],[FR03],[Setting a game to "Completed".],[
+        1. Right click on a games entry.
+        2. Open the context menu.
+        3. Press edit.
+        4. Set the games status to "Completed".
+        5. Press OK.
+      ],[N/A],[The game is set to "Completed".],[PASS],
+      [TC8],[FR03],[Setting a game to "Abandoned".],[
+        1. Right click on a games entry.
+        2. Open the context menu.
+        3. Press edit.
+        4. Set the games status to "Abandoned".
+        5. Press OK.
+      ],[N/A],[The game is set to "Abandoned".],[PASS],
+      [TC9],[FR04],[Sorting games by name.],[
+        1. Click on the "Name" column header.
+      ],[N/A],[The games are sorted by name.],[PASS],
+      [TC10],[FR04],[Sorting games by release date.],[
+        1. Click on the "Release Date" column header.
+      ],[N/A],[The games are sorted by release date.],[PASS],
+      [TC11],[FR04],[Filtering games by name.],[
+        1. Enter a name in the search bar.
+      ],[N/A],[The games are filtered by name.],[PASS],
+      [TC12],[FR04],[Filtering games by multiple attributes.],[
+        1. Enter a name in the search bar.
+        2. Select a filter from the filter list.
+      ],[N/A],[The games are filtered by name and the selected filter.],[FAIL],
+      [TC13],[FR05],[Adding a game with all fields filled.],[
+        1. Open the add game dialog.
+        2. Enter values for all fields.
+        3. Press OK.
+      ],[Information about the game Minecraft.],[The game is added, and shows up on the main list. The filters along the side are also populated with the relevant entries.],[PASS],
+      [TC14],[FR05],[Adding a game with no fields filled.],[
+        1. Open the add game dialog.
+        2. Press OK.
+      ],[N/A],[An error message is displayed, and the game is not added.],[PASS],
+      [TC15],[FR05],[Adding a game with only name filled.],[
+        1. Open the add game dialog.
+        2. Enter a name for the game.
+        3. Press OK.
+      ],[N/A],[The game is added, the only necessary details for a game are the name.],[PASS],
+      [TC16],[FR06],[Fetching game data from the API.],[
+        1. Open the add game dialog.
+        2. Enter a name for the game.
+        3. Press the "Fetch Data" button.
+      ],[Enter the game name "Team Fortress 2".],[The input fields on the add game form are populated. The games icon is also provided by the API.],[PASS],
+      [TC17],[FR06],[Fetching game data from the API with no results.],[
+        1. Open the add game dialog.
+        2. Enter a name for the game.
+        3. Press the "Fetch Data" button.
+      ],[Enter the game name "This Game Does Not Exist".],[An error message is displayed, and the input fields are not populated.],[FAIL],
+      [TC18],[FR06],[Fetching game data from the API with multiple results.],[
+        1. Open the add game dialog.
+        2. Enter a name for the game.
+        3. Press the "Fetch Data" button.
+      ],[Enter the game name "Team".],[A list of games is displayed, and the user can select the correct game.],[PASS],
+      [TC19],[FR06],[Fetching game data from the API with no internet connection.],[
+        1. Disconnect from the internet.
+        2. Open the add game dialog.
+        3. Enter a name for the game.
+        4. Press the "Fetch Data" button.
+      ],[Enter the game name "Team Fortress 2".],[An error message is displayed, and the input fields are not populated.],[FAIL],
+      [TC20],[FR07],[Launching a game.],[
+        1. Select a game in the list.
+        2. Press launch.
+      ],[N/A],[The game is launched.],[PASS],
+      [TC21],[FR07],[Launching a game with no executable path set.],[
+        1. Select a game in the list.
+        2. Press launch.
+      ],[N/A],[The launch button is unable to be pressed.],[PASS],
+      [TC22],[FR07],[Launching a game with an invalid executable path set.],[
+        1. Select a game in the list.
+        2. Press launch.
+      ],[N/A],[An error message is displayed.],[PASS],
+      [TC23],[FR07],[Launching a game with no game selected.],[
+        1. Press launch.
+      ],[N/A],[The launch button is unable to be pressed.],[PASS]
+    )
+  ] <appendix4>
+  ]
+]
 ]
