@@ -194,7 +194,7 @@
       word-count(total => {
       content
       align(right)[
-      #smallcaps[#total.words words]
+      //#smallcaps[#total.words words]
       ]
     })
   }

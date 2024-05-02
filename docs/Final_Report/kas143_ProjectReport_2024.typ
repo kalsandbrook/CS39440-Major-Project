@@ -7,7 +7,7 @@
 }
 
 #show: doc.with(
-  status: "DRAFT", version: "v0.5", title: "CS39440 - GamePile", subtitle: "Major Project Report", authors: ((name: "Kal Sandbrook", email: "kas143@aber.ac.uk"),), supervisors: ((name: "Dr. Edore Akpokodje", email: "eta@aber.ac.uk"),), reference: "kas143-FinalReport", hasOutline: false,
+  status: "RELEASE", version: "v1.0", title: "CS39440 - GamePile", subtitle: "Major Project Report", authors: ((name: "Kal Sandbrook", email: "kas143@aber.ac.uk"),), supervisors: ((name: "Dr. Edore Akpokodje", email: "eta@aber.ac.uk"),), reference: "kas143-FinalReport", hasOutline: false,
 )
 
 #[ <preamble>
@@ -51,12 +51,15 @@
     #v(1fr)
 
     = Acknowledgements
-    TODO: Add Acknowledgements - #lorem(50)
+    With thanks to my supervisor, Dr. Edore Akpokodje, for his guidance and support throughout the development of this project. 
+    I would also like to thank my friends and family for their support throughout this project and my time at university as a whole - especially my uncle, without his support none of this would have been possible in the first place.
 
     #v(1fr)
 
     = Abstract// 300 words
-    TODO: Write the Abstract - #lorem(295)
+    #wordcountsec[
+    The GamePile project aimed to create a native desktop application that helps users to manage their video game backlogs (lists of games they want to play) and libraries (games they own). The application allows users to add games to the library and mark them as part of their backlog, in progress or completed. GamePile also allows users to search through their games and filter them based on various attributes such as genre, platform or completion status. It also allows users to search for games to add to their library via the use of a Third-Party API. This uses a fuzzy search algorithm to allow users to search for games even if they are unsure of the exact name. The application also allows users to view detailed information about the games in their library, such as the aforementioned attributes. The project was developed using C++ and Python, with the main application using the Qt framework and the API module using the requests library. Development was based on a Kanban framework, with a weekly log being kept to document progress and any issues that arose. The project was developed with a focus on Linux compatibility, with support for other operating systems coming second. Unlike competitors, GamePile provides a native solution for managing game libraries and backlogs, offering better performance and integration with the users system without the need to open a web page and consequently without requiring an internet connection.
+    ]
 
     #v(1fr)
   ]
@@ -1255,7 +1258,44 @@ as a part of the appendices.
 // What would I do if I had more time?
 
 #wordcountsec[
+  == Achievement of Aims and Objectives
 
+  I think that this project makes a reasonably good attempt at achieving the aims
+  and objectives set out at the beginning of the project. The application is able
+  to manage a library of games, with the ability to add, delete and edit games,
+  and to filter and sort games based on various attributes. The application is
+  also able to fetch game data from an API, and to mark games as part of a
+  backlog. However, there are some issues with the application, such as the
+  filtering system not working as expected, and the lack of optional features.
+
+  Further, I think that there are some User Experience enhancements that could be made to the application. For example, it could be made easier to change the status of a game. Currently, the user has to right-click on a game, select "Edit Game", and then change the status. This could be made easier by adding a button to the game details pane that allows the user to change the status directly. Further, I think the `QTreeView` in the main window could be enhanced by adding the option to show games in a grid view, rather than a list view. This would allow for more games to be displayed at once, whilst limiting the amount of scrolling required and potentially redundant information displayed. 
+
+  It would have been good to implement the optional features, such as sharing libraries and a basic recommendation system - particularly the latter. This would have added a lot of value to the project, adding some algorithmic complexity. 
+
+  == Reflection on Development Process
+
+  Kanban was not necessarily the best choice for managing the project. It was a good way to keep track of tasks, but it was not particularly useful for tracking progress or ensuring that tasks were completed on time. An iterative approach may have been better, with regular reviews of the project and the progress made. This would have allowed for changes to be made to the project as it progressed, and for issues to be caught early. As C++ was not a language I had extensive experience with, an iterative approach would have been beneficial, as it would encourage revision of the codebase and the design of the application - removing the increased technical debt accrued when working with an unfamiliar language.
+
+  It should also be considered that iterative development necessitates a significant time overhead for planning and review compared to a more linear methodology. This would have been a significant time investment, but would have likely resulted in a more polished final product.
+
+  == Choice of Tools and Development Environment
+
+  Qt Widgets was an appropriate choice for the development of the application. It
+  provides a performant solution to creating desktop applications, and had a wide range of tools and features that allow for the creation of a robust interface. 
+
+  In future, however, it may be worth considering using a more modern framework, such as Qt Quick, which is designed for more fluid interfaces. This would allow for more complex animations and transitions, and would provide a more modern look and feel to the application, closer to a modern web application.
+
+  Choosing C++ as the language for development was a good choice, but choosing a language that I did not have extensive experience with was not. C++'s famous complexity and verbosity made development more difficult than it needed to be, and the lack of experience with the language meant that development was slower than it could have been. In future, it would be better to choose a language that I am more familiar with, or practice more with a new language before starting development.
+
+  == Considerations for Future Projects
+
+  In summary, if I were to start this project again, I would likely choose a different language for development. C++ was a good choice for the project, but the lack of experience with the language made development more difficult than it needed to be. I would also consider using a more modern framework, such as Qt Quick, which would allow for more complex animations and transitions, and would provide a more modern look and feel to the application.
+
+  I would also consider using an iterative development process, with regular reviews of the project and the progress made. This would allow for changes to be made to the project as it progressed, and for issues to be caught early. This would have been particularly useful for this project, as C++ was not a language I had extensive experience with, and an iterative approach would have encouraged revision of the codebase and the design of the application.
+
+  I also believe that this project would have benefitted significantly from a larger feature-set and more time to polish the user experience. This would create room for more complex algorithms and features, adding to the technical complexity of the work, increasing the amount of work available to be done and ultimately making for a more interesting project.
+
+  All in all, I think that this project was a good learning experience, and that I have gained a lot of valuable knowledge from it. I have learned a lot about C++ development, user interface design, and I have gained a lot of experience in developing desktop applications. I think that this project has been a valuable experience, and I'm ultimately proud of what I have achieved.
 ]
 
 #pagebreak()
