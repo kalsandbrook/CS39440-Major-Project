@@ -105,8 +105,26 @@ public:
     QVariant data(const QModelIndex& index,
         int role) const override;
 
+    /**
+     * @brief Returns the header data of the model.
+     * 
+     * This method returns the header data of the model with the given section, orientation, and role.
+     * 
+     * @param section The section of the header.
+     * @param orientation The orientation of the header.
+     * @param role The role of the header.
+     * @return The header data of the model.
+    */
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-
+    
+    /**
+     * @brief Retrieves a game object based on the index.
+     * 
+     * This method retrieves a game object based on the index.
+     * 
+     * @param index The index of the game.
+     * @return The game object. 
+    */
     Game getGame(QModelIndex index);
 public slots:
     /**

@@ -72,10 +72,12 @@ QVariant GameLibraryModel::data(const QModelIndex& index, int role) const
     QImage icon;
     switch (role) {
     case Qt::DecorationRole:
+        // Retrieve the icon from the icon controller
         icon = m_gameLibrary.iconController->getIcon(game.iconName());
         if (!icon.isNull())
             return icon;
         else
+            // Fallback icon
             return QIcon::fromTheme("input-gamepad-symbolic");
         break;
     case Qt::DisplayRole:
@@ -149,7 +151,6 @@ void GameLibraryModel::onGameAdded(const Game& game)
     beginInsertRows(QModelIndex(), row, row);
     m_games.append(game);
     endInsertRows();
-    // emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
 }
 void GameLibraryModel::onGameDeleted(const int gameId)
 {

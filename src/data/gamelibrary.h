@@ -44,16 +44,50 @@ public:
      */
     void addGame(Game& game);
 
+    /**
+     * @brief Adds an attribute to the library.
+     * @param attribute The attribute to add.
+     * @param name The name of the attribute.
+     * @see Game::Attribute
+    */
     void addAttribute(const Game::Attribute attribute, const QString& name);
 
+    /**
+     * @brief Sets the attribute of a game.
+     * @param gameId The ID of the game.
+     * @param attribute The attribute to set.
+     * @param attributeList The list of attributes.
+     * @see Game::Attribute
+    */
     void setGameAttribute(int gameId, Game::Attribute attribute, QStringList attributeList);
 
+    /**
+     * @brief Removes attribute values from the database that are not used by any game.
+     * @param attribute The attribute to remove.
+     * @see Game::Attribute
+    */
     void removeUnusedAttribute(Game::Attribute attribute);
 
+    /**
+     * @brief Deletes all games from the library.
+     * Mainly used in testing.
+    */
     void deleteAllGames();
 
+    /**
+     * @brief Returns the list of games in the library.
+     * @return The list of games in the library.
+     * @see Game
+    */
     QStringList getGameAttribute(Game game, Game::Attribute attribute);
 
+    /**
+     * @brief Returns the list of all values of a given attribute.
+     * @param attribute The attribute to get the values of.
+     * @return The list of all values of the given attribute.
+     * 
+     * Used to autofill on the add game dialog.
+    */
     QStringList getAllOfAttribute(Game::Attribute attribute);
 
     /**
@@ -82,9 +116,17 @@ public:
      * @return The list of games in the library.
      */
     QMap<int, Game>& games();
-
+    
+    /**
+     * @brief Sets the database name.
+     * 
+     * Used to set a custom database name for testing, so tests don't interfere with the main database.
+    */
     void setDb(QString dbname);
 
+    /**
+     * @brief The icon controller for the library.
+    */
     GameIconController* iconController;
 
 signals:
@@ -118,6 +160,9 @@ signals:
      */
     void gameUpdated(const Game& game);
 
+    /**
+     * @brief Signals that the game library has changed.
+    */
     void gameChanged();
 
 

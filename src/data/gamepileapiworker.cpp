@@ -2,13 +2,18 @@
 
 GamePileApiWorker::GamePileApiWorker(QObject* parent) : QObject(parent) {}
 
+/**
+ * @brief Starts the lookup game operation.
+*/
 void GamePileApiWorker::lookupGame(const QString& gameName) {
+    // Start a process, and call the GamePile-API executable.
     QProcess process;
     process.start("GamePile-API", QStringList() << gameName << "-n 5");
     process.waitForFinished();
 
     QList<QMap<QString, QString>> result;
 
+    // Returns empty result if an error occurred.
     if (process.error() != QProcess::UnknownError) {
         qDebug() << "An error occurred with GamePile-API:" << process.errorString();
         emit lookupGameFinished(result);
@@ -17,6 +22,7 @@ void GamePileApiWorker::lookupGame(const QString& gameName) {
 
     QByteArray output = process.readAllStandardOutput();
 
+    // Parses the JSON output from the API. It transforms the JSON into a list of key-value pairs. (which corerspond to the game attributes)
     QJsonDocument jsonDoc = QJsonDocument::fromJson(output);
     qDebug() << jsonDoc;
     if (!jsonDoc.isNull() && jsonDoc.isArray()) {
@@ -42,9 +48,9 @@ void GamePileApiWorker::lookupGame(const QString& gameName) {
                 result.append(gameJson);
             }
         }
-        //QJsonObject jsonObject = jsonDoc.object();
 
     } else {
+        // if the JSON is malformed, log an error.
         qDebug() << "API received malformed JSON.";
     }
 

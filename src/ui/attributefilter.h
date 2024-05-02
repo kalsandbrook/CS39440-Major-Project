@@ -9,6 +9,11 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+/**
+ * @brief A class representing the attribute filter.
+ * Used to filter games by attribute.
+ * @see FiltersWidget
+*/
 class AttributeFilter : public QWidget {
     Q_OBJECT
 public:

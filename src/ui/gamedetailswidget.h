@@ -20,6 +20,11 @@ public:
     GameDetailsLine(QString content, QWidget* parent);
 };
 
+/**
+ * @brief A class representing the game details widget.
+ * Displays the details of a game in the library. Uses readOnly QLineEdit for displaying game details.
+ * A button is provided to launch the game, which is only enabled when a valid executable path is set.
+*/
 class GameDetailsWidget : public QWidget {
 public:
     GameDetailsWidget(QWidget* parent);

@@ -4,7 +4,6 @@
 
 #include "mainwindow.h"
 
-//#include "data/gamelibrary.h"
 #include "ui/filterswidget.h"
 #include "ui/gamedetailswidget.h"
 #include "ui/gameitemdelegate.h"
@@ -15,7 +14,7 @@
 
 MainWindow::MainWindow()
 {
-
+    // Setup Main Window
     helpMenu = new QMenu(helpButton);
 
     createActions();
@@ -56,6 +55,11 @@ MainWindow::MainWindow()
     connect(&GameLibrary::instance(), &GameLibrary::gameChanged, filtersWidget, &FiltersWidget::updateAttributeFilters);
 }
 
+
+/**
+ * @brief MainWindow::createActions
+ * Creates the actions for the main window
+*/
 void MainWindow::createActions()
 {
     addGameAction = new QAction(QIcon::fromTheme("list-add"), "&Add Game", this);
@@ -65,6 +69,10 @@ void MainWindow::createActions()
     aboutQtAction = helpMenu->addAction(tr("About &Qt"));
 }
 
+/**
+ * @brief MainWindow::createToolBars
+ * Creates the toolbars for the main window
+*/
 void MainWindow::createToolBars()
 {
     // Setup Main Toolbars
@@ -90,13 +98,21 @@ void MainWindow::createToolBars()
 
     addToolBar(mainToolBar);
 }
-
+/**
+ * @brief MainWindow::onAddGameDialog
+ * Opens the dialog to add a new game, typically in the response to the addGameAction being triggered.
+*/
 void MainWindow::onAddGameDialog()
 {
     addGameDialog = new GameEditDialog(this);
     addGameDialog->exec();
 }
 
+
+/**
+ * @brief MainWindow::onAboutAction
+ * Displays the about dialog for the application
+*/
 void MainWindow::onAboutAction()
 {
     QMessageBox::about(this,
@@ -105,12 +121,19 @@ void MainWindow::onAboutAction()
         "\n\n"
         "Made by kas143 as a part of the CS39440 module at Aberystwyth University.");
 }
-
+/**
+ * @brief MainWindow::onAboutQtAction
+ * Displays the about dialog for the Qt framework. This is boilerplate code.
+*/
 void MainWindow::onAboutQtAction()
 {
     QMessageBox::aboutQt(this);
 }
 
+/**
+ * @brief MainWindow::onSearchUpdated
+ * Update the search filter in the game library proxy model.
+*/
 void MainWindow::onSearchUpdated(QString query)
 {
     // TODO: Use Fuzzy Searching

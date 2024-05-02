@@ -62,6 +62,11 @@ public slots:
      */
     void onAboutQtAction();
 
+    /**
+     * @brief Updates the search results.
+     * @param query The search query.
+     * This method updates the search results based on the given query.
+    */
     void onSearchUpdated(QString query);
 
 private:

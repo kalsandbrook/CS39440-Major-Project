@@ -7,6 +7,10 @@
 #include <QWidget>
 #include <qsortfilterproxymodel.h>
 
+/**
+ * @brief A class representing the filters widget.
+ * Contains the list of filters displayed in the main window.
+*/
 class FiltersWidget : public QWidget {
     Q_OBJECT
 public:

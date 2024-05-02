@@ -26,13 +26,9 @@ int main(int argc, char* argv[])
  * \author Kal Sandbrook - kas143
  * \date 2024-03-03
  *
- * \section intro_sec Introduction
  *
  * This is the documentation for the GamePile application. GamePile is a C++ Qt application designed to facilitate convenient and informative management of your video game collection.
  *
  * This project is being made as a part of the CS39440 module at Aberystwyth University.
- *
- * \todo Editing games should be done via GameLibraryModel
- * \todo Investigate tips given in https://doc.qt.io/qt-6/qabstractitemmodel.html#subclassing
  *
  */
